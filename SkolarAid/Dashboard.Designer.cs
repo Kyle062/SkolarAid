@@ -29,32 +29,32 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
-            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius36 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius37 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius38 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius39 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius40 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius41 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius42 = new SATAUiFramework.BorderRadius();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ScholarAid = new System.Windows.Forms.Label();
             this.sataButton6 = new FrameworkTest.SATAButton();
             this.sataButton5 = new FrameworkTest.SATAButton();
             this.sataButton4 = new FrameworkTest.SATAButton();
             this.sataButton3 = new FrameworkTest.SATAButton();
             this.sataButton2 = new FrameworkTest.SATAButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.sataButton1 = new FrameworkTest.SATAButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ScholarAid = new System.Windows.Forms.Label();
             this.sataPanel1 = new SATAUiFramework.SATAPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.sataButton7 = new FrameworkTest.SATAButton();
+            this.label2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.sataPanel2 = new SATAUiFramework.SATAPanel();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.sataPanel3 = new SATAUiFramework.SATAPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -105,30 +105,6 @@
             this.panel1.Size = new System.Drawing.Size(288, 950);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(-2, 72);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 22);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "_____________________________";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
-            // 
-            // ScholarAid
-            // 
-            this.ScholarAid.AutoSize = true;
-            this.ScholarAid.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScholarAid.ForeColor = System.Drawing.Color.White;
-            this.ScholarAid.Location = new System.Drawing.Point(95, 37);
-            this.ScholarAid.Name = "ScholarAid";
-            this.ScholarAid.Size = new System.Drawing.Size(173, 22);
-            this.ScholarAid.TabIndex = 0;
-            this.ScholarAid.Text = "ScholarAid Admin";
-            this.ScholarAid.Click += new System.EventHandler(this.label1_Click);
             // 
             // sataButton6
             // 
@@ -325,6 +301,18 @@
             this.sataButton2.TextOffset = new System.Drawing.Point(0, 0);
             this.sataButton2.Click += new System.EventHandler(this.sataButton2_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(-2, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(300, 22);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "_____________________________";
+            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            // 
             // sataButton1
             // 
             this.sataButton1.ButtonText = "Dashboard";
@@ -375,16 +363,28 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // ScholarAid
+            // 
+            this.ScholarAid.AutoSize = true;
+            this.ScholarAid.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScholarAid.ForeColor = System.Drawing.Color.White;
+            this.ScholarAid.Location = new System.Drawing.Point(95, 37);
+            this.ScholarAid.Name = "ScholarAid";
+            this.ScholarAid.Size = new System.Drawing.Size(173, 22);
+            this.ScholarAid.TabIndex = 0;
+            this.ScholarAid.Text = "ScholarAid Admin";
+            this.ScholarAid.Click += new System.EventHandler(this.label1_Click);
+            // 
             // sataPanel1
             // 
             this.sataPanel1.BackColor = System.Drawing.Color.White;
             this.sataPanel1.BackColor2 = System.Drawing.Color.White;
             this.sataPanel1.BorderColor = System.Drawing.Color.Black;
-            borderRadius1.BottomLeft = 10;
-            borderRadius1.BottomRight = 10;
-            borderRadius1.TopLeft = 10;
-            borderRadius1.TopRight = 10;
-            this.sataPanel1.BorderRadius = borderRadius1;
+            borderRadius36.BottomLeft = 10;
+            borderRadius36.BottomRight = 10;
+            borderRadius36.TopLeft = 10;
+            borderRadius36.TopRight = 10;
+            this.sataPanel1.BorderRadius = borderRadius36;
             this.sataPanel1.BorderThickness = 0;
             this.sataPanel1.Controls.Add(this.sataButton7);
             this.sataPanel1.Controls.Add(this.label2);
@@ -397,30 +397,6 @@
             this.sataPanel1.Size = new System.Drawing.Size(1312, 72);
             this.sataPanel1.TabIndex = 3;
             this.sataPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.sataPanel1_Paint);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(28, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 28);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Dashboard";
-            this.label2.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(1015, 32);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 19);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Administrator";
-            this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
             // sataButton7
             // 
@@ -461,6 +437,18 @@
             this.sataButton7.TextOffset = new System.Drawing.Point(0, 0);
             this.sataButton7.Click += new System.EventHandler(this.sataButton7_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(28, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(141, 28);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Dashboard";
+            this.label2.Click += new System.EventHandler(this.label1_Click);
+            // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::SkolarAid.Properties.Resources.user__3_;
@@ -472,16 +460,28 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(1015, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(111, 19);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Administrator";
+            this.label3.Click += new System.EventHandler(this.label1_Click);
+            // 
             // sataPanel2
             // 
             this.sataPanel2.BackColor = System.Drawing.Color.White;
             this.sataPanel2.BackColor2 = System.Drawing.Color.White;
             this.sataPanel2.BorderColor = System.Drawing.Color.Black;
-            borderRadius2.BottomLeft = 10;
-            borderRadius2.BottomRight = 10;
-            borderRadius2.TopLeft = 10;
-            borderRadius2.TopRight = 10;
-            this.sataPanel2.BorderRadius = borderRadius2;
+            borderRadius37.BottomLeft = 10;
+            borderRadius37.BottomRight = 10;
+            borderRadius37.TopLeft = 10;
+            borderRadius37.TopRight = 10;
+            this.sataPanel2.BorderRadius = borderRadius37;
             this.sataPanel2.BorderThickness = 0;
             this.sataPanel2.Controls.Add(this.label5);
             this.sataPanel2.Controls.Add(this.label4);
@@ -491,6 +491,18 @@
             this.sataPanel2.Size = new System.Drawing.Size(255, 175);
             this.sataPanel2.TabIndex = 4;
             this.sataPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.sataPanel2_Paint);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 30F, System.Drawing.FontStyle.Bold);
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(82, 68);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 47);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "0";
+            this.label5.Click += new System.EventHandler(this.label1_Click);
             // 
             // label4
             // 
@@ -515,28 +527,16 @@
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 30F, System.Drawing.FontStyle.Bold);
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(82, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(42, 47);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "0";
-            this.label5.Click += new System.EventHandler(this.label1_Click);
-            // 
             // sataPanel3
             // 
             this.sataPanel3.BackColor = System.Drawing.Color.White;
             this.sataPanel3.BackColor2 = System.Drawing.Color.White;
             this.sataPanel3.BorderColor = System.Drawing.Color.Black;
-            borderRadius3.BottomLeft = 10;
-            borderRadius3.BottomRight = 10;
-            borderRadius3.TopLeft = 10;
-            borderRadius3.TopRight = 10;
-            this.sataPanel3.BorderRadius = borderRadius3;
+            borderRadius38.BottomLeft = 10;
+            borderRadius38.BottomRight = 10;
+            borderRadius38.TopLeft = 10;
+            borderRadius38.TopRight = 10;
+            this.sataPanel3.BorderRadius = borderRadius38;
             this.sataPanel3.BorderThickness = 0;
             this.sataPanel3.Controls.Add(this.label6);
             this.sataPanel3.Controls.Add(this.label7);
@@ -583,11 +583,11 @@
             this.sataPanel5.BackColor = System.Drawing.Color.White;
             this.sataPanel5.BackColor2 = System.Drawing.Color.White;
             this.sataPanel5.BorderColor = System.Drawing.Color.Black;
-            borderRadius4.BottomLeft = 10;
-            borderRadius4.BottomRight = 10;
-            borderRadius4.TopLeft = 10;
-            borderRadius4.TopRight = 10;
-            this.sataPanel5.BorderRadius = borderRadius4;
+            borderRadius39.BottomLeft = 10;
+            borderRadius39.BottomRight = 10;
+            borderRadius39.TopLeft = 10;
+            borderRadius39.TopRight = 10;
+            this.sataPanel5.BorderRadius = borderRadius39;
             this.sataPanel5.BorderThickness = 0;
             this.sataPanel5.Controls.Add(this.label8);
             this.sataPanel5.Controls.Add(this.label9);
@@ -634,11 +634,11 @@
             this.sataPanel4.BackColor = System.Drawing.Color.White;
             this.sataPanel4.BackColor2 = System.Drawing.Color.White;
             this.sataPanel4.BorderColor = System.Drawing.Color.Black;
-            borderRadius5.BottomLeft = 10;
-            borderRadius5.BottomRight = 10;
-            borderRadius5.TopLeft = 10;
-            borderRadius5.TopRight = 10;
-            this.sataPanel4.BorderRadius = borderRadius5;
+            borderRadius40.BottomLeft = 10;
+            borderRadius40.BottomRight = 10;
+            borderRadius40.TopLeft = 10;
+            borderRadius40.TopRight = 10;
+            this.sataPanel4.BorderRadius = borderRadius40;
             this.sataPanel4.BorderThickness = 0;
             this.sataPanel4.Controls.Add(this.label10);
             this.sataPanel4.Controls.Add(this.label11);
@@ -685,11 +685,11 @@
             this.sataPanel6.BackColor = System.Drawing.Color.White;
             this.sataPanel6.BackColor2 = System.Drawing.Color.White;
             this.sataPanel6.BorderColor = System.Drawing.Color.Black;
-            borderRadius6.BottomLeft = 10;
-            borderRadius6.BottomRight = 10;
-            borderRadius6.TopLeft = 10;
-            borderRadius6.TopRight = 10;
-            this.sataPanel6.BorderRadius = borderRadius6;
+            borderRadius41.BottomLeft = 10;
+            borderRadius41.BottomRight = 10;
+            borderRadius41.TopLeft = 10;
+            borderRadius41.TopRight = 10;
+            this.sataPanel6.BorderRadius = borderRadius41;
             this.sataPanel6.BorderThickness = 0;
             this.sataPanel6.Controls.Add(this.label13);
             this.sataPanel6.Location = new System.Drawing.Point(321, 378);
@@ -713,11 +713,11 @@
             this.sataPanel7.BackColor = System.Drawing.Color.White;
             this.sataPanel7.BackColor2 = System.Drawing.Color.White;
             this.sataPanel7.BorderColor = System.Drawing.Color.Black;
-            borderRadius7.BottomLeft = 10;
-            borderRadius7.BottomRight = 10;
-            borderRadius7.TopLeft = 10;
-            borderRadius7.TopRight = 10;
-            this.sataPanel7.BorderRadius = borderRadius7;
+            borderRadius42.BottomLeft = 10;
+            borderRadius42.BottomRight = 10;
+            borderRadius42.TopLeft = 10;
+            borderRadius42.TopRight = 10;
+            this.sataPanel7.BorderRadius = borderRadius42;
             this.sataPanel7.BorderThickness = 0;
             this.sataPanel7.Controls.Add(this.label12);
             this.sataPanel7.Location = new System.Drawing.Point(974, 378);
@@ -736,13 +736,12 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "Upcoming Payments";
             // 
-            // Form1
+            // Dashboard
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1600, 950);
             this.Controls.Add(this.sataPanel7);
             this.Controls.Add(this.sataPanel6);
@@ -760,7 +759,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "Dashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SkolarAid";
             this.Load += new System.EventHandler(this.Form1_Load);

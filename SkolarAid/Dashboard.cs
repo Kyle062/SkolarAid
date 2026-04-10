@@ -15,10 +15,7 @@ namespace SkolarAid
         public Dashboard()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.MinimizeBox = false;
-            this.MaximizeBox = false;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -98,7 +95,14 @@ namespace SkolarAid
 
         private void sataButton7_Click(object sender, EventArgs e)
         {
+            // Create an instance of the Login form
+            Login loginForm = new Login();
 
+            // Show the Login form
+            loginForm.Show();
+
+            // Hide or close the current Register form
+            this.Hide();
         }
 
         private void sataPanel3_Paint(object sender, PaintEventArgs e)
