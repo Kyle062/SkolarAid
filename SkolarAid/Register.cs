@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SkolarAid
 {
-    public partial class Login : Form
+    public partial class Register : Form
     {
-        public Login()
+        public Register()
         {
             InitializeComponent();
         }

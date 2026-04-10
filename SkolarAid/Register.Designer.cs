@@ -1,6 +1,6 @@
 ﻿namespace SkolarAid
 {
-    partial class Login
+    partial class Register
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Register));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,6 +54,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.sataPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +113,8 @@
             this.sataPanel1.Controls.Add(this.sataTextBox4);
             this.sataPanel1.Controls.Add(this.sataTextBox2);
             this.sataPanel1.Controls.Add(this.sataTextBox7);
+            this.sataPanel1.Controls.Add(this.label15);
+            this.sataPanel1.Controls.Add(this.label14);
             this.sataPanel1.Controls.Add(this.label12);
             this.sataPanel1.Controls.Add(this.sataTextBox5);
             this.sataPanel1.Controls.Add(this.label9);
@@ -479,7 +483,31 @@
     "oll for easy access\"";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Login
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(292, 507);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(173, 17);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Already have an account?";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.label15.Location = new System.Drawing.Point(468, 507);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 17);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Login";
+            // 
+            // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -498,7 +526,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Login";
+            this.Name = "Register";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.Load += new System.EventHandler(this.Login_Load);
@@ -535,5 +563,7 @@
         private FrameworkTest.SATAButton sataButton1;
         private SATAComboBox sataComboBox1;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
     }
 }
