@@ -45,9 +45,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ExitBtn1 = new System.Windows.Forms.PictureBox();
             this.sataPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitBtn1)).BeginInit();
             this.SuspendLayout();
             // 
             // label13
@@ -228,12 +228,14 @@
             this.txtPassword.Location = new System.Drawing.Point(56, 199);
             this.txtPassword.Multiline = true;
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = false;
+            this.txtPassword.PasswordChar = true;
             this.txtPassword.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPassword.PlaceholderText = "";
             this.txtPassword.Size = new System.Drawing.Size(517, 40);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Texts = "";
+            this.txtPassword.Multiline = false; // Must be false for stars to show
+            this.txtPassword.PasswordChar = true;
             this.txtPassword.UnderlinedStyle = false;
             this.txtPassword.Click += new System.EventHandler(this.sataTextBox1_Click);
             // 
@@ -249,7 +251,7 @@
             this.txtStudentID.Location = new System.Drawing.Point(56, 106);
             this.txtStudentID.Multiline = true;
             this.txtStudentID.Name = "txtStudentID";
-            this.txtStudentID.PasswordChar = true;
+            this.txtStudentID.PasswordChar = false;
             this.txtStudentID.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtStudentID.PlaceholderText = "";
             this.txtStudentID.Size = new System.Drawing.Size(517, 40);
@@ -294,17 +296,17 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Student ID: ";
             // 
-            // pictureBox1
+            // ExitBtn1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::SkolarAid.Properties.Resources.reject;
-            this.pictureBox1.Location = new System.Drawing.Point(1514, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(58, 33);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.ExitBtn1.BackColor = System.Drawing.Color.Transparent;
+            this.ExitBtn1.Image = global::SkolarAid.Properties.Resources.reject;
+            this.ExitBtn1.Location = new System.Drawing.Point(1514, 12);
+            this.ExitBtn1.Name = "ExitBtn1";
+            this.ExitBtn1.Size = new System.Drawing.Size(58, 33);
+            this.ExitBtn1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ExitBtn1.TabIndex = 8;
+            this.ExitBtn1.TabStop = false;
+            this.ExitBtn1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Login
             // 
@@ -314,7 +316,7 @@
             this.BackgroundImage = global::SkolarAid.Properties.Resources.BackgroundImage2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1584, 911);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.ExitBtn1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
@@ -331,7 +333,7 @@
             this.Text = "Login";
             this.sataPanel1.ResumeLayout(false);
             this.sataPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitBtn1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -354,6 +356,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox ExitBtn1;
     }
 }

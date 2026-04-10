@@ -48,5 +48,10 @@ namespace SkolarAid
             // Hide or close the current Register form
             this.Hide();
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

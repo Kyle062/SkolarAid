@@ -15,6 +15,7 @@ namespace SkolarAid
         public Login()
         {
             InitializeComponent();
+            txtPassword.PasswordChar = true;
         }
 
         private void sataPanel1_Paint(object sender, PaintEventArgs e)

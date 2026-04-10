@@ -56,9 +56,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ExitBtn2 = new System.Windows.Forms.PictureBox();
             this.sataPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitBtn2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -510,16 +510,17 @@
     "oll for easy access\"";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox1
+            // ExitBtn2
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::SkolarAid.Properties.Resources.reject;
-            this.pictureBox1.Location = new System.Drawing.Point(1514, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(58, 33);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
+            this.ExitBtn2.BackColor = System.Drawing.Color.Transparent;
+            this.ExitBtn2.Image = global::SkolarAid.Properties.Resources.reject;
+            this.ExitBtn2.Location = new System.Drawing.Point(1514, 12);
+            this.ExitBtn2.Name = "ExitBtn2";
+            this.ExitBtn2.Size = new System.Drawing.Size(58, 33);
+            this.ExitBtn2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ExitBtn2.TabIndex = 9;
+            this.ExitBtn2.TabStop = false;
+            this.ExitBtn2.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Register
             // 
@@ -530,7 +531,7 @@
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1584, 911);
             this.ControlBox = false;
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.ExitBtn2);
             this.Controls.Add(this.sataPanel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label13);
@@ -547,7 +548,7 @@
             this.Load += new System.EventHandler(this.Login_Load);
             this.sataPanel1.ResumeLayout(false);
             this.sataPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ExitBtn2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -581,6 +582,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox ExitBtn2;
     }
 }
