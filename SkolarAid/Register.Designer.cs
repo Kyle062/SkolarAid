@@ -41,6 +41,8 @@
             this.sataTextBox4 = new SATATextBox();
             this.sataTextBox2 = new SATATextBox();
             this.sataTextBox7 = new SATATextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.sataTextBox5 = new SATATextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -54,9 +56,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.sataPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -301,6 +303,31 @@
             this.sataTextBox7.Texts = "";
             this.sataTextBox7.UnderlinedStyle = false;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline);
+            this.label15.ForeColor = System.Drawing.Color.Blue;
+            this.label15.Location = new System.Drawing.Point(464, 507);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 17);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Login";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Location = new System.Drawing.Point(292, 507);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(173, 17);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Already have an account?";
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -483,29 +510,16 @@
     "oll for easy access\"";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label14
+            // pictureBox1
             // 
-            this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.Color.Transparent;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(292, 507);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(173, 17);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Already have an account?";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label15.Location = new System.Drawing.Point(468, 507);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(43, 17);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Login";
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::SkolarAid.Properties.Resources.reject;
+            this.pictureBox1.Location = new System.Drawing.Point(1514, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(58, 33);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
             // 
             // Register
             // 
@@ -516,6 +530,7 @@
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1584, 911);
             this.ControlBox = false;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.sataPanel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label13);
@@ -532,6 +547,7 @@
             this.Load += new System.EventHandler(this.Login_Load);
             this.sataPanel1.ResumeLayout(false);
             this.sataPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -565,5 +581,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

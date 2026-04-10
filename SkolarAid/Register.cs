@@ -36,5 +36,17 @@ namespace SkolarAid
         {
 
         }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the Login form
+            Login loginForm = new Login();
+
+            // Show the Login form
+            loginForm.Show();
+
+            // Hide or close the current Register form
+            this.Hide();
+        }
     }
 }
