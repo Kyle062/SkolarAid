@@ -43,6 +43,7 @@ namespace SkolarAid
 
             // Hide the current Login form
             this.Hide();
+            
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace SkolarAid
 
             if (user == "admin" && pass == "admin123")
             {
-                Dashboard dashboardForm = new Dashboard();
+                FrmAdminDashboard dashboardForm = new FrmAdminDashboard();
                 dashboardForm.Show();
                 this.Hide();
             }

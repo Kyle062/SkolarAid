@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SkolarAid
 {
-    public partial class Dashboard : Form
+    public partial class FrmAdminDashboard : Form
     {
-        public Dashboard()
+        public FrmAdminDashboard()
         {
             InitializeComponent();
            
@@ -45,7 +45,14 @@ namespace SkolarAid
 
         private void sataButton2_Click(object sender, EventArgs e)
         {
+            // Create an instance of the Login form
+            FrmScholarManagement scholar = new FrmScholarManagement();
 
+            // Show the Login form
+            scholar.Show();
+
+            // Hide or close the current Register form
+            this.Hide();
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -80,7 +87,10 @@ namespace SkolarAid
 
         private void sataButton3_Click(object sender, EventArgs e)
         {
+            FrmPayrollProcessing payrollProcessing = new FrmPayrollProcessing();
+            payrollProcessing.Show();
 
+            this.Hide();
         }
 
         private void sataButton1_Click(object sender, EventArgs e)

@@ -52,33 +52,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dashboard.cs">
+    <Compile Include="form\FrmActivityLogs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
+    <Compile Include="form\FrmActivityLogs.Designer.cs">
+      <DependentUpon>FrmActivityLogs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login.cs">
+    <Compile Include="form\FrmAdminDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login.Designer.cs">
+    <Compile Include="form\FrmAdminDashboard.Designer.cs">
+      <DependentUpon>FrmAdminDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\FrmNotifications.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\FrmNotifications.Designer.cs">
+      <DependentUpon>FrmNotifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\FrmReports&amp;Analytics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\FrmReports&amp;Analytics.Designer.cs">
+      <DependentUpon>FrmReports&amp;Analytics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Register.cs">
+    <Compile Include="form\FrmPayrollProcessing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Register.Designer.cs">
+    <Compile Include="form\FrmPayrollProcessing.Designer.cs">
+      <DependentUpon>FrmPayrollProcessing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\Register.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Dashboard.resx">
-      <DependentUpon>Dashboard.cs</DependentUpon>
+    <Compile Include="form\FrmScholarManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\FrmScholarManagement.Designer.cs">
+      <DependentUpon>FrmScholarManagement.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="form\FrmActivityLogs.resx">
+      <DependentUpon>FrmActivityLogs.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login.resx">
+    <EmbeddedResource Include="form\FrmAdminDashboard.resx">
+      <DependentUpon>FrmAdminDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\FrmNotifications.resx">
+      <DependentUpon>FrmNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\FrmReports&amp;Analytics.resx">
+      <DependentUpon>FrmReports&amp;Analytics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Register.resx">
+    <EmbeddedResource Include="form\FrmPayrollProcessing.resx">
+      <DependentUpon>FrmPayrollProcessing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -91,6 +133,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="form\FrmScholarManagement.resx">
+      <DependentUpon>FrmScholarManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

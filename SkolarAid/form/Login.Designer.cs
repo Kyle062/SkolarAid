@@ -226,16 +226,14 @@
             this.txtPassword.Icon = null;
             this.txtPassword.IconSize = new System.Drawing.Size(20, 20);
             this.txtPassword.Location = new System.Drawing.Point(56, 199);
-            this.txtPassword.Multiline = true;
+            this.txtPassword.Multiline = false;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = true;
             this.txtPassword.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPassword.PlaceholderText = "";
-            this.txtPassword.Size = new System.Drawing.Size(517, 40);
+            this.txtPassword.Size = new System.Drawing.Size(517, 38);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Texts = "";
-            this.txtPassword.Multiline = false; // Must be false for stars to show
-            this.txtPassword.PasswordChar = true;
             this.txtPassword.UnderlinedStyle = false;
             this.txtPassword.Click += new System.EventHandler(this.sataTextBox1_Click);
             // 
