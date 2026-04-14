@@ -17,10 +17,10 @@
 
         private void InitializeComponent()
         {
-            SATAUiFramework.BorderRadius borderRadius17 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius18 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius19 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius20 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmScholarManagement));
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelSearchBar = new SATAUiFramework.SATAPanel();
@@ -66,25 +66,25 @@
             this.labelHeaderTitle = new System.Windows.Forms.Label();
             this.sataButtonLogout = new FrameworkTest.SATAButton();
             this.panelHeader = new SATAUiFramework.SATAPanel();
-            this.panelSidebar = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ScholarAid = new System.Windows.Forms.Label();
             this.pictureBoxUser = new System.Windows.Forms.PictureBox();
+            this.panelSidebar = new System.Windows.Forms.Panel();
             this.sataButton6 = new FrameworkTest.SATAButton();
             this.sataButton5 = new FrameworkTest.SATAButton();
             this.sataButton4 = new FrameworkTest.SATAButton();
             this.sataButton3 = new FrameworkTest.SATAButton();
             this.sataButton2 = new FrameworkTest.SATAButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.sataButton1 = new FrameworkTest.SATAButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ScholarAid = new System.Windows.Forms.Label();
             this.panelContent.SuspendLayout();
             this.panelSearchBar.SuspendLayout();
             this.panelScholarList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScholars)).BeginInit();
             this.panelForm.SuspendLayout();
             this.panelHeader.SuspendLayout();
-            this.panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).BeginInit();
+            this.panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,11 +105,11 @@
             this.panelSearchBar.BackColor = System.Drawing.Color.White;
             this.panelSearchBar.BackColor2 = System.Drawing.Color.White;
             this.panelSearchBar.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius17.BottomLeft = 10;
-            borderRadius17.BottomRight = 10;
-            borderRadius17.TopLeft = 10;
-            borderRadius17.TopRight = 10;
-            this.panelSearchBar.BorderRadius = borderRadius17;
+            borderRadius1.BottomLeft = 10;
+            borderRadius1.BottomRight = 10;
+            borderRadius1.TopLeft = 10;
+            borderRadius1.TopRight = 10;
+            this.panelSearchBar.BorderRadius = borderRadius1;
             this.panelSearchBar.BorderThickness = 1;
             this.panelSearchBar.Controls.Add(this.txtSearch);
             this.panelSearchBar.Controls.Add(this.cmbFilterStatus);
@@ -234,11 +234,11 @@
             this.panelScholarList.BackColor = System.Drawing.Color.White;
             this.panelScholarList.BackColor2 = System.Drawing.Color.White;
             this.panelScholarList.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius18.BottomLeft = 10;
-            borderRadius18.BottomRight = 10;
-            borderRadius18.TopLeft = 10;
-            borderRadius18.TopRight = 10;
-            this.panelScholarList.BorderRadius = borderRadius18;
+            borderRadius2.BottomLeft = 10;
+            borderRadius2.BottomRight = 10;
+            borderRadius2.TopLeft = 10;
+            borderRadius2.TopRight = 10;
+            this.panelScholarList.BorderRadius = borderRadius2;
             this.panelScholarList.BorderThickness = 1;
             this.panelScholarList.Controls.Add(this.dgvScholars);
             this.panelScholarList.Location = new System.Drawing.Point(25, 105);
@@ -266,11 +266,11 @@
             this.panelForm.BackColor = System.Drawing.Color.White;
             this.panelForm.BackColor2 = System.Drawing.Color.White;
             this.panelForm.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius19.BottomLeft = 10;
-            borderRadius19.BottomRight = 10;
-            borderRadius19.TopLeft = 10;
-            borderRadius19.TopRight = 10;
-            this.panelForm.BorderRadius = borderRadius19;
+            borderRadius3.BottomLeft = 10;
+            borderRadius3.BottomRight = 10;
+            borderRadius3.TopLeft = 10;
+            borderRadius3.TopRight = 10;
+            this.panelForm.BorderRadius = borderRadius3;
             this.panelForm.BorderThickness = 1;
             this.panelForm.Controls.Add(this.btnCancel);
             this.panelForm.Controls.Add(this.btnDelete);
@@ -788,17 +788,18 @@
             this.sataButtonLogout.TabIndex = 1;
             this.sataButtonLogout.TextAutoCenter = true;
             this.sataButtonLogout.TextOffset = new System.Drawing.Point(0, 0);
+            this.sataButtonLogout.Click += new System.EventHandler(this.sataButtonLogout_Click);
             // 
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.White;
             this.panelHeader.BackColor2 = System.Drawing.Color.White;
             this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius20.BottomLeft = 10;
-            borderRadius20.BottomRight = 10;
-            borderRadius20.TopLeft = 10;
-            borderRadius20.TopRight = 10;
-            this.panelHeader.BorderRadius = borderRadius20;
+            borderRadius4.BottomLeft = 10;
+            borderRadius4.BottomRight = 10;
+            borderRadius4.TopLeft = 10;
+            borderRadius4.TopRight = 10;
+            this.panelHeader.BorderRadius = borderRadius4;
             this.panelHeader.BorderThickness = 0;
             this.panelHeader.Controls.Add(this.sataButtonLogout);
             this.panelHeader.Controls.Add(this.labelHeaderTitle);
@@ -809,6 +810,16 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1312, 72);
             this.panelHeader.TabIndex = 3;
+            // 
+            // pictureBoxUser
+            // 
+            this.pictureBoxUser.Image = global::SkolarAid.Properties.Resources.user__3_;
+            this.pictureBoxUser.Location = new System.Drawing.Point(968, 23);
+            this.pictureBoxUser.Name = "pictureBoxUser";
+            this.pictureBoxUser.Size = new System.Drawing.Size(36, 35);
+            this.pictureBoxUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxUser.TabIndex = 2;
+            this.pictureBoxUser.TabStop = false;
             // 
             // panelSidebar
             // 
@@ -827,38 +838,6 @@
             this.panelSidebar.Name = "panelSidebar";
             this.panelSidebar.Size = new System.Drawing.Size(288, 950);
             this.panelSidebar.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(-6, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(300, 22);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "_____________________________";
-            // 
-            // ScholarAid
-            // 
-            this.ScholarAid.AutoSize = true;
-            this.ScholarAid.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScholarAid.ForeColor = System.Drawing.Color.White;
-            this.ScholarAid.Location = new System.Drawing.Point(91, 25);
-            this.ScholarAid.Name = "ScholarAid";
-            this.ScholarAid.Size = new System.Drawing.Size(173, 22);
-            this.ScholarAid.TabIndex = 9;
-            this.ScholarAid.Text = "ScholarAid Admin";
-            // 
-            // pictureBoxUser
-            // 
-            this.pictureBoxUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.pictureBoxUser.Location = new System.Drawing.Point(968, 23);
-            this.pictureBoxUser.Name = "pictureBoxUser";
-            this.pictureBoxUser.Size = new System.Drawing.Size(36, 35);
-            this.pictureBoxUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxUser.TabIndex = 2;
-            this.pictureBoxUser.TabStop = false;
             // 
             // sataButton6
             // 
@@ -1054,6 +1033,17 @@
             this.sataButton2.TextAutoCenter = true;
             this.sataButton2.TextOffset = new System.Drawing.Point(0, 0);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(-6, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(300, 22);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "_____________________________";
+            // 
             // sataButton1
             // 
             this.sataButton1.ButtonText = "Dashboard";
@@ -1103,6 +1093,17 @@
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
+            // ScholarAid
+            // 
+            this.ScholarAid.AutoSize = true;
+            this.ScholarAid.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScholarAid.ForeColor = System.Drawing.Color.White;
+            this.ScholarAid.Location = new System.Drawing.Point(91, 25);
+            this.ScholarAid.Name = "ScholarAid";
+            this.ScholarAid.Size = new System.Drawing.Size(173, 22);
+            this.ScholarAid.TabIndex = 9;
+            this.ScholarAid.Text = "ScholarAid Admin";
+            // 
             // FrmScholarManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -1126,9 +1127,9 @@
             this.panelForm.PerformLayout();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).EndInit();
             this.panelSidebar.ResumeLayout(false);
             this.panelSidebar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

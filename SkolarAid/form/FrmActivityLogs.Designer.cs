@@ -31,15 +31,17 @@ namespace SkolarAid.form
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmActivityLogs));
-            SATAUiFramework.BorderRadius borderRadius19 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius20 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius21 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius22 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius23 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius24 = new SATAUiFramework.BorderRadius();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.sataButton6 = new FrameworkTest.SATAButton();
             this.sataButton5 = new FrameworkTest.SATAButton();
@@ -411,11 +413,11 @@ namespace SkolarAid.form
             this.panelTop.BackColor = System.Drawing.Color.White;
             this.panelTop.BackColor2 = System.Drawing.Color.White;
             this.panelTop.BorderColor = System.Drawing.Color.Black;
-            borderRadius19.BottomLeft = 10;
-            borderRadius19.BottomRight = 10;
-            borderRadius19.TopLeft = 10;
-            borderRadius19.TopRight = 10;
-            this.panelTop.BorderRadius = borderRadius19;
+            borderRadius1.BottomLeft = 10;
+            borderRadius1.BottomRight = 10;
+            borderRadius1.TopLeft = 10;
+            borderRadius1.TopRight = 10;
+            this.panelTop.BorderRadius = borderRadius1;
             this.panelTop.BorderThickness = 0;
             this.panelTop.Controls.Add(this.btnLogout);
             this.panelTop.Controls.Add(this.lblPageTitle);
@@ -464,6 +466,7 @@ namespace SkolarAid.form
             this.btnLogout.TabIndex = 1;
             this.btnLogout.TextAutoCenter = true;
             this.btnLogout.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // lblPageTitle
             // 
@@ -502,11 +505,11 @@ namespace SkolarAid.form
             this.panelStats1.BackColor = System.Drawing.Color.White;
             this.panelStats1.BackColor2 = System.Drawing.Color.White;
             this.panelStats1.BorderColor = System.Drawing.Color.Black;
-            borderRadius20.BottomLeft = 10;
-            borderRadius20.BottomRight = 10;
-            borderRadius20.TopLeft = 10;
-            borderRadius20.TopRight = 10;
-            this.panelStats1.BorderRadius = borderRadius20;
+            borderRadius2.BottomLeft = 10;
+            borderRadius2.BottomRight = 10;
+            borderRadius2.TopLeft = 10;
+            borderRadius2.TopRight = 10;
+            this.panelStats1.BorderRadius = borderRadius2;
             this.panelStats1.BorderThickness = 0;
             this.panelStats1.Controls.Add(this.lblTotalLogs);
             this.panelStats1.Controls.Add(this.lblTotalLogsLabel);
@@ -553,11 +556,11 @@ namespace SkolarAid.form
             this.panelStats2.BackColor = System.Drawing.Color.White;
             this.panelStats2.BackColor2 = System.Drawing.Color.White;
             this.panelStats2.BorderColor = System.Drawing.Color.Black;
-            borderRadius21.BottomLeft = 10;
-            borderRadius21.BottomRight = 10;
-            borderRadius21.TopLeft = 10;
-            borderRadius21.TopRight = 10;
-            this.panelStats2.BorderRadius = borderRadius21;
+            borderRadius3.BottomLeft = 10;
+            borderRadius3.BottomRight = 10;
+            borderRadius3.TopLeft = 10;
+            borderRadius3.TopRight = 10;
+            this.panelStats2.BorderRadius = borderRadius3;
             this.panelStats2.BorderThickness = 0;
             this.panelStats2.Controls.Add(this.lblTodayLogs);
             this.panelStats2.Controls.Add(this.lblTodayLogsLabel);
@@ -603,11 +606,11 @@ namespace SkolarAid.form
             this.panelStats3.BackColor = System.Drawing.Color.White;
             this.panelStats3.BackColor2 = System.Drawing.Color.White;
             this.panelStats3.BorderColor = System.Drawing.Color.Black;
-            borderRadius22.BottomLeft = 10;
-            borderRadius22.BottomRight = 10;
-            borderRadius22.TopLeft = 10;
-            borderRadius22.TopRight = 10;
-            this.panelStats3.BorderRadius = borderRadius22;
+            borderRadius4.BottomLeft = 10;
+            borderRadius4.BottomRight = 10;
+            borderRadius4.TopLeft = 10;
+            borderRadius4.TopRight = 10;
+            this.panelStats3.BorderRadius = borderRadius4;
             this.panelStats3.BorderThickness = 0;
             this.panelStats3.Controls.Add(this.lblUniqueUsers);
             this.panelStats3.Controls.Add(this.lblUniqueUsersLabel);
@@ -654,11 +657,11 @@ namespace SkolarAid.form
             this.panelFilters.BackColor = System.Drawing.Color.White;
             this.panelFilters.BackColor2 = System.Drawing.Color.White;
             this.panelFilters.BorderColor = System.Drawing.Color.Black;
-            borderRadius23.BottomLeft = 10;
-            borderRadius23.BottomRight = 10;
-            borderRadius23.TopLeft = 10;
-            borderRadius23.TopRight = 10;
-            this.panelFilters.BorderRadius = borderRadius23;
+            borderRadius5.BottomLeft = 10;
+            borderRadius5.BottomRight = 10;
+            borderRadius5.TopLeft = 10;
+            borderRadius5.TopRight = 10;
+            this.panelFilters.BorderRadius = borderRadius5;
             this.panelFilters.BorderThickness = 0;
             this.panelFilters.Controls.Add(this.cmbActionType);
             this.panelFilters.Controls.Add(this.lblActionType);
@@ -905,11 +908,11 @@ namespace SkolarAid.form
             this.panelDataGrid.BackColor = System.Drawing.Color.White;
             this.panelDataGrid.BackColor2 = System.Drawing.Color.White;
             this.panelDataGrid.BorderColor = System.Drawing.Color.Black;
-            borderRadius24.BottomLeft = 10;
-            borderRadius24.BottomRight = 10;
-            borderRadius24.TopLeft = 10;
-            borderRadius24.TopRight = 10;
-            this.panelDataGrid.BorderRadius = borderRadius24;
+            borderRadius6.BottomLeft = 10;
+            borderRadius6.BottomRight = 10;
+            borderRadius6.TopLeft = 10;
+            borderRadius6.TopRight = 10;
+            this.panelDataGrid.BorderRadius = borderRadius6;
             this.panelDataGrid.BorderThickness = 0;
             this.panelDataGrid.Controls.Add(this.dgvActivityLogs);
             this.panelDataGrid.Location = new System.Drawing.Point(321, 340);
@@ -926,14 +929,14 @@ namespace SkolarAid.form
             this.dgvActivityLogs.BackgroundColor = System.Drawing.Color.White;
             this.dgvActivityLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvActivityLogs.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvActivityLogs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvActivityLogs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvActivityLogs.ColumnHeadersHeight = 40;
             this.dgvActivityLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colLogID,
@@ -944,14 +947,14 @@ namespace SkolarAid.form
             this.colTableAffected,
             this.colDetails,
             this.colIPAddress});
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvActivityLogs.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvActivityLogs.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvActivityLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvActivityLogs.EnableHeadersVisualStyles = false;
             this.dgvActivityLogs.GridColor = System.Drawing.Color.LightGray;
@@ -960,12 +963,12 @@ namespace SkolarAid.form
             this.dgvActivityLogs.Name = "dgvActivityLogs";
             this.dgvActivityLogs.ReadOnly = true;
             this.dgvActivityLogs.RowHeadersVisible = false;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvActivityLogs.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvActivityLogs.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvActivityLogs.RowTemplate.Height = 35;
             this.dgvActivityLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvActivityLogs.Size = new System.Drawing.Size(910, 575);
@@ -1029,7 +1032,11 @@ namespace SkolarAid.form
             this.panelDetailView.BackColor = System.Drawing.Color.White;
             this.panelDetailView.BackColor2 = System.Drawing.Color.White;
             this.panelDetailView.BorderColor = System.Drawing.Color.Black;
-            //this.panelDetailView.BorderRadius = 0;
+            borderRadius7.BottomLeft = 10;
+            borderRadius7.BottomRight = 10;
+            borderRadius7.TopLeft = 10;
+            borderRadius7.TopRight = 10;
+            this.panelDetailView.BorderRadius = borderRadius7;
             this.panelDetailView.BorderThickness = 0;
             this.panelDetailView.Controls.Add(this.lblDetailDescription);
             this.panelDetailView.Controls.Add(this.txtDetailDescription);
@@ -1133,7 +1140,11 @@ namespace SkolarAid.form
             this.panelPagination.BackColor = System.Drawing.Color.White;
             this.panelPagination.BackColor2 = System.Drawing.Color.White;
             this.panelPagination.BorderColor = System.Drawing.Color.Black;
-            //this.panelPagination.BorderRadius = borderRadius1;
+            borderRadius8.BottomLeft = 10;
+            borderRadius8.BottomRight = 10;
+            borderRadius8.TopLeft = 10;
+            borderRadius8.TopRight = 10;
+            this.panelPagination.BorderRadius = borderRadius8;
             this.panelPagination.BorderThickness = 0;
             this.panelPagination.Controls.Add(this.btnLastPage);
             this.panelPagination.Controls.Add(this.btnNextPage);
