@@ -17,10 +17,10 @@
 
         private void InitializeComponent()
         {
-            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius17 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius18 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius19 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius20 = new SATAUiFramework.BorderRadius();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmScholarManagement));
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelSearchBar = new SATAUiFramework.SATAPanel();
@@ -105,11 +105,11 @@
             this.panelSearchBar.BackColor = System.Drawing.Color.White;
             this.panelSearchBar.BackColor2 = System.Drawing.Color.White;
             this.panelSearchBar.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius1.BottomLeft = 10;
-            borderRadius1.BottomRight = 10;
-            borderRadius1.TopLeft = 10;
-            borderRadius1.TopRight = 10;
-            this.panelSearchBar.BorderRadius = borderRadius1;
+            borderRadius17.BottomLeft = 10;
+            borderRadius17.BottomRight = 10;
+            borderRadius17.TopLeft = 10;
+            borderRadius17.TopRight = 10;
+            this.panelSearchBar.BorderRadius = borderRadius17;
             this.panelSearchBar.BorderThickness = 1;
             this.panelSearchBar.Controls.Add(this.txtSearch);
             this.panelSearchBar.Controls.Add(this.cmbFilterStatus);
@@ -234,11 +234,11 @@
             this.panelScholarList.BackColor = System.Drawing.Color.White;
             this.panelScholarList.BackColor2 = System.Drawing.Color.White;
             this.panelScholarList.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius2.BottomLeft = 10;
-            borderRadius2.BottomRight = 10;
-            borderRadius2.TopLeft = 10;
-            borderRadius2.TopRight = 10;
-            this.panelScholarList.BorderRadius = borderRadius2;
+            borderRadius18.BottomLeft = 10;
+            borderRadius18.BottomRight = 10;
+            borderRadius18.TopLeft = 10;
+            borderRadius18.TopRight = 10;
+            this.panelScholarList.BorderRadius = borderRadius18;
             this.panelScholarList.BorderThickness = 1;
             this.panelScholarList.Controls.Add(this.dgvScholars);
             this.panelScholarList.Location = new System.Drawing.Point(25, 105);
@@ -266,11 +266,11 @@
             this.panelForm.BackColor = System.Drawing.Color.White;
             this.panelForm.BackColor2 = System.Drawing.Color.White;
             this.panelForm.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius3.BottomLeft = 10;
-            borderRadius3.BottomRight = 10;
-            borderRadius3.TopLeft = 10;
-            borderRadius3.TopRight = 10;
-            this.panelForm.BorderRadius = borderRadius3;
+            borderRadius19.BottomLeft = 10;
+            borderRadius19.BottomRight = 10;
+            borderRadius19.TopLeft = 10;
+            borderRadius19.TopRight = 10;
+            this.panelForm.BorderRadius = borderRadius19;
             this.panelForm.BorderThickness = 1;
             this.panelForm.Controls.Add(this.btnCancel);
             this.panelForm.Controls.Add(this.btnDelete);
@@ -794,11 +794,11 @@
             this.panelHeader.BackColor = System.Drawing.Color.White;
             this.panelHeader.BackColor2 = System.Drawing.Color.White;
             this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius4.BottomLeft = 10;
-            borderRadius4.BottomRight = 10;
-            borderRadius4.TopLeft = 10;
-            borderRadius4.TopRight = 10;
-            this.panelHeader.BorderRadius = borderRadius4;
+            borderRadius20.BottomLeft = 10;
+            borderRadius20.BottomRight = 10;
+            borderRadius20.TopLeft = 10;
+            borderRadius20.TopRight = 10;
+            this.panelHeader.BorderRadius = borderRadius20;
             this.panelHeader.BorderThickness = 0;
             this.panelHeader.Controls.Add(this.sataButtonLogout);
             this.panelHeader.Controls.Add(this.labelHeaderTitle);
@@ -897,6 +897,7 @@
             this.sataButton6.TabIndex = 17;
             this.sataButton6.TextAutoCenter = true;
             this.sataButton6.TextOffset = new System.Drawing.Point(10, 0);
+            this.sataButton6.Click += new System.EventHandler(this.sataButton6_Click);
             // 
             // sataButton5
             // 
@@ -935,6 +936,7 @@
             this.sataButton5.TabIndex = 16;
             this.sataButton5.TextAutoCenter = true;
             this.sataButton5.TextOffset = new System.Drawing.Point(-30, 0);
+            this.sataButton5.Click += new System.EventHandler(this.sataButton5_Click);
             // 
             // sataButton4
             // 
@@ -973,6 +975,7 @@
             this.sataButton4.TabIndex = 15;
             this.sataButton4.TextAutoCenter = true;
             this.sataButton4.TextOffset = new System.Drawing.Point(-10, 0);
+            this.sataButton4.Click += new System.EventHandler(this.sataButton4_Click);
             // 
             // sataButton3
             // 
@@ -1011,6 +1014,7 @@
             this.sataButton3.TabIndex = 14;
             this.sataButton3.TextAutoCenter = true;
             this.sataButton3.TextOffset = new System.Drawing.Point(-15, 0);
+            this.sataButton3.Click += new System.EventHandler(this.sataButton3_Click);
             // 
             // sataButton2
             // 
@@ -1087,6 +1091,7 @@
             this.sataButton1.TabIndex = 11;
             this.sataButton1.TextAutoCenter = true;
             this.sataButton1.TextOffset = new System.Drawing.Point(-35, 0);
+            this.sataButton1.Click += new System.EventHandler(this.sataButton1_Click_1);
             // 
             // pictureBox1
             // 

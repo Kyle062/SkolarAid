@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkolarAid.form;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,46 @@ namespace SkolarAid
         private void FrmPayrollProcessing_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void sataButton1_Click(object sender, EventArgs e)
+        {
+            FrmAdminDashboard frmAdminDashboard = new FrmAdminDashboard();
+            frmAdminDashboard.Show();
+            this.Hide();
+        }
+
+        private void sataButton2_Click(object sender, EventArgs e)
+        {
+            FrmScholarManagement frmScholarManagement = new FrmScholarManagement();
+            frmScholarManagement.Show();
+            this.Hide();
+        }
+
+        private void sataButton3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sataButton4_Click(object sender, EventArgs e)
+        {
+            FrmReportsAnalytics frmReportsAnalytics = new FrmReportsAnalytics();
+            frmReportsAnalytics.Show();
+            this.Hide();
+        }
+
+        private void sataButton5_Click(object sender, EventArgs e)
+        {
+            FrmActivityLogs frmActivityLogs = new FrmActivityLogs();
+            frmActivityLogs.Show();
+            this.Hide();
+        }
+
+        private void sataButton6_Click(object sender, EventArgs e)
+        {
+            FrmNotifications frmNotifications = new FrmNotifications();
+            frmNotifications.Show();
+            this.Hide();
         }
     }
 }

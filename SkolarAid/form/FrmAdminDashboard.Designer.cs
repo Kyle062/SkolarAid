@@ -283,7 +283,7 @@
             this.sataButton2.ImageTint = System.Drawing.Color.White;
             this.sataButton2.IsToggleButton = false;
             this.sataButton2.IsToggled = false;
-            this.sataButton2.Location = new System.Drawing.Point(0, 306);
+            this.sataButton2.Location = new System.Drawing.Point(2, 306);
             this.sataButton2.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.sataButton2.Name = "sataButton2";
             this.sataButton2.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -736,7 +736,7 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "Upcoming Payments";
             // 
-            // Dashboard
+            // FrmAdminDashboard
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -759,7 +759,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Dashboard";
+            this.Name = "FrmAdminDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SkolarAid";
             this.Load += new System.EventHandler(this.Form1_Load);
