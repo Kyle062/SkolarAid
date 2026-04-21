@@ -56,7 +56,7 @@
             this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Snow;
-            this.label13.Location = new System.Drawing.Point(578, 683);
+            this.label13.Location = new System.Drawing.Point(577, 652);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(481, 48);
             this.label13.TabIndex = 3;
@@ -71,7 +71,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.75F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Snow;
-            this.label2.Location = new System.Drawing.Point(624, 186);
+            this.label2.Location = new System.Drawing.Point(609, 188);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(421, 35);
             this.label2.TabIndex = 6;
@@ -83,7 +83,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.label3.ForeColor = System.Drawing.Color.Snow;
-            this.label3.Location = new System.Drawing.Point(637, 223);
+            this.label3.Location = new System.Drawing.Point(637, 225);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(361, 26);
             this.label3.TabIndex = 4;
@@ -95,7 +95,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.label1.ForeColor = System.Drawing.Color.Snow;
-            this.label1.Location = new System.Drawing.Point(742, 155);
+            this.label1.Location = new System.Drawing.Point(737, 157);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 31);
             this.label1.TabIndex = 5;
@@ -128,7 +128,7 @@
             // LoginBtn
             // 
             this.LoginBtn.BackColor = System.Drawing.Color.Transparent;
-            this.LoginBtn.ButtonText = "Login";
+            this.LoginBtn.ButtonText = "LOG IN";
             this.LoginBtn.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(85)))), ((int)(((byte)(80)))));
             this.LoginBtn.CheckedForeColor = System.Drawing.Color.White;
             this.LoginBtn.CheckedImageTint = System.Drawing.Color.White;
@@ -147,7 +147,7 @@
             this.LoginBtn.ImageTint = System.Drawing.Color.White;
             this.LoginBtn.IsToggleButton = false;
             this.LoginBtn.IsToggled = false;
-            this.LoginBtn.Location = new System.Drawing.Point(44, 296);
+            this.LoginBtn.Location = new System.Drawing.Point(36, 227);
             this.LoginBtn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LoginBtn.Name = "LoginBtn";
             this.LoginBtn.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(85)))), ((int)(((byte)(80)))));
@@ -159,7 +159,7 @@
             this.LoginBtn.PressedImageTint = System.Drawing.Color.White;
             this.LoginBtn.PressedOutline = System.Drawing.Color.Empty;
             this.LoginBtn.Rounding = new System.Windows.Forms.Padding(5);
-            this.LoginBtn.Size = new System.Drawing.Size(548, 48);
+            this.LoginBtn.Size = new System.Drawing.Size(303, 48);
             this.LoginBtn.TabIndex = 3;
             this.LoginBtn.TextAutoCenter = true;
             this.LoginBtn.TextOffset = new System.Drawing.Point(0, 0);
@@ -185,9 +185,9 @@
             this.sataPanel1.Controls.Add(this.label6);
             this.sataPanel1.Controls.Add(this.label4);
             this.sataPanel1.Controls.Add(this.label5);
-            this.sataPanel1.Location = new System.Drawing.Point(503, 265);
+            this.sataPanel1.Location = new System.Drawing.Point(629, 274);
             this.sataPanel1.Name = "sataPanel1";
-            this.sataPanel1.Size = new System.Drawing.Size(623, 399);
+            this.sataPanel1.Size = new System.Drawing.Size(378, 344);
             this.sataPanel1.TabIndex = 7;
             this.sataPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.sataPanel1_Paint);
             // 
@@ -197,11 +197,11 @@
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline);
             this.label7.ForeColor = System.Drawing.Color.Blue;
-            this.label7.Location = new System.Drawing.Point(535, 360);
+            this.label7.Location = new System.Drawing.Point(242, 310);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 17);
+            this.label7.Size = new System.Drawing.Size(56, 17);
             this.label7.TabIndex = 4;
-            this.label7.Text = "Register";
+            this.label7.Text = "Sign up";
             this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
@@ -210,11 +210,12 @@
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(383, 360);
+            this.label8.Location = new System.Drawing.Point(73, 310);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(155, 17);
+            this.label8.Size = new System.Drawing.Size(173, 17);
             this.label8.TabIndex = 5;
-            this.label8.Text = "Dont have an account?";
+            this.label8.Text = "Doesn\'t have an account?";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // txtPassword
             // 
@@ -225,13 +226,13 @@
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Icon = null;
             this.txtPassword.IconSize = new System.Drawing.Size(20, 20);
-            this.txtPassword.Location = new System.Drawing.Point(56, 199);
+            this.txtPassword.Location = new System.Drawing.Point(33, 155);
             this.txtPassword.Multiline = false;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = true;
             this.txtPassword.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtPassword.PlaceholderText = "";
-            this.txtPassword.Size = new System.Drawing.Size(517, 38);
+            this.txtPassword.Size = new System.Drawing.Size(305, 38);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.Texts = "";
             this.txtPassword.UnderlinedStyle = false;
@@ -246,13 +247,13 @@
             this.txtStudentID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStudentID.Icon = null;
             this.txtStudentID.IconSize = new System.Drawing.Size(20, 20);
-            this.txtStudentID.Location = new System.Drawing.Point(56, 106);
+            this.txtStudentID.Location = new System.Drawing.Point(32, 60);
             this.txtStudentID.Multiline = true;
             this.txtStudentID.Name = "txtStudentID";
             this.txtStudentID.PasswordChar = false;
             this.txtStudentID.PlaceholderColor = System.Drawing.Color.DarkGray;
             this.txtStudentID.PlaceholderText = "";
-            this.txtStudentID.Size = new System.Drawing.Size(517, 40);
+            this.txtStudentID.Size = new System.Drawing.Size(306, 40);
             this.txtStudentID.TabIndex = 1;
             this.txtStudentID.Texts = "";
             this.txtStudentID.UnderlinedStyle = false;
@@ -262,11 +263,11 @@
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(452, 255);
+            this.label6.Location = new System.Drawing.Point(266, 134);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(121, 17);
+            this.label6.Size = new System.Drawing.Size(91, 13);
             this.label6.TabIndex = 0;
             this.label6.Text = "Forgot password?";
             // 
@@ -276,7 +277,7 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(53, 165);
+            this.label4.Location = new System.Drawing.Point(32, 129);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(81, 17);
             this.label4.TabIndex = 0;
@@ -288,7 +289,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(53, 80);
+            this.label5.Location = new System.Drawing.Point(30, 31);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 17);
             this.label5.TabIndex = 0;
@@ -329,6 +330,7 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.sataPanel1.ResumeLayout(false);
             this.sataPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitBtn1)).EndInit();

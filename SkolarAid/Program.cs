@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using SkolarAid.Data;
 
 namespace SkolarAid
 {
@@ -16,8 +14,24 @@ namespace SkolarAid
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmAdminDashboard());
-           
+
+            // Test database connection on startup
+            if (DatabaseHelper.TestConnection())
+            {
+                Application.Run(new Login());
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Cannot connect to database. Please ensure:\n\n" +
+                    "1. XAMPP is running\n" +
+                    "2. MySQL service is started\n" +
+                    "3. Database 'iskolaraid' exists\n\n" +
+                    "Check App.config for correct connection settings.",
+                    "Database Connection Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
     }
 }

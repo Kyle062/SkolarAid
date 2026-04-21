@@ -22,11 +22,6 @@ namespace SkolarAid.form
 
         }
 
-        private void sataButton2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void sataButton1_Click(object sender, EventArgs e)
         {
             FrmAdminDashboard frmAdminDashboard = new FrmAdminDashboard();

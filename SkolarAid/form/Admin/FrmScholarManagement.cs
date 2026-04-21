@@ -80,5 +80,40 @@ namespace SkolarAid
             // Hide or close the current Register form
             this.Hide();
         }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelSidebar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panelContent_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dgvScholars_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panelContent_Paint_2(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnScholarMgmt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPayroll_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

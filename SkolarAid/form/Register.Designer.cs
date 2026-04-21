@@ -67,7 +67,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
             this.label1.ForeColor = System.Drawing.Color.Snow;
-            this.label1.Location = new System.Drawing.Point(739, 145);
+            this.label1.Location = new System.Drawing.Point(739, 147);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(153, 31);
             this.label1.TabIndex = 0;
@@ -79,7 +79,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.75F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.Snow;
-            this.label2.Location = new System.Drawing.Point(649, 178);
+            this.label2.Location = new System.Drawing.Point(640, 178);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(342, 35);
             this.label2.TabIndex = 1;
@@ -90,11 +90,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Snow;
-            this.label3.Location = new System.Drawing.Point(634, 213);
+            this.label3.Location = new System.Drawing.Point(653, 215);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(361, 26);
+            this.label3.Size = new System.Drawing.Size(311, 24);
             this.label3.TabIndex = 0;
             this.label3.Text = "Sign in to access your scholar portal";
             // 
@@ -138,7 +138,7 @@
             // 
             this.sataComboBox1.BackColor = System.Drawing.Color.Transparent;
             this.sataComboBox1.BackgroundColor = System.Drawing.Color.White;
-            this.sataComboBox1.BorderColor = System.Drawing.Color.LightGray;
+            this.sataComboBox1.BorderColor = System.Drawing.Color.Black;
             this.sataComboBox1.BorderThickness = 1;
             this.sataComboBox1.CornerRadius = 5;
             this.sataComboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -166,7 +166,7 @@
             // sataButton1
             // 
             this.sataButton1.BackColor = System.Drawing.Color.Transparent;
-            this.sataButton1.ButtonText = "Login";
+            this.sataButton1.ButtonText = "SIGN UP";
             this.sataButton1.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(85)))), ((int)(((byte)(80)))));
             this.sataButton1.CheckedForeColor = System.Drawing.Color.White;
             this.sataButton1.CheckedImageTint = System.Drawing.Color.White;
@@ -309,11 +309,11 @@
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Underline);
             this.label15.ForeColor = System.Drawing.Color.Blue;
-            this.label15.Location = new System.Drawing.Point(464, 507);
+            this.label15.Location = new System.Drawing.Point(366, 512);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(43, 17);
+            this.label15.Size = new System.Drawing.Size(47, 17);
             this.label15.TabIndex = 0;
-            this.label15.Text = "Login";
+            this.label15.Text = "Log In";
             this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // label14
@@ -322,11 +322,12 @@
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(292, 507);
+            this.label14.Location = new System.Drawing.Point(194, 512);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(173, 17);
             this.label14.TabIndex = 0;
             this.label14.Text = "Already have an account?";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // label12
             // 
