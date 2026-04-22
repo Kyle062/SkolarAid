@@ -17,19 +17,19 @@
 
         private void InitializeComponent()
         {
-            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius9 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius10 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius11 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius12 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius13 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius27 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius28 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius29 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius30 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius31 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius32 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius33 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius34 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius35 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius36 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius37 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius38 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius39 = new SATAUiFramework.BorderRadius();
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnReminder = new FrameworkTest.SATAButton();
@@ -66,7 +66,6 @@
             this.tabPageAnalytics = new System.Windows.Forms.TabPage();
             this.panelAnalytics = new SATAUiFramework.SATAPanel();
             this.panelCharts = new SATAUiFramework.SATAPanel();
-            this.btnRefreshAnalytics = new FrameworkTest.SATAButton();
             this.labelCharts = new System.Windows.Forms.Label();
             this.panelChartPayments = new SATAUiFramework.SATAPanel();
             this.labelChart3Title = new System.Windows.Forms.Label();
@@ -78,6 +77,7 @@
             this.labelChart1Title = new System.Windows.Forms.Label();
             this.pictureBoxChart1 = new System.Windows.Forms.PictureBox();
             this.panelStatsCards = new SATAUiFramework.SATAPanel();
+            this.btnRefreshAnalytics = new FrameworkTest.SATAButton();
             this.panelPendingPayments = new SATAUiFramework.SATAPanel();
             this.pictureBoxPending = new System.Windows.Forms.PictureBox();
             this.lblPendingPaymentsTitle = new System.Windows.Forms.Label();
@@ -133,7 +133,7 @@
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(0, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1700, 1050);
+            this.panelContent.Size = new System.Drawing.Size(1700, 1000);
             this.panelContent.TabIndex = 4;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
@@ -149,7 +149,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 970);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
             this.panelSidebar.TabIndex = 2;
             // 
             // btnReminder
@@ -189,6 +189,7 @@
             this.btnReminder.TabIndex = 5;
             this.btnReminder.TextAutoCenter = true;
             this.btnReminder.TextOffset = new System.Drawing.Point(10, 0);
+            this.btnReminder.Click += new System.EventHandler(this.btnReminder_Click);
             // 
             // btnActivityLog
             // 
@@ -227,6 +228,7 @@
             this.btnActivityLog.TabIndex = 4;
             this.btnActivityLog.TextAutoCenter = true;
             this.btnActivityLog.TextOffset = new System.Drawing.Point(-25, 0);
+            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
             // 
             // btnReports
             // 
@@ -252,7 +254,7 @@
             this.btnReports.Location = new System.Drawing.Point(0, 270);
             this.btnReports.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnReports.Name = "btnReports";
-            this.btnReports.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.btnReports.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
             this.btnReports.NormalForeColor = System.Drawing.Color.White;
             this.btnReports.NormalOutline = System.Drawing.Color.Empty;
             this.btnReports.OutlineThickness = 2F;
@@ -303,6 +305,7 @@
             this.btnPayroll.TabIndex = 2;
             this.btnPayroll.TextAutoCenter = true;
             this.btnPayroll.TextOffset = new System.Drawing.Point(-15, 0);
+            this.btnPayroll.Click += new System.EventHandler(this.btnPayroll_Click);
             // 
             // btnScholarMgmt
             // 
@@ -341,6 +344,7 @@
             this.btnScholarMgmt.TabIndex = 1;
             this.btnScholarMgmt.TextAutoCenter = true;
             this.btnScholarMgmt.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnScholarMgmt.Click += new System.EventHandler(this.btnScholarMgmt_Click);
             // 
             // btnDashboard
             // 
@@ -366,7 +370,7 @@
             this.btnDashboard.Location = new System.Drawing.Point(0, 45);
             this.btnDashboard.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
+            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.btnDashboard.NormalForeColor = System.Drawing.Color.White;
             this.btnDashboard.NormalOutline = System.Drawing.Color.Empty;
             this.btnDashboard.OutlineThickness = 2F;
@@ -379,17 +383,18 @@
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.TextAutoCenter = true;
             this.btnDashboard.TextOffset = new System.Drawing.Point(-30, 0);
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius1.BottomLeft = 1;
-            borderRadius1.BottomRight = 1;
-            borderRadius1.TopLeft = 1;
-            borderRadius1.TopRight = 1;
-            this.panelHeader.BorderRadius = borderRadius1;
+            borderRadius27.BottomLeft = 1;
+            borderRadius27.BottomRight = 1;
+            borderRadius27.TopLeft = 1;
+            borderRadius27.TopRight = 1;
+            this.panelHeader.BorderRadius = borderRadius27;
             this.panelHeader.BorderThickness = 0;
             this.panelHeader.Controls.Add(this.picLogo);
             this.panelHeader.Controls.Add(this.lblBrand);
@@ -401,6 +406,7 @@
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1700, 80);
             this.panelHeader.TabIndex = 3;
+            this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
             // picLogo
             // 
@@ -461,6 +467,7 @@
             this.btnLogout.TabIndex = 2;
             this.btnLogout.TextAutoCenter = true;
             this.btnLogout.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // picUser
             // 
@@ -491,7 +498,7 @@
             this.tabControlReports.Location = new System.Drawing.Point(288, 125);
             this.tabControlReports.Name = "tabControlReports";
             this.tabControlReports.SelectedIndex = 0;
-            this.tabControlReports.Size = new System.Drawing.Size(1389, 850);
+            this.tabControlReports.Size = new System.Drawing.Size(1389, 903);
             this.tabControlReports.TabIndex = 0;
             // 
             // tabPageReports
@@ -501,7 +508,7 @@
             this.tabPageReports.Location = new System.Drawing.Point(4, 25);
             this.tabPageReports.Name = "tabPageReports";
             this.tabPageReports.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageReports.Size = new System.Drawing.Size(1381, 821);
+            this.tabPageReports.Size = new System.Drawing.Size(1381, 874);
             this.tabPageReports.TabIndex = 0;
             this.tabPageReports.Text = "Generate Reports";
             // 
@@ -510,11 +517,11 @@
             this.panelReports.BackColor = System.Drawing.Color.White;
             this.panelReports.BackColor2 = System.Drawing.Color.White;
             this.panelReports.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius2.BottomLeft = 10;
-            borderRadius2.BottomRight = 10;
-            borderRadius2.TopLeft = 10;
-            borderRadius2.TopRight = 10;
-            this.panelReports.BorderRadius = borderRadius2;
+            borderRadius28.BottomLeft = 10;
+            borderRadius28.BottomRight = 10;
+            borderRadius28.TopLeft = 10;
+            borderRadius28.TopRight = 10;
+            this.panelReports.BorderRadius = borderRadius28;
             this.panelReports.BorderThickness = 1;
             this.panelReports.Controls.Add(this.btnPrint);
             this.panelReports.Controls.Add(this.btnExportExcel);
@@ -534,7 +541,7 @@
             this.panelReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelReports.Location = new System.Drawing.Point(3, 3);
             this.panelReports.Name = "panelReports";
-            this.panelReports.Size = new System.Drawing.Size(1375, 815);
+            this.panelReports.Size = new System.Drawing.Size(1375, 868);
             this.panelReports.TabIndex = 0;
             // 
             // btnPrint
@@ -821,11 +828,11 @@
             this.panelReportPreview.BackColor = System.Drawing.Color.White;
             this.panelReportPreview.BackColor2 = System.Drawing.Color.White;
             this.panelReportPreview.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius3.BottomLeft = 10;
-            borderRadius3.BottomRight = 10;
-            borderRadius3.TopLeft = 10;
-            borderRadius3.TopRight = 10;
-            this.panelReportPreview.BorderRadius = borderRadius3;
+            borderRadius29.BottomLeft = 10;
+            borderRadius29.BottomRight = 10;
+            borderRadius29.TopLeft = 10;
+            borderRadius29.TopRight = 10;
+            this.panelReportPreview.BorderRadius = borderRadius29;
             this.panelReportPreview.BorderThickness = 1;
             this.panelReportPreview.Controls.Add(this.dgvReportData);
             this.panelReportPreview.Location = new System.Drawing.Point(25, 115);
@@ -855,7 +862,7 @@
             this.tabPageAnalytics.Location = new System.Drawing.Point(4, 25);
             this.tabPageAnalytics.Name = "tabPageAnalytics";
             this.tabPageAnalytics.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAnalytics.Size = new System.Drawing.Size(1381, 821);
+            this.tabPageAnalytics.Size = new System.Drawing.Size(1381, 874);
             this.tabPageAnalytics.TabIndex = 1;
             this.tabPageAnalytics.Text = "Analytics Dashboard";
             // 
@@ -864,18 +871,18 @@
             this.panelAnalytics.BackColor = System.Drawing.Color.White;
             this.panelAnalytics.BackColor2 = System.Drawing.Color.White;
             this.panelAnalytics.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius4.BottomLeft = 10;
-            borderRadius4.BottomRight = 10;
-            borderRadius4.TopLeft = 10;
-            borderRadius4.TopRight = 10;
-            this.panelAnalytics.BorderRadius = borderRadius4;
+            borderRadius30.BottomLeft = 10;
+            borderRadius30.BottomRight = 10;
+            borderRadius30.TopLeft = 10;
+            borderRadius30.TopRight = 10;
+            this.panelAnalytics.BorderRadius = borderRadius30;
             this.panelAnalytics.BorderThickness = 1;
             this.panelAnalytics.Controls.Add(this.panelCharts);
             this.panelAnalytics.Controls.Add(this.panelStatsCards);
             this.panelAnalytics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalytics.Location = new System.Drawing.Point(3, 3);
             this.panelAnalytics.Name = "panelAnalytics";
-            this.panelAnalytics.Size = new System.Drawing.Size(1375, 815);
+            this.panelAnalytics.Size = new System.Drawing.Size(1375, 868);
             this.panelAnalytics.TabIndex = 0;
             // 
             // panelCharts
@@ -883,21 +890,169 @@
             this.panelCharts.BackColor = System.Drawing.Color.White;
             this.panelCharts.BackColor2 = System.Drawing.Color.White;
             this.panelCharts.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius5.BottomLeft = 10;
-            borderRadius5.BottomRight = 10;
-            borderRadius5.TopLeft = 10;
-            borderRadius5.TopRight = 10;
-            this.panelCharts.BorderRadius = borderRadius5;
+            borderRadius31.BottomLeft = 10;
+            borderRadius31.BottomRight = 10;
+            borderRadius31.TopLeft = 10;
+            borderRadius31.TopRight = 10;
+            this.panelCharts.BorderRadius = borderRadius31;
             this.panelCharts.BorderThickness = 1;
-            this.panelCharts.Controls.Add(this.btnRefreshAnalytics);
             this.panelCharts.Controls.Add(this.labelCharts);
             this.panelCharts.Controls.Add(this.panelChartPayments);
             this.panelCharts.Controls.Add(this.panelChartCourse);
             this.panelCharts.Controls.Add(this.panelChartScholarship);
-            this.panelCharts.Location = new System.Drawing.Point(25, 205);
+            this.panelCharts.Location = new System.Drawing.Point(25, 191);
             this.panelCharts.Name = "panelCharts";
-            this.panelCharts.Size = new System.Drawing.Size(1324, 580);
+            this.panelCharts.Size = new System.Drawing.Size(1350, 580);
             this.panelCharts.TabIndex = 1;
+            // 
+            // labelCharts
+            // 
+            this.labelCharts.AutoSize = true;
+            this.labelCharts.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold);
+            this.labelCharts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
+            this.labelCharts.Location = new System.Drawing.Point(20, 6);
+            this.labelCharts.Name = "labelCharts";
+            this.labelCharts.Size = new System.Drawing.Size(185, 26);
+            this.labelCharts.TabIndex = 0;
+            this.labelCharts.Text = "Analytics Charts";
+            // 
+            // panelChartPayments
+            // 
+            this.panelChartPayments.BackColor = System.Drawing.Color.White;
+            this.panelChartPayments.BackColor2 = System.Drawing.Color.White;
+            this.panelChartPayments.BorderColor = System.Drawing.Color.LightGray;
+            borderRadius32.BottomLeft = 10;
+            borderRadius32.BottomRight = 10;
+            borderRadius32.TopLeft = 10;
+            borderRadius32.TopRight = 10;
+            this.panelChartPayments.BorderRadius = borderRadius32;
+            this.panelChartPayments.BorderThickness = 1;
+            this.panelChartPayments.Controls.Add(this.labelChart3Title);
+            this.panelChartPayments.Controls.Add(this.pictureBoxChart3);
+            this.panelChartPayments.Location = new System.Drawing.Point(905, 42);
+            this.panelChartPayments.Name = "panelChartPayments";
+            this.panelChartPayments.Size = new System.Drawing.Size(420, 520);
+            this.panelChartPayments.TabIndex = 3;
+            // 
+            // labelChart3Title
+            // 
+            this.labelChart3Title.AutoSize = true;
+            this.labelChart3Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.labelChart3Title.ForeColor = System.Drawing.Color.Black;
+            this.labelChart3Title.Location = new System.Drawing.Point(20, 20);
+            this.labelChart3Title.Name = "labelChart3Title";
+            this.labelChart3Title.Size = new System.Drawing.Size(183, 19);
+            this.labelChart3Title.TabIndex = 1;
+            this.labelChart3Title.Text = "Monthly Disbursements";
+            // 
+            // pictureBoxChart3
+            // 
+            this.pictureBoxChart3.BackColor = System.Drawing.Color.White;
+            this.pictureBoxChart3.Location = new System.Drawing.Point(20, 50);
+            this.pictureBoxChart3.Name = "pictureBoxChart3";
+            this.pictureBoxChart3.Size = new System.Drawing.Size(399, 557);
+            this.pictureBoxChart3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBoxChart3.TabIndex = 0;
+            this.pictureBoxChart3.TabStop = false;
+            // 
+            // panelChartCourse
+            // 
+            this.panelChartCourse.BackColor = System.Drawing.Color.White;
+            this.panelChartCourse.BackColor2 = System.Drawing.Color.White;
+            this.panelChartCourse.BorderColor = System.Drawing.Color.LightGray;
+            borderRadius33.BottomLeft = 10;
+            borderRadius33.BottomRight = 10;
+            borderRadius33.TopLeft = 10;
+            borderRadius33.TopRight = 10;
+            this.panelChartCourse.BorderRadius = borderRadius33;
+            this.panelChartCourse.BorderThickness = 1;
+            this.panelChartCourse.Controls.Add(this.labelChart2Title);
+            this.panelChartCourse.Controls.Add(this.pictureBoxChart2);
+            this.panelChartCourse.Location = new System.Drawing.Point(465, 42);
+            this.panelChartCourse.Name = "panelChartCourse";
+            this.panelChartCourse.Size = new System.Drawing.Size(420, 520);
+            this.panelChartCourse.TabIndex = 2;
+            // 
+            // labelChart2Title
+            // 
+            this.labelChart2Title.AutoSize = true;
+            this.labelChart2Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.labelChart2Title.ForeColor = System.Drawing.Color.Black;
+            this.labelChart2Title.Location = new System.Drawing.Point(20, 20);
+            this.labelChart2Title.Name = "labelChart2Title";
+            this.labelChart2Title.Size = new System.Drawing.Size(154, 19);
+            this.labelChart2Title.TabIndex = 1;
+            this.labelChart2Title.Text = "Scholars by Course";
+            // 
+            // pictureBoxChart2
+            // 
+            this.pictureBoxChart2.BackColor = System.Drawing.Color.White;
+            this.pictureBoxChart2.Location = new System.Drawing.Point(20, 50);
+            this.pictureBoxChart2.Name = "pictureBoxChart2";
+            this.pictureBoxChart2.Size = new System.Drawing.Size(407, 557);
+            this.pictureBoxChart2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBoxChart2.TabIndex = 0;
+            this.pictureBoxChart2.TabStop = false;
+            // 
+            // panelChartScholarship
+            // 
+            this.panelChartScholarship.BackColor = System.Drawing.Color.White;
+            this.panelChartScholarship.BackColor2 = System.Drawing.Color.White;
+            this.panelChartScholarship.BorderColor = System.Drawing.Color.LightGray;
+            borderRadius34.BottomLeft = 10;
+            borderRadius34.BottomRight = 10;
+            borderRadius34.TopLeft = 10;
+            borderRadius34.TopRight = 10;
+            this.panelChartScholarship.BorderRadius = borderRadius34;
+            this.panelChartScholarship.BorderThickness = 1;
+            this.panelChartScholarship.Controls.Add(this.labelChart1Title);
+            this.panelChartScholarship.Controls.Add(this.pictureBoxChart1);
+            this.panelChartScholarship.Location = new System.Drawing.Point(25, 42);
+            this.panelChartScholarship.Name = "panelChartScholarship";
+            this.panelChartScholarship.Size = new System.Drawing.Size(420, 520);
+            this.panelChartScholarship.TabIndex = 1;
+            // 
+            // labelChart1Title
+            // 
+            this.labelChart1Title.AutoSize = true;
+            this.labelChart1Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.labelChart1Title.ForeColor = System.Drawing.Color.Black;
+            this.labelChart1Title.Location = new System.Drawing.Point(20, 20);
+            this.labelChart1Title.Name = "labelChart1Title";
+            this.labelChart1Title.Size = new System.Drawing.Size(231, 19);
+            this.labelChart1Title.TabIndex = 1;
+            this.labelChart1Title.Text = "Scholars by Scholarship Type";
+            // 
+            // pictureBoxChart1
+            // 
+            this.pictureBoxChart1.BackColor = System.Drawing.Color.White;
+            this.pictureBoxChart1.Location = new System.Drawing.Point(20, 50);
+            this.pictureBoxChart1.Name = "pictureBoxChart1";
+            this.pictureBoxChart1.Size = new System.Drawing.Size(407, 557);
+            this.pictureBoxChart1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBoxChart1.TabIndex = 0;
+            this.pictureBoxChart1.TabStop = false;
+            // 
+            // panelStatsCards
+            // 
+            this.panelStatsCards.BackColor = System.Drawing.Color.White;
+            this.panelStatsCards.BackColor2 = System.Drawing.Color.White;
+            this.panelStatsCards.BorderColor = System.Drawing.Color.LightGray;
+            borderRadius35.BottomLeft = 10;
+            borderRadius35.BottomRight = 10;
+            borderRadius35.TopLeft = 10;
+            borderRadius35.TopRight = 10;
+            this.panelStatsCards.BorderRadius = borderRadius35;
+            this.panelStatsCards.BorderThickness = 1;
+            this.panelStatsCards.Controls.Add(this.btnRefreshAnalytics);
+            this.panelStatsCards.Controls.Add(this.panelPendingPayments);
+            this.panelStatsCards.Controls.Add(this.panelTotalDisbursed);
+            this.panelStatsCards.Controls.Add(this.panelActiveScholars);
+            this.panelStatsCards.Controls.Add(this.panelTotalScholars);
+            this.panelStatsCards.Location = new System.Drawing.Point(25, 25);
+            this.panelStatsCards.Name = "panelStatsCards";
+            this.panelStatsCards.Size = new System.Drawing.Size(1314, 160);
+            this.panelStatsCards.TabIndex = 0;
             // 
             // btnRefreshAnalytics
             // 
@@ -920,7 +1075,7 @@
             this.btnRefreshAnalytics.ImageTint = System.Drawing.Color.White;
             this.btnRefreshAnalytics.IsToggleButton = false;
             this.btnRefreshAnalytics.IsToggled = false;
-            this.btnRefreshAnalytics.Location = new System.Drawing.Point(1100, 15);
+            this.btnRefreshAnalytics.Location = new System.Drawing.Point(1219, 129);
             this.btnRefreshAnalytics.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnRefreshAnalytics.Name = "btnRefreshAnalytics";
             this.btnRefreshAnalytics.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -937,177 +1092,29 @@
             this.btnRefreshAnalytics.TextAutoCenter = true;
             this.btnRefreshAnalytics.TextOffset = new System.Drawing.Point(0, 0);
             // 
-            // labelCharts
-            // 
-            this.labelCharts.AutoSize = true;
-            this.labelCharts.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold);
-            this.labelCharts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            this.labelCharts.Location = new System.Drawing.Point(25, 20);
-            this.labelCharts.Name = "labelCharts";
-            this.labelCharts.Size = new System.Drawing.Size(185, 26);
-            this.labelCharts.TabIndex = 0;
-            this.labelCharts.Text = "Analytics Charts";
-            // 
-            // panelChartPayments
-            // 
-            this.panelChartPayments.BackColor = System.Drawing.Color.White;
-            this.panelChartPayments.BackColor2 = System.Drawing.Color.White;
-            this.panelChartPayments.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius6.BottomLeft = 10;
-            borderRadius6.BottomRight = 10;
-            borderRadius6.TopLeft = 10;
-            borderRadius6.TopRight = 10;
-            this.panelChartPayments.BorderRadius = borderRadius6;
-            this.panelChartPayments.BorderThickness = 1;
-            this.panelChartPayments.Controls.Add(this.labelChart3Title);
-            this.panelChartPayments.Controls.Add(this.pictureBoxChart3);
-            this.panelChartPayments.Location = new System.Drawing.Point(902, 80);
-            this.panelChartPayments.Name = "panelChartPayments";
-            this.panelChartPayments.Size = new System.Drawing.Size(370, 490);
-            this.panelChartPayments.TabIndex = 3;
-            // 
-            // labelChart3Title
-            // 
-            this.labelChart3Title.AutoSize = true;
-            this.labelChart3Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.labelChart3Title.ForeColor = System.Drawing.Color.Black;
-            this.labelChart3Title.Location = new System.Drawing.Point(20, 20);
-            this.labelChart3Title.Name = "labelChart3Title";
-            this.labelChart3Title.Size = new System.Drawing.Size(183, 19);
-            this.labelChart3Title.TabIndex = 1;
-            this.labelChart3Title.Text = "Monthly Disbursements";
-            // 
-            // pictureBoxChart3
-            // 
-            this.pictureBoxChart3.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBoxChart3.Location = new System.Drawing.Point(20, 50);
-            this.pictureBoxChart3.Name = "pictureBoxChart3";
-            this.pictureBoxChart3.Size = new System.Drawing.Size(330, 420);
-            this.pictureBoxChart3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBoxChart3.TabIndex = 0;
-            this.pictureBoxChart3.TabStop = false;
-            // 
-            // panelChartCourse
-            // 
-            this.panelChartCourse.BackColor = System.Drawing.Color.White;
-            this.panelChartCourse.BackColor2 = System.Drawing.Color.White;
-            this.panelChartCourse.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius7.BottomLeft = 10;
-            borderRadius7.BottomRight = 10;
-            borderRadius7.TopLeft = 10;
-            borderRadius7.TopRight = 10;
-            this.panelChartCourse.BorderRadius = borderRadius7;
-            this.panelChartCourse.BorderThickness = 1;
-            this.panelChartCourse.Controls.Add(this.labelChart2Title);
-            this.panelChartCourse.Controls.Add(this.pictureBoxChart2);
-            this.panelChartCourse.Location = new System.Drawing.Point(469, 80);
-            this.panelChartCourse.Name = "panelChartCourse";
-            this.panelChartCourse.Size = new System.Drawing.Size(370, 490);
-            this.panelChartCourse.TabIndex = 2;
-            // 
-            // labelChart2Title
-            // 
-            this.labelChart2Title.AutoSize = true;
-            this.labelChart2Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.labelChart2Title.ForeColor = System.Drawing.Color.Black;
-            this.labelChart2Title.Location = new System.Drawing.Point(20, 20);
-            this.labelChart2Title.Name = "labelChart2Title";
-            this.labelChart2Title.Size = new System.Drawing.Size(154, 19);
-            this.labelChart2Title.TabIndex = 1;
-            this.labelChart2Title.Text = "Scholars by Course";
-            // 
-            // pictureBoxChart2
-            // 
-            this.pictureBoxChart2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBoxChart2.Location = new System.Drawing.Point(20, 50);
-            this.pictureBoxChart2.Name = "pictureBoxChart2";
-            this.pictureBoxChart2.Size = new System.Drawing.Size(330, 420);
-            this.pictureBoxChart2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBoxChart2.TabIndex = 0;
-            this.pictureBoxChart2.TabStop = false;
-            // 
-            // panelChartScholarship
-            // 
-            this.panelChartScholarship.BackColor = System.Drawing.Color.White;
-            this.panelChartScholarship.BackColor2 = System.Drawing.Color.White;
-            this.panelChartScholarship.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius8.BottomLeft = 10;
-            borderRadius8.BottomRight = 10;
-            borderRadius8.TopLeft = 10;
-            borderRadius8.TopRight = 10;
-            this.panelChartScholarship.BorderRadius = borderRadius8;
-            this.panelChartScholarship.BorderThickness = 1;
-            this.panelChartScholarship.Controls.Add(this.labelChart1Title);
-            this.panelChartScholarship.Controls.Add(this.pictureBoxChart1);
-            this.panelChartScholarship.Location = new System.Drawing.Point(30, 80);
-            this.panelChartScholarship.Name = "panelChartScholarship";
-            this.panelChartScholarship.Size = new System.Drawing.Size(370, 490);
-            this.panelChartScholarship.TabIndex = 1;
-            // 
-            // labelChart1Title
-            // 
-            this.labelChart1Title.AutoSize = true;
-            this.labelChart1Title.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.labelChart1Title.ForeColor = System.Drawing.Color.Black;
-            this.labelChart1Title.Location = new System.Drawing.Point(20, 20);
-            this.labelChart1Title.Name = "labelChart1Title";
-            this.labelChart1Title.Size = new System.Drawing.Size(231, 19);
-            this.labelChart1Title.TabIndex = 1;
-            this.labelChart1Title.Text = "Scholars by Scholarship Type";
-            // 
-            // pictureBoxChart1
-            // 
-            this.pictureBoxChart1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pictureBoxChart1.Location = new System.Drawing.Point(20, 50);
-            this.pictureBoxChart1.Name = "pictureBoxChart1";
-            this.pictureBoxChart1.Size = new System.Drawing.Size(330, 420);
-            this.pictureBoxChart1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBoxChart1.TabIndex = 0;
-            this.pictureBoxChart1.TabStop = false;
-            // 
-            // panelStatsCards
-            // 
-            this.panelStatsCards.BackColor = System.Drawing.Color.White;
-            this.panelStatsCards.BackColor2 = System.Drawing.Color.White;
-            this.panelStatsCards.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius9.BottomLeft = 10;
-            borderRadius9.BottomRight = 10;
-            borderRadius9.TopLeft = 10;
-            borderRadius9.TopRight = 10;
-            this.panelStatsCards.BorderRadius = borderRadius9;
-            this.panelStatsCards.BorderThickness = 1;
-            this.panelStatsCards.Controls.Add(this.panelPendingPayments);
-            this.panelStatsCards.Controls.Add(this.panelTotalDisbursed);
-            this.panelStatsCards.Controls.Add(this.panelActiveScholars);
-            this.panelStatsCards.Controls.Add(this.panelTotalScholars);
-            this.panelStatsCards.Location = new System.Drawing.Point(25, 25);
-            this.panelStatsCards.Name = "panelStatsCards";
-            this.panelStatsCards.Size = new System.Drawing.Size(1314, 160);
-            this.panelStatsCards.TabIndex = 0;
-            // 
             // panelPendingPayments
             // 
             this.panelPendingPayments.BackColor = System.Drawing.Color.White;
             this.panelPendingPayments.BackColor2 = System.Drawing.Color.White;
             this.panelPendingPayments.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            borderRadius10.BottomLeft = 10;
-            borderRadius10.BottomRight = 10;
-            borderRadius10.TopLeft = 10;
-            borderRadius10.TopRight = 10;
-            this.panelPendingPayments.BorderRadius = borderRadius10;
+            borderRadius36.BottomLeft = 10;
+            borderRadius36.BottomRight = 10;
+            borderRadius36.TopLeft = 10;
+            borderRadius36.TopRight = 10;
+            this.panelPendingPayments.BorderRadius = borderRadius36;
             this.panelPendingPayments.BorderThickness = 2;
             this.panelPendingPayments.Controls.Add(this.pictureBoxPending);
             this.panelPendingPayments.Controls.Add(this.lblPendingPaymentsTitle);
             this.panelPendingPayments.Controls.Add(this.lblPendingPaymentsValue);
             this.panelPendingPayments.Location = new System.Drawing.Point(1007, 22);
             this.panelPendingPayments.Name = "panelPendingPayments";
-            this.panelPendingPayments.Size = new System.Drawing.Size(265, 120);
+            this.panelPendingPayments.Size = new System.Drawing.Size(265, 101);
             this.panelPendingPayments.TabIndex = 3;
             // 
             // pictureBoxPending
             // 
             this.pictureBoxPending.Image = global::SkolarAid.Properties.Resources.bell__1_;
-            this.pictureBoxPending.Location = new System.Drawing.Point(25, 35);
+            this.pictureBoxPending.Location = new System.Drawing.Point(25, 20);
             this.pictureBoxPending.Name = "pictureBoxPending";
             this.pictureBoxPending.Size = new System.Drawing.Size(50, 50);
             this.pictureBoxPending.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1119,7 +1126,7 @@
             this.lblPendingPaymentsTitle.AutoSize = true;
             this.lblPendingPaymentsTitle.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
             this.lblPendingPaymentsTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblPendingPaymentsTitle.Location = new System.Drawing.Point(85, 85);
+            this.lblPendingPaymentsTitle.Location = new System.Drawing.Point(85, 70);
             this.lblPendingPaymentsTitle.Name = "lblPendingPaymentsTitle";
             this.lblPendingPaymentsTitle.Size = new System.Drawing.Size(132, 17);
             this.lblPendingPaymentsTitle.TabIndex = 1;
@@ -1130,7 +1137,7 @@
             this.lblPendingPaymentsValue.AutoSize = true;
             this.lblPendingPaymentsValue.Font = new System.Drawing.Font("Century Gothic", 28F, System.Drawing.FontStyle.Bold);
             this.lblPendingPaymentsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.lblPendingPaymentsValue.Location = new System.Drawing.Point(85, 40);
+            this.lblPendingPaymentsValue.Location = new System.Drawing.Point(85, 25);
             this.lblPendingPaymentsValue.Name = "lblPendingPaymentsValue";
             this.lblPendingPaymentsValue.Size = new System.Drawing.Size(40, 44);
             this.lblPendingPaymentsValue.TabIndex = 0;
@@ -1141,24 +1148,24 @@
             this.panelTotalDisbursed.BackColor = System.Drawing.Color.White;
             this.panelTotalDisbursed.BackColor2 = System.Drawing.Color.White;
             this.panelTotalDisbursed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            borderRadius11.BottomLeft = 10;
-            borderRadius11.BottomRight = 10;
-            borderRadius11.TopLeft = 10;
-            borderRadius11.TopRight = 10;
-            this.panelTotalDisbursed.BorderRadius = borderRadius11;
+            borderRadius37.BottomLeft = 10;
+            borderRadius37.BottomRight = 10;
+            borderRadius37.TopLeft = 10;
+            borderRadius37.TopRight = 10;
+            this.panelTotalDisbursed.BorderRadius = borderRadius37;
             this.panelTotalDisbursed.BorderThickness = 2;
             this.panelTotalDisbursed.Controls.Add(this.pictureBoxDisbursed);
             this.panelTotalDisbursed.Controls.Add(this.lblTotalDisbursedTitle);
             this.panelTotalDisbursed.Controls.Add(this.lblTotalDisbursedValue);
             this.panelTotalDisbursed.Location = new System.Drawing.Point(677, 22);
             this.panelTotalDisbursed.Name = "panelTotalDisbursed";
-            this.panelTotalDisbursed.Size = new System.Drawing.Size(280, 120);
+            this.panelTotalDisbursed.Size = new System.Drawing.Size(280, 101);
             this.panelTotalDisbursed.TabIndex = 2;
             // 
             // pictureBoxDisbursed
             // 
             this.pictureBoxDisbursed.Image = global::SkolarAid.Properties.Resources.dollar;
-            this.pictureBoxDisbursed.Location = new System.Drawing.Point(25, 35);
+            this.pictureBoxDisbursed.Location = new System.Drawing.Point(24, 20);
             this.pictureBoxDisbursed.Name = "pictureBoxDisbursed";
             this.pictureBoxDisbursed.Size = new System.Drawing.Size(50, 50);
             this.pictureBoxDisbursed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1170,7 +1177,7 @@
             this.lblTotalDisbursedTitle.AutoSize = true;
             this.lblTotalDisbursedTitle.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
             this.lblTotalDisbursedTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTotalDisbursedTitle.Location = new System.Drawing.Point(80, 85);
+            this.lblTotalDisbursedTitle.Location = new System.Drawing.Point(79, 70);
             this.lblTotalDisbursedTitle.Name = "lblTotalDisbursedTitle";
             this.lblTotalDisbursedTitle.Size = new System.Drawing.Size(109, 17);
             this.lblTotalDisbursedTitle.TabIndex = 1;
@@ -1181,7 +1188,7 @@
             this.lblTotalDisbursedValue.AutoSize = true;
             this.lblTotalDisbursedValue.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold);
             this.lblTotalDisbursedValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            this.lblTotalDisbursedValue.Location = new System.Drawing.Point(80, 42);
+            this.lblTotalDisbursedValue.Location = new System.Drawing.Point(79, 27);
             this.lblTotalDisbursedValue.Name = "lblTotalDisbursedValue";
             this.lblTotalDisbursedValue.Size = new System.Drawing.Size(55, 38);
             this.lblTotalDisbursedValue.TabIndex = 0;
@@ -1192,24 +1199,24 @@
             this.panelActiveScholars.BackColor = System.Drawing.Color.White;
             this.panelActiveScholars.BackColor2 = System.Drawing.Color.White;
             this.panelActiveScholars.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            borderRadius12.BottomLeft = 10;
-            borderRadius12.BottomRight = 10;
-            borderRadius12.TopLeft = 10;
-            borderRadius12.TopRight = 10;
-            this.panelActiveScholars.BorderRadius = borderRadius12;
+            borderRadius38.BottomLeft = 10;
+            borderRadius38.BottomRight = 10;
+            borderRadius38.TopLeft = 10;
+            borderRadius38.TopRight = 10;
+            this.panelActiveScholars.BorderRadius = borderRadius38;
             this.panelActiveScholars.BorderThickness = 2;
             this.panelActiveScholars.Controls.Add(this.pictureBoxActive);
             this.panelActiveScholars.Controls.Add(this.lblActiveScholarsTitle);
             this.panelActiveScholars.Controls.Add(this.lblActiveScholarsValue);
             this.panelActiveScholars.Location = new System.Drawing.Point(350, 22);
             this.panelActiveScholars.Name = "panelActiveScholars";
-            this.panelActiveScholars.Size = new System.Drawing.Size(280, 120);
+            this.panelActiveScholars.Size = new System.Drawing.Size(280, 101);
             this.panelActiveScholars.TabIndex = 1;
             // 
             // pictureBoxActive
             // 
             this.pictureBoxActive.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.pictureBoxActive.Location = new System.Drawing.Point(25, 35);
+            this.pictureBoxActive.Location = new System.Drawing.Point(30, 19);
             this.pictureBoxActive.Name = "pictureBoxActive";
             this.pictureBoxActive.Size = new System.Drawing.Size(50, 50);
             this.pictureBoxActive.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1221,7 +1228,7 @@
             this.lblActiveScholarsTitle.AutoSize = true;
             this.lblActiveScholarsTitle.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
             this.lblActiveScholarsTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblActiveScholarsTitle.Location = new System.Drawing.Point(90, 85);
+            this.lblActiveScholarsTitle.Location = new System.Drawing.Point(95, 69);
             this.lblActiveScholarsTitle.Name = "lblActiveScholarsTitle";
             this.lblActiveScholarsTitle.Size = new System.Drawing.Size(111, 17);
             this.lblActiveScholarsTitle.TabIndex = 1;
@@ -1232,7 +1239,7 @@
             this.lblActiveScholarsValue.AutoSize = true;
             this.lblActiveScholarsValue.Font = new System.Drawing.Font("Century Gothic", 28F, System.Drawing.FontStyle.Bold);
             this.lblActiveScholarsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.lblActiveScholarsValue.Location = new System.Drawing.Point(90, 40);
+            this.lblActiveScholarsValue.Location = new System.Drawing.Point(95, 24);
             this.lblActiveScholarsValue.Name = "lblActiveScholarsValue";
             this.lblActiveScholarsValue.Size = new System.Drawing.Size(40, 44);
             this.lblActiveScholarsValue.TabIndex = 0;
@@ -1243,24 +1250,24 @@
             this.panelTotalScholars.BackColor = System.Drawing.Color.White;
             this.panelTotalScholars.BackColor2 = System.Drawing.Color.White;
             this.panelTotalScholars.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            borderRadius13.BottomLeft = 10;
-            borderRadius13.BottomRight = 10;
-            borderRadius13.TopLeft = 10;
-            borderRadius13.TopRight = 10;
-            this.panelTotalScholars.BorderRadius = borderRadius13;
+            borderRadius39.BottomLeft = 10;
+            borderRadius39.BottomRight = 10;
+            borderRadius39.TopLeft = 10;
+            borderRadius39.TopRight = 10;
+            this.panelTotalScholars.BorderRadius = borderRadius39;
             this.panelTotalScholars.BorderThickness = 2;
             this.panelTotalScholars.Controls.Add(this.pictureBoxScholars);
             this.panelTotalScholars.Controls.Add(this.lblTotalScholarsTitle);
             this.panelTotalScholars.Controls.Add(this.lblTotalScholarsValue);
             this.panelTotalScholars.Location = new System.Drawing.Point(25, 20);
             this.panelTotalScholars.Name = "panelTotalScholars";
-            this.panelTotalScholars.Size = new System.Drawing.Size(280, 120);
+            this.panelTotalScholars.Size = new System.Drawing.Size(280, 101);
             this.panelTotalScholars.TabIndex = 0;
             // 
             // pictureBoxScholars
             // 
             this.pictureBoxScholars.Image = global::SkolarAid.Properties.Resources.scholar;
-            this.pictureBoxScholars.Location = new System.Drawing.Point(25, 35);
+            this.pictureBoxScholars.Location = new System.Drawing.Point(29, 17);
             this.pictureBoxScholars.Name = "pictureBoxScholars";
             this.pictureBoxScholars.Size = new System.Drawing.Size(50, 50);
             this.pictureBoxScholars.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1272,7 +1279,7 @@
             this.lblTotalScholarsTitle.AutoSize = true;
             this.lblTotalScholarsTitle.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
             this.lblTotalScholarsTitle.ForeColor = System.Drawing.Color.Gray;
-            this.lblTotalScholarsTitle.Location = new System.Drawing.Point(90, 85);
+            this.lblTotalScholarsTitle.Location = new System.Drawing.Point(94, 67);
             this.lblTotalScholarsTitle.Name = "lblTotalScholarsTitle";
             this.lblTotalScholarsTitle.Size = new System.Drawing.Size(100, 17);
             this.lblTotalScholarsTitle.TabIndex = 1;
@@ -1283,7 +1290,7 @@
             this.lblTotalScholarsValue.AutoSize = true;
             this.lblTotalScholarsValue.Font = new System.Drawing.Font("Century Gothic", 28F, System.Drawing.FontStyle.Bold);
             this.lblTotalScholarsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            this.lblTotalScholarsValue.Location = new System.Drawing.Point(90, 40);
+            this.lblTotalScholarsValue.Location = new System.Drawing.Point(94, 22);
             this.lblTotalScholarsValue.Name = "lblTotalScholarsValue";
             this.lblTotalScholarsValue.Size = new System.Drawing.Size(40, 44);
             this.lblTotalScholarsValue.TabIndex = 0;
@@ -1294,7 +1301,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1050);
+            this.ClientSize = new System.Drawing.Size(1700, 1000);
             this.Controls.Add(this.panelContent);
             this.Font = new System.Drawing.Font("Century Gothic", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

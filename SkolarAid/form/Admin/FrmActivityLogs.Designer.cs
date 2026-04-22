@@ -38,6 +38,7 @@ namespace SkolarAid.form
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
@@ -136,7 +137,7 @@ namespace SkolarAid.form
             this.panelStats1.Controls.Add(this.lblTotalLogs);
             this.panelStats1.Controls.Add(this.lblTotalLogsLabel);
             this.panelStats1.Controls.Add(this.picTotalLogs);
-            this.panelStats1.Location = new System.Drawing.Point(384, 183);
+            this.panelStats1.Location = new System.Drawing.Point(376, 100);
             this.panelStats1.Name = "panelStats1";
             this.panelStats1.Size = new System.Drawing.Size(255, 120);
             this.panelStats1.TabIndex = 4;
@@ -187,7 +188,7 @@ namespace SkolarAid.form
             this.panelStats2.Controls.Add(this.lblTodayLogs);
             this.panelStats2.Controls.Add(this.lblTodayLogsLabel);
             this.panelStats2.Controls.Add(this.picTodayLogs);
-            this.panelStats2.Location = new System.Drawing.Point(893, 183);
+            this.panelStats2.Location = new System.Drawing.Point(885, 100);
             this.panelStats2.Name = "panelStats2";
             this.panelStats2.Size = new System.Drawing.Size(255, 120);
             this.panelStats2.TabIndex = 5;
@@ -237,7 +238,7 @@ namespace SkolarAid.form
             this.panelStats3.Controls.Add(this.lblUniqueUsers);
             this.panelStats3.Controls.Add(this.lblUniqueUsersLabel);
             this.panelStats3.Controls.Add(this.picUniqueUsers);
-            this.panelStats3.Location = new System.Drawing.Point(1422, 183);
+            this.panelStats3.Location = new System.Drawing.Point(1414, 100);
             this.panelStats3.Name = "panelStats3";
             this.panelStats3.Size = new System.Drawing.Size(255, 120);
             this.panelStats3.TabIndex = 6;
@@ -298,7 +299,7 @@ namespace SkolarAid.form
             this.panelFilters.Controls.Add(this.btnExportLogs);
             this.panelFilters.Controls.Add(this.btnClearFilters);
             this.panelFilters.Controls.Add(this.btnRefresh);
-            this.panelFilters.Location = new System.Drawing.Point(324, 320);
+            this.panelFilters.Location = new System.Drawing.Point(324, 226);
             this.panelFilters.Name = "panelFilters";
             this.panelFilters.Size = new System.Drawing.Size(1356, 85);
             this.panelFilters.TabIndex = 7;
@@ -537,9 +538,9 @@ namespace SkolarAid.form
             this.panelDataGrid.BorderRadius = borderRadius5;
             this.panelDataGrid.BorderThickness = 0;
             this.panelDataGrid.Controls.Add(this.dgvActivityLogs);
-            this.panelDataGrid.Location = new System.Drawing.Point(324, 425);
+            this.panelDataGrid.Location = new System.Drawing.Point(324, 337);
             this.panelDataGrid.Name = "panelDataGrid";
-            this.panelDataGrid.Size = new System.Drawing.Size(993, 575);
+            this.panelDataGrid.Size = new System.Drawing.Size(993, 571);
             this.panelDataGrid.TabIndex = 8;
             // 
             // dgvActivityLogs
@@ -547,18 +548,20 @@ namespace SkolarAid.form
             this.dgvActivityLogs.AllowUserToAddRows = false;
             this.dgvActivityLogs.AllowUserToDeleteRows = false;
             this.dgvActivityLogs.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.dgvActivityLogs.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvActivityLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvActivityLogs.BackgroundColor = System.Drawing.Color.White;
             this.dgvActivityLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvActivityLogs.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvActivityLogs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvActivityLogs.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvActivityLogs.ColumnHeadersHeight = 40;
             this.dgvActivityLogs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colLogID,
@@ -569,14 +572,14 @@ namespace SkolarAid.form
             this.colTableAffected,
             this.colDetails,
             this.colIPAddress});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvActivityLogs.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvActivityLogs.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvActivityLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvActivityLogs.EnableHeadersVisualStyles = false;
             this.dgvActivityLogs.GridColor = System.Drawing.Color.LightGray;
@@ -585,15 +588,15 @@ namespace SkolarAid.form
             this.dgvActivityLogs.Name = "dgvActivityLogs";
             this.dgvActivityLogs.ReadOnly = true;
             this.dgvActivityLogs.RowHeadersVisible = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvActivityLogs.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvActivityLogs.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvActivityLogs.RowTemplate.Height = 35;
             this.dgvActivityLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvActivityLogs.Size = new System.Drawing.Size(993, 575);
+            this.dgvActivityLogs.Size = new System.Drawing.Size(993, 571);
             this.dgvActivityLogs.TabIndex = 0;
             // 
             // colLogID
@@ -668,7 +671,7 @@ namespace SkolarAid.form
             this.panelDetailView.Controls.Add(this.lblDetailUser);
             this.panelDetailView.Controls.Add(this.lblDetailTimestamp);
             this.panelDetailView.Controls.Add(this.lblDetailTitle);
-            this.panelDetailView.Location = new System.Drawing.Point(1340, 425);
+            this.panelDetailView.Location = new System.Drawing.Point(1340, 337);
             this.panelDetailView.Name = "panelDetailView";
             this.panelDetailView.Size = new System.Drawing.Size(337, 571);
             this.panelDetailView.TabIndex = 9;
@@ -773,7 +776,7 @@ namespace SkolarAid.form
             this.panelPagination.Controls.Add(this.lblPageInfo);
             this.panelPagination.Controls.Add(this.btnPrevPage);
             this.panelPagination.Controls.Add(this.btnFirstPage);
-            this.panelPagination.Location = new System.Drawing.Point(324, 982);
+            this.panelPagination.Location = new System.Drawing.Point(327, 914);
             this.panelPagination.Name = "panelPagination";
             this.panelPagination.Size = new System.Drawing.Size(990, 15);
             this.panelPagination.TabIndex = 10;
@@ -995,6 +998,7 @@ namespace SkolarAid.form
             this.btnReminder.TabIndex = 5;
             this.btnReminder.TextAutoCenter = true;
             this.btnReminder.TextOffset = new System.Drawing.Point(10, 0);
+            this.btnReminder.Click += new System.EventHandler(this.btnReminder_Click);
             // 
             // btnActivityLog
             // 
@@ -1020,7 +1024,7 @@ namespace SkolarAid.form
             this.btnActivityLog.Location = new System.Drawing.Point(0, 345);
             this.btnActivityLog.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnActivityLog.Name = "btnActivityLog";
-            this.btnActivityLog.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.btnActivityLog.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
             this.btnActivityLog.NormalForeColor = System.Drawing.Color.White;
             this.btnActivityLog.NormalOutline = System.Drawing.Color.Empty;
             this.btnActivityLog.OutlineThickness = 2F;
@@ -1071,6 +1075,7 @@ namespace SkolarAid.form
             this.btnReports.TabIndex = 3;
             this.btnReports.TextAutoCenter = true;
             this.btnReports.TextOffset = new System.Drawing.Point(-5, 0);
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // btnPayroll
             // 
@@ -1109,6 +1114,7 @@ namespace SkolarAid.form
             this.btnPayroll.TabIndex = 2;
             this.btnPayroll.TextAutoCenter = true;
             this.btnPayroll.TextOffset = new System.Drawing.Point(-15, 0);
+            this.btnPayroll.Click += new System.EventHandler(this.btnPayroll_Click);
             // 
             // btnScholarMgmt
             // 
@@ -1147,6 +1153,7 @@ namespace SkolarAid.form
             this.btnScholarMgmt.TabIndex = 1;
             this.btnScholarMgmt.TextAutoCenter = true;
             this.btnScholarMgmt.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnScholarMgmt.Click += new System.EventHandler(this.btnScholarMgmt_Click);
             // 
             // btnDashboard
             // 
@@ -1172,7 +1179,7 @@ namespace SkolarAid.form
             this.btnDashboard.Location = new System.Drawing.Point(0, 45);
             this.btnDashboard.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
+            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.btnDashboard.NormalForeColor = System.Drawing.Color.White;
             this.btnDashboard.NormalOutline = System.Drawing.Color.Empty;
             this.btnDashboard.OutlineThickness = 2F;
@@ -1185,6 +1192,7 @@ namespace SkolarAid.form
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.TextAutoCenter = true;
             this.btnDashboard.TextOffset = new System.Drawing.Point(-30, 0);
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // panelHeader
             // 
@@ -1267,6 +1275,7 @@ namespace SkolarAid.form
             this.btnLogout.TabIndex = 2;
             this.btnLogout.TextAutoCenter = true;
             this.btnLogout.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // picUser
             // 
@@ -1309,6 +1318,7 @@ namespace SkolarAid.form
             this.Name = "FrmActivityLogs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Activity Logs - ScholarAid";
+            this.Load += new System.EventHandler(this.FrmActivityLogs_Load_1);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTotalLogs)).EndInit();

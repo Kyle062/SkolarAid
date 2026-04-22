@@ -542,6 +542,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="Resources\bell2.png" />
+    <None Include="Resources\open-folder.png" />
+    <None Include="Resources\bell21.png" />
+    <Content Include="Resources\dolllar2.png" />
+    <None Include="Resources\dolllar21.png" />
     <None Include="Resources\wall-clock.png" />
     <None Include="Resources\wallet %281%29.png" />
     <None Include="Resources\checked.png" />
