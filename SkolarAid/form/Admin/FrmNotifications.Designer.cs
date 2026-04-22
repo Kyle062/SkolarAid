@@ -402,7 +402,7 @@ namespace SkolarAid.form
             // txtSearch
             // 
             this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 11.25F);
-            this.txtSearch.Location = new System.Drawing.Point(434, 32);
+            this.txtSearch.Location = new System.Drawing.Point(452, 33);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(151, 26);
             this.txtSearch.TabIndex = 1;
@@ -411,7 +411,7 @@ namespace SkolarAid.form
             // 
             this.lblSearch.AutoSize = true;
             this.lblSearch.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.lblSearch.Location = new System.Drawing.Point(441, 11);
+            this.lblSearch.Location = new System.Drawing.Point(459, 12);
             this.lblSearch.Name = "lblSearch";
             this.lblSearch.Size = new System.Drawing.Size(54, 17);
             this.lblSearch.TabIndex = 0;

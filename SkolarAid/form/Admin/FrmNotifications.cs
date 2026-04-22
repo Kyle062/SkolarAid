@@ -21,11 +21,148 @@ namespace SkolarAid.form
         private Label lblTotalRecords;
         private Panel _selectedPanel = null;
 
+        // ========== DELETE BUTTONS (ADDED) ==========
+        // 👇 YOU CAN ADJUST THESE VALUES TO CHANGE BUTTON POSITION AND SIZE
+        private FrameworkTest.SATAButton btnDeleteAllRead;
+        // Delete All Read button settings:
+        // Location: X = 290, Y = 22 (Change these to move the button)
+        // Size: Width = 130, Height = 35 (Change these to resize)
+        // ============================================
+
         public FrmNotifications()
         {
             InitializeComponent();
             InitializeCustomControls();
+            InitializeDeleteButtons(); // 👈 ADDED: Initialize delete buttons
             this.Load += FrmNotifications_Load;
+        }
+
+        // ========== ADDED METHOD: Initialize Delete Buttons ==========
+        private void InitializeDeleteButtons()
+        {
+            // 👇 DELETE ALL READ BUTTON
+            // To adjust position: Change X and Y values in Location
+            // To adjust size: Change Width and Height values in Size
+            this.btnDeleteAllRead = new FrameworkTest.SATAButton
+            {
+                ButtonText = "Delete All Read",
+                Location = new Point(250, 22),      // 👈 X=270, Y=22 (CHANGE THESE TO MOVE BUTTON)
+                Size = new Size(110, 35),           // 👈 Width=110, Height=35 (CHANGE THESE TO RESIZE)
+                Font = new Font("Century Gothic", 10F),
+                NormalBackground = Color.FromArgb(239, 68, 68),  // Red color
+                NormalForeColor = Color.White,
+                HoverBackground = Color.FromArgb(220, 50, 50),
+                Rounding = new Padding(5),
+                TextAutoCenter = true
+            };
+            this.btnDeleteAllRead.Click += BtnDeleteAllRead_Click;
+            this.panelFilters.Controls.Add(this.btnDeleteAllRead);
+        }
+
+        // ========== ADDED EVENT HANDLER: Delete All Read ==========
+        private void BtnDeleteAllRead_Click(object sender, EventArgs e)
+        {
+            int readCount = _notifications.Count(n => n.IsRead);
+
+            if (readCount == 0)
+            {
+                MessageBox.Show("No read notifications to delete.", "Information",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to delete all {readCount} read notifications?\n\nThis action cannot be undone.",
+                "Confirm Delete All Read",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                    {
+                        conn.Open();
+                        string query = "DELETE FROM notifications WHERE is_read = TRUE";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        int affected = cmd.ExecuteNonQuery();
+
+                        ActivityLogger.Log("DELETE", $"Deleted {affected} read notifications");
+
+                        MessageBox.Show($"{affected} read notifications deleted successfully.", "Success",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        LoadNotifications();
+                        LoadStatistics();
+                        ClearDetailView();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting notifications: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // ========== ADDED METHOD: Delete Single Notification ==========
+        private void DeleteSingleNotification(int notificationId)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this notification?\n\nThis action cannot be undone.",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                    {
+                        conn.Open();
+                        string query = "DELETE FROM notifications WHERE id = @id";
+                        MySqlCommand cmd = new MySqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@id", notificationId);
+                        cmd.ExecuteNonQuery();
+
+                        ActivityLogger.Log("DELETE", $"Deleted notification ID: {notificationId}");
+
+                        // Check if the deleted notification was selected
+                        if (_selectedPanel != null)
+                        {
+                            var selectedNotification = _selectedPanel.Tag as NotificationItem;
+                            if (selectedNotification != null && selectedNotification.Id == notificationId)
+                            {
+                                ClearDetailView();
+                            }
+                        }
+
+                        LoadNotifications();
+                        LoadStatistics();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting notification: {ex.Message}", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // ========== ADDED METHOD: Clear Detail View ==========
+        private void ClearDetailView()
+        {
+            lblDetailTitle.Text = "Select a notification";
+            lblDetailType.Text = "-";
+            lblDetailType.ForeColor = Color.Black;
+            lblDetailDate.Text = "-";
+            lblDetailMessage.Text = "Click on any notification to view its details.";
+            lblDetailDelivery.Text = "-";
+            lblDetailSMSStatus.Text = "-";
+            btnResend.Tag = null;
+            _selectedPanel = null;
         }
 
         private void InitializeCustomControls()
@@ -46,11 +183,12 @@ namespace SkolarAid.form
             this.panelDataGrid.Controls.Add(this.flowNotifications);
 
             // Create Unread Only checkbox - positioned properly
+            // 👇 To adjust checkbox position: Change X and Y values
             this.chkUnreadOnly = new CheckBox
             {
                 Text = "Unread Only",
-                Location = new Point(20, 28),
-                Size = new Size(110, 24),
+                Location = new Point(20, 28),      // 👈 X=20, Y=28 (CHANGE THESE TO MOVE CHECKBOX)
+                Size = new Size(90, 24),          // 👈 Width=100, Height=24 (CHANGE     THESE TO RESIZE)
                 Font = new Font("Century Gothic", 10F),
                 BackColor = Color.Transparent,
                 ForeColor = Color.Black
@@ -58,11 +196,12 @@ namespace SkolarAid.form
             this.panelFilters.Controls.Add(this.chkUnreadOnly);
 
             // Create Mark All as Read button - positioned properly
+            // 👇 To adjust button position: Change X and Y values
             this.btnMarkAllRead = new FrameworkTest.SATAButton
             {
                 ButtonText = "Mark All as Read",
-                Location = new Point(140, 22),
-                Size = new Size(140, 35),
+                Location = new Point(110, 22),     // 👈 X=110, Y=22 (CHANGE THESE TO MOVE BUTTON)
+                Size = new Size(140, 35),          // 👈 Width=140, Height=35 (CHANGE THESE TO RESIZE)
                 Font = new Font("Century Gothic", 10F),
                 NormalBackground = Color.FromArgb(0, 68, 79),
                 NormalForeColor = Color.White,
@@ -87,7 +226,6 @@ namespace SkolarAid.form
 
         private void FrmNotifications_Load(object sender, EventArgs e)
         {
-            // Set default selections
             // Set default selections
             cmbNotificationType.SelectedIndex = 0;
             cmbComposeType.SelectedIndex = 0;
@@ -288,7 +426,7 @@ namespace SkolarAid.form
             Panel panel = new Panel
             {
                 Width = flowNotifications.Width - 30,
-                Height = 100,
+                Height = 105,
                 BackColor = notification.IsRead ? Color.White : Color.FromArgb(240, 248, 248),
                 Margin = new Padding(5, 0, 5, 8),
                 Cursor = Cursors.Hand
@@ -326,7 +464,7 @@ namespace SkolarAid.form
             Label lblTitle = new Label
             {
                 Text = notification.Title,
-                Location = new Point(70, 12),
+                Location = new Point(70, 10),
                 Size = new Size(panel.Width - 190, 22),
                 Font = new Font("Century Gothic", 11F, notification.IsRead ? FontStyle.Regular : FontStyle.Bold),
                 ForeColor = notification.IsRead ? Color.FromArgb(60, 60, 60) : Color.FromArgb(0, 68, 79),
@@ -335,13 +473,13 @@ namespace SkolarAid.form
             };
 
             // Message preview
-            string preview = notification.Message.Length > 40 ?
-                notification.Message.Substring(0, 37) + "..." : notification.Message;
+            string preview = notification.Message.Length > 35 ?
+                notification.Message.Substring(0, 32) + "..." : notification.Message;
 
             Label lblMessage = new Label
             {
                 Text = preview,
-                Location = new Point(70, 35),
+                Location = new Point(70, 32),
                 Size = new Size(panel.Width - 190, 20),
                 Font = new Font("Century Gothic", 9F),
                 ForeColor = Color.FromArgb(80, 80, 80),
@@ -353,8 +491,8 @@ namespace SkolarAid.form
             Label lblRecipient = new Label
             {
                 Text = $"To: {notification.RecipientName}",
-                Location = new Point(70, 58),
-                Size = new Size(200, 18),
+                Location = new Point(70, 52),
+                Size = new Size(180, 18),
                 Font = new Font("Century Gothic", 8F),
                 ForeColor = Color.FromArgb(100, 100, 100),
                 BackColor = Color.Transparent,
@@ -365,7 +503,7 @@ namespace SkolarAid.form
             Label lblType = new Label
             {
                 Text = notification.Type,
-                Location = new Point(panel.Width - 100, 12),
+                Location = new Point(panel.Width - 110, 10),
                 Size = new Size(85, 22),
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Century Gothic", 8F, FontStyle.Bold),
@@ -378,7 +516,7 @@ namespace SkolarAid.form
             Label lblTime = new Label
             {
                 Text = GetRelativeTime(notification.DateSent),
-                Location = new Point(panel.Width - 100, 38),
+                Location = new Point(panel.Width - 110, 35),
                 Size = new Size(85, 20),
                 TextAlign = ContentAlignment.MiddleRight,
                 Font = new Font("Century Gothic", 8F),
@@ -391,14 +529,37 @@ namespace SkolarAid.form
             Label lblReadStatus = new Label
             {
                 Text = notification.IsRead ? "✓ Read" : "● Unread",
-                Location = new Point(panel.Width - 100, 60),
-                Size = new Size(85, 18),
+                Location = new Point(panel.Width - 120, 55),
+                Size = new Size(75, 18),
                 TextAlign = ContentAlignment.MiddleRight,
                 Font = new Font("Century Gothic", 8F, FontStyle.Bold),
                 ForeColor = notification.IsRead ? Color.FromArgb(40, 167, 69) : Color.FromArgb(0, 68, 79),
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand
             };
+
+            // ========== DELETE BUTTON (INDIVIDUAL NOTIFICATION) ==========
+            // 👇 To adjust delete button position: Change X and Y values in Location
+            // 👇 To adjust delete button size: Change Width and Height values in Size
+            Label lblDelete = new Label
+            {
+                Text = "✕",
+                Location = new Point(panel.Width - 26, 8),  // 👈 X = panel.Width - 26, Y = 8 (CHANGE THESE TO MOVE BUTTON)
+                Size = new Size(20, 20),                   // 👈 Width=20, Height=20 (CHANGE THESE TO RESIZE)
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Century Gothic", 10F, FontStyle.Bold),
+                ForeColor = Color.Red,
+                BackColor = Color.Transparent,
+                Cursor = Cursors.Hand,
+                Tag = notification.Id
+            };
+            lblDelete.MouseEnter += (s, e) => lblDelete.ForeColor = Color.FromArgb(239, 68, 68);
+            lblDelete.MouseLeave += (s, e) => lblDelete.ForeColor = Color.FromArgb(150, 150, 150);
+            lblDelete.Click += (s, e) => {
+                int id = (int)((Label)s).Tag;
+                DeleteSingleNotification(id);
+            };
+            // =============================================================
 
             panel.Controls.Add(picIcon);
             panel.Controls.Add(lblTitle);
@@ -407,8 +568,9 @@ namespace SkolarAid.form
             panel.Controls.Add(lblType);
             panel.Controls.Add(lblTime);
             panel.Controls.Add(lblReadStatus);
+            panel.Controls.Add(lblDelete); // 👈 ADDED: Delete button
 
-            // Click event - handles selection highlighting
+            // Click event - handles selection highlighting (but not on delete button)
             panel.Click += (s, e) => {
                 SelectNotificationPanel(panel, notification);
                 ShowNotificationDetails(notification);
@@ -416,10 +578,13 @@ namespace SkolarAid.form
 
             foreach (Control ctrl in panel.Controls)
             {
-                ctrl.Click += (s, e) => {
-                    SelectNotificationPanel(panel, notification);
-                    ShowNotificationDetails(notification);
-                };
+                if (ctrl != lblDelete) // Skip delete button for selection
+                {
+                    ctrl.Click += (s, e) => {
+                        SelectNotificationPanel(panel, notification);
+                        ShowNotificationDetails(notification);
+                    };
+                }
             }
 
             return panel;
@@ -437,18 +602,18 @@ namespace SkolarAid.form
                 // Reset text colors for previous selection
                 foreach (Control ctrl in _selectedPanel.Controls)
                 {
-                    if (ctrl is Label lbl)
+                    if (ctrl is Label lbl && ctrl != _selectedPanel.Controls[_selectedPanel.Controls.Count - 1]) // Skip delete button
                     {
                         if (lbl == _selectedPanel.Controls[1]) // Title
                             lbl.ForeColor = prevNotification != null && prevNotification.IsRead ?
                                 Color.FromArgb(60, 60, 60) : Color.FromArgb(0, 68, 79);
-                        else if (lbl != _selectedPanel.Controls[5]) // Not the type badge
+                        else if (lbl != _selectedPanel.Controls[4]) // Not the type badge
                             lbl.ForeColor = Color.FromArgb(80, 80, 80);
                     }
                 }
             }
 
-            // Highlight new selection - darker border effect
+            // Highlight new selection
             selectedPanel.BackColor = Color.FromArgb(220, 240, 240);
             selectedPanel.BorderStyle = BorderStyle.None;
 
@@ -792,13 +957,7 @@ namespace SkolarAid.form
         private void sataButton5_Click(object sender, EventArgs e) => btnActivityLog_Click(sender, e);
         private void sataButton6_Click(object sender, EventArgs e) { } // Already on Notifications
         private void btnActivityLog_Click_1(object sender, EventArgs e) => btnActivityLog_Click(sender, e);
-
-        // Designer-generated event handler referenced in the designer file.
-        private void panelHeader_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-            // No custom painting required for the header at the moment.
-            // This method is present to satisfy the designer event hookup.
-        }
+        private void panelHeader_Paint(object sender, PaintEventArgs e) { }
         #endregion
     }
 
