@@ -14,7 +14,7 @@ namespace SkolarAid
         public Login()
         {
             InitializeComponent();
-            txtPassword.PasswordChar = true;
+            txtPassword.PasswordChar = true; // ← ADD THIS LINE (was missing!)
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
@@ -49,7 +49,7 @@ namespace SkolarAid
                     {
                         if (reader.Read())
                         {
-                            string accountStatus = reader["account_status"].ToString();
+                            string accountStatus = reader["account_status"]?.ToString() ?? "Active";
 
                             if (accountStatus != "Active")
                             {
@@ -58,18 +58,19 @@ namespace SkolarAid
                                 return;
                             }
 
-                            string dbPassword = reader["password"].ToString();
-                            string role = reader["role"].ToString();
+                            string dbPassword = reader["password"]?.ToString() ?? "";
+                            string role = reader["role"]?.ToString() ?? "";
+                            string name = reader["name"]?.ToString() ?? "";
 
                             if (password == dbPassword)
                             {
-                                // Create User object
+                                // Create User object with safe conversions
                                 User currentUser = new User
                                 {
-                                    Id = Convert.ToInt32(reader["id"]),
-                                    Username = reader["username"].ToString(),
+                                    Id = reader["id"] != DBNull.Value ? Convert.ToInt32(reader["id"]) : 0,
+                                    Username = reader["username"]?.ToString() ?? "",
                                     Role = role,
-                                    Name = reader["name"].ToString(),
+                                    Name = name,
                                     AccountStatus = accountStatus
                                 };
 
@@ -90,14 +91,24 @@ namespace SkolarAid
                                     };
                                 }
 
-                                // Set session
-                                SessionManager.SetCurrentUser(currentUser, currentScholar);
+                                // Set session with null check
+                                if (currentUser != null && currentUser.Id > 0)
+                                {
+                                    SessionManager.SetCurrentUser(currentUser, currentScholar);
+                                }
 
                                 // Update last login
-                                UpdateLastLogin(currentUser.Id);
+                                if (currentUser.Id > 0)
+                                {
+                                    UpdateLastLogin(currentUser.Id);
 
-                                // Log activity
-                                ActivityLogger.LogLogin(currentUser.Id, currentUser.Name);
+                                    // Log activity - with try-catch to prevent crashes
+                                    try
+                                    {
+                                        ActivityLogger.LogLogin(currentUser.Id, currentUser.Name);
+                                    }
+                                    catch { }
+                                }
 
                                 // Navigate to appropriate dashboard
                                 if (role == "ADMIN")
@@ -108,12 +119,12 @@ namespace SkolarAid
                                 }
                                 else if (role == "SCHOLAR")
                                 {
-                                    if (currentScholar != null && currentScholar.Status == "Active")
+                                    if (currentScholar != null && !string.IsNullOrEmpty(currentScholar.Status) && currentScholar.Status == "Active")
                                     {
                                         FrmScholarDashboard scholarDashboard = new FrmScholarDashboard(
                                             currentScholar.Id,
-                                            currentScholar.FullName,
-                                            currentScholar.ScholarNumber
+                                            currentScholar.FullName ?? name,
+                                            currentScholar.ScholarNumber ?? ""
                                         );
                                         scholarDashboard.Show();
                                         this.Hide();
@@ -141,7 +152,8 @@ namespace SkolarAid
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Database error: {ex.Message}", "Error",
+                // Show detailed error for debugging
+                MessageBox.Show($"Database error: {ex.Message}\n\nStack Trace: {ex.StackTrace}", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -159,7 +171,11 @@ namespace SkolarAid
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Silent fail - non-critical
+                Console.WriteLine($"UpdateLastLogin error: {ex.Message}");
+            }
         }
 
         private void label7_Click(object sender, EventArgs e)

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using SkolarAid.form.Admin;
 namespace SkolarAid
 {
     public partial class FrmReportsAnalytics : Form
@@ -94,6 +94,11 @@ namespace SkolarAid
 
             // Hide or close the current Register form
             this.Hide();
+        }
+
+        private void panelContent_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

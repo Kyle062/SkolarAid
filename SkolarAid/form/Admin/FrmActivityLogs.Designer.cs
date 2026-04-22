@@ -44,12 +44,15 @@ namespace SkolarAid.form
             this.panelStats1 = new SATAUiFramework.SATAPanel();
             this.lblTotalLogs = new System.Windows.Forms.Label();
             this.lblTotalLogsLabel = new System.Windows.Forms.Label();
+            this.picTotalLogs = new System.Windows.Forms.PictureBox();
             this.panelStats2 = new SATAUiFramework.SATAPanel();
             this.lblTodayLogs = new System.Windows.Forms.Label();
             this.lblTodayLogsLabel = new System.Windows.Forms.Label();
+            this.picTodayLogs = new System.Windows.Forms.PictureBox();
             this.panelStats3 = new SATAUiFramework.SATAPanel();
             this.lblUniqueUsers = new System.Windows.Forms.Label();
             this.lblUniqueUsersLabel = new System.Windows.Forms.Label();
+            this.picUniqueUsers = new System.Windows.Forms.PictureBox();
             this.panelFilters = new SATAUiFramework.SATAPanel();
             this.cmbActionType = new System.Windows.Forms.ComboBox();
             this.lblActionType = new System.Windows.Forms.Label();
@@ -61,6 +64,7 @@ namespace SkolarAid.form
             this.lblDateFrom = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
+            this.btnExportLogs = new FrameworkTest.SATAButton();
             this.btnClearFilters = new FrameworkTest.SATAButton();
             this.btnRefresh = new FrameworkTest.SATAButton();
             this.panelDataGrid = new SATAUiFramework.SATAPanel();
@@ -88,10 +92,6 @@ namespace SkolarAid.form
             this.lblPageInfo = new System.Windows.Forms.Label();
             this.btnPrevPage = new FrameworkTest.SATAButton();
             this.btnFirstPage = new FrameworkTest.SATAButton();
-            this.btnExportLogs = new FrameworkTest.SATAButton();
-            this.picUniqueUsers = new System.Windows.Forms.PictureBox();
-            this.picTodayLogs = new System.Windows.Forms.PictureBox();
-            this.picTotalLogs = new System.Windows.Forms.PictureBox();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnReminder = new FrameworkTest.SATAButton();
             this.btnActivityLog = new FrameworkTest.SATAButton();
@@ -106,16 +106,16 @@ namespace SkolarAid.form
             this.picUser = new System.Windows.Forms.PictureBox();
             this.lblRole = new System.Windows.Forms.Label();
             this.panelStats1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTotalLogs)).BeginInit();
             this.panelStats2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTodayLogs)).BeginInit();
             this.panelStats3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUniqueUsers)).BeginInit();
             this.panelFilters.SuspendLayout();
             this.panelDataGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityLogs)).BeginInit();
             this.panelDetailView.SuspendLayout();
             this.panelPagination.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picUniqueUsers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTodayLogs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTotalLogs)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
@@ -163,6 +163,16 @@ namespace SkolarAid.form
             this.lblTotalLogsLabel.TabIndex = 0;
             this.lblTotalLogsLabel.Text = "Total Logs";
             // 
+            // picTotalLogs
+            // 
+            this.picTotalLogs.Image = global::SkolarAid.Properties.Resources.file;
+            this.picTotalLogs.Location = new System.Drawing.Point(23, 45);
+            this.picTotalLogs.Name = "picTotalLogs";
+            this.picTotalLogs.Size = new System.Drawing.Size(48, 52);
+            this.picTotalLogs.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picTotalLogs.TabIndex = 2;
+            this.picTotalLogs.TabStop = false;
+            // 
             // panelStats2
             // 
             this.panelStats2.BackColor = System.Drawing.Color.White;
@@ -204,6 +214,15 @@ namespace SkolarAid.form
             this.lblTodayLogsLabel.TabIndex = 0;
             this.lblTodayLogsLabel.Text = "Today\'s Activities";
             // 
+            // picTodayLogs
+            // 
+            this.picTodayLogs.Location = new System.Drawing.Point(23, 45);
+            this.picTodayLogs.Name = "picTodayLogs";
+            this.picTodayLogs.Size = new System.Drawing.Size(48, 52);
+            this.picTodayLogs.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picTodayLogs.TabIndex = 2;
+            this.picTodayLogs.TabStop = false;
+            // 
             // panelStats3
             // 
             this.panelStats3.BackColor = System.Drawing.Color.White;
@@ -244,6 +263,16 @@ namespace SkolarAid.form
             this.lblUniqueUsersLabel.Size = new System.Drawing.Size(99, 19);
             this.lblUniqueUsersLabel.TabIndex = 0;
             this.lblUniqueUsersLabel.Text = "Active Users";
+            // 
+            // picUniqueUsers
+            // 
+            this.picUniqueUsers.Image = global::SkolarAid.Properties.Resources.user__3_;
+            this.picUniqueUsers.Location = new System.Drawing.Point(23, 45);
+            this.picUniqueUsers.Name = "picUniqueUsers";
+            this.picUniqueUsers.Size = new System.Drawing.Size(48, 52);
+            this.picUniqueUsers.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picUniqueUsers.TabIndex = 2;
+            this.picUniqueUsers.TabStop = false;
             // 
             // panelFilters
             // 
@@ -381,6 +410,44 @@ namespace SkolarAid.form
             this.lblSearch.Size = new System.Drawing.Size(54, 17);
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search";
+            // 
+            // btnExportLogs
+            // 
+            this.btnExportLogs.ButtonText = "Export Logs";
+            this.btnExportLogs.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(61)))), ((int)(((byte)(61)))));
+            this.btnExportLogs.CheckedForeColor = System.Drawing.Color.White;
+            this.btnExportLogs.CheckedImageTint = System.Drawing.Color.White;
+            this.btnExportLogs.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.btnExportLogs.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnExportLogs.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.btnExportLogs.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.btnExportLogs.HoverForeColor = System.Drawing.Color.White;
+            this.btnExportLogs.HoverImage = null;
+            this.btnExportLogs.HoverImageTint = System.Drawing.Color.White;
+            this.btnExportLogs.HoverOutline = System.Drawing.Color.Empty;
+            this.btnExportLogs.Image = global::SkolarAid.Properties.Resources.file;
+            this.btnExportLogs.ImageAutoCenter = true;
+            this.btnExportLogs.ImageExpand = new System.Drawing.Point(8, 8);
+            this.btnExportLogs.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnExportLogs.ImageTint = System.Drawing.Color.White;
+            this.btnExportLogs.IsToggleButton = false;
+            this.btnExportLogs.IsToggled = false;
+            this.btnExportLogs.Location = new System.Drawing.Point(1170, 28);
+            this.btnExportLogs.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.btnExportLogs.Name = "btnExportLogs";
+            this.btnExportLogs.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnExportLogs.NormalForeColor = System.Drawing.Color.White;
+            this.btnExportLogs.NormalOutline = System.Drawing.Color.Empty;
+            this.btnExportLogs.OutlineThickness = 2F;
+            this.btnExportLogs.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnExportLogs.PressedForeColor = System.Drawing.Color.White;
+            this.btnExportLogs.PressedImageTint = System.Drawing.Color.White;
+            this.btnExportLogs.PressedOutline = System.Drawing.Color.Empty;
+            this.btnExportLogs.Rounding = new System.Windows.Forms.Padding(5);
+            this.btnExportLogs.Size = new System.Drawing.Size(154, 35);
+            this.btnExportLogs.TabIndex = 5;
+            this.btnExportLogs.TextAutoCenter = true;
+            this.btnExportLogs.TextOffset = new System.Drawing.Point(-5, 0);
             // 
             // btnClearFilters
             // 
@@ -603,7 +670,7 @@ namespace SkolarAid.form
             this.panelDetailView.Controls.Add(this.lblDetailTitle);
             this.panelDetailView.Location = new System.Drawing.Point(1340, 425);
             this.panelDetailView.Name = "panelDetailView";
-            this.panelDetailView.Size = new System.Drawing.Size(337, 575);
+            this.panelDetailView.Size = new System.Drawing.Size(337, 571);
             this.panelDetailView.TabIndex = 9;
             // 
             // lblDetailDescription
@@ -625,7 +692,7 @@ namespace SkolarAid.form
             this.txtDetailDescription.Location = new System.Drawing.Point(25, 235);
             this.txtDetailDescription.Name = "txtDetailDescription";
             this.txtDetailDescription.ReadOnly = true;
-            this.txtDetailDescription.Size = new System.Drawing.Size(290, 320);
+            this.txtDetailDescription.Size = new System.Drawing.Size(290, 281);
             this.txtDetailDescription.TabIndex = 2;
             this.txtDetailDescription.Text = "";
             // 
@@ -876,73 +943,6 @@ namespace SkolarAid.form
             this.btnFirstPage.TextAutoCenter = true;
             this.btnFirstPage.TextOffset = new System.Drawing.Point(0, 0);
             // 
-            // btnExportLogs
-            // 
-            this.btnExportLogs.ButtonText = "Export Logs";
-            this.btnExportLogs.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(61)))), ((int)(((byte)(61)))));
-            this.btnExportLogs.CheckedForeColor = System.Drawing.Color.White;
-            this.btnExportLogs.CheckedImageTint = System.Drawing.Color.White;
-            this.btnExportLogs.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.btnExportLogs.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnExportLogs.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.btnExportLogs.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
-            this.btnExportLogs.HoverForeColor = System.Drawing.Color.White;
-            this.btnExportLogs.HoverImage = null;
-            this.btnExportLogs.HoverImageTint = System.Drawing.Color.White;
-            this.btnExportLogs.HoverOutline = System.Drawing.Color.Empty;
-            this.btnExportLogs.Image = global::SkolarAid.Properties.Resources.file;
-            this.btnExportLogs.ImageAutoCenter = true;
-            this.btnExportLogs.ImageExpand = new System.Drawing.Point(8, 8);
-            this.btnExportLogs.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnExportLogs.ImageTint = System.Drawing.Color.White;
-            this.btnExportLogs.IsToggleButton = false;
-            this.btnExportLogs.IsToggled = false;
-            this.btnExportLogs.Location = new System.Drawing.Point(1170, 28);
-            this.btnExportLogs.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.btnExportLogs.Name = "btnExportLogs";
-            this.btnExportLogs.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.btnExportLogs.NormalForeColor = System.Drawing.Color.White;
-            this.btnExportLogs.NormalOutline = System.Drawing.Color.Empty;
-            this.btnExportLogs.OutlineThickness = 2F;
-            this.btnExportLogs.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnExportLogs.PressedForeColor = System.Drawing.Color.White;
-            this.btnExportLogs.PressedImageTint = System.Drawing.Color.White;
-            this.btnExportLogs.PressedOutline = System.Drawing.Color.Empty;
-            this.btnExportLogs.Rounding = new System.Windows.Forms.Padding(5);
-            this.btnExportLogs.Size = new System.Drawing.Size(154, 35);
-            this.btnExportLogs.TabIndex = 5;
-            this.btnExportLogs.TextAutoCenter = true;
-            this.btnExportLogs.TextOffset = new System.Drawing.Point(-5, 0);
-            // 
-            // picUniqueUsers
-            // 
-            this.picUniqueUsers.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUniqueUsers.Location = new System.Drawing.Point(23, 45);
-            this.picUniqueUsers.Name = "picUniqueUsers";
-            this.picUniqueUsers.Size = new System.Drawing.Size(48, 52);
-            this.picUniqueUsers.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picUniqueUsers.TabIndex = 2;
-            this.picUniqueUsers.TabStop = false;
-            // 
-            // picTodayLogs
-            // 
-            this.picTodayLogs.Location = new System.Drawing.Point(23, 45);
-            this.picTodayLogs.Name = "picTodayLogs";
-            this.picTodayLogs.Size = new System.Drawing.Size(48, 52);
-            this.picTodayLogs.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picTodayLogs.TabIndex = 2;
-            this.picTodayLogs.TabStop = false;
-            // 
-            // picTotalLogs
-            // 
-            this.picTotalLogs.Image = global::SkolarAid.Properties.Resources.file;
-            this.picTotalLogs.Location = new System.Drawing.Point(23, 45);
-            this.picTotalLogs.Name = "picTotalLogs";
-            this.picTotalLogs.Size = new System.Drawing.Size(48, 52);
-            this.picTotalLogs.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picTotalLogs.TabIndex = 2;
-            this.picTotalLogs.TabStop = false;
-            // 
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
@@ -955,7 +955,7 @@ namespace SkolarAid.form
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 970);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
             this.panelSidebar.TabIndex = 11;
             // 
             // btnReminder
@@ -1294,7 +1294,7 @@ namespace SkolarAid.form
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1050);
+            this.ClientSize = new System.Drawing.Size(1700, 1000);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelPagination);
@@ -1311,10 +1311,13 @@ namespace SkolarAid.form
             this.Text = "Activity Logs - ScholarAid";
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTotalLogs)).EndInit();
             this.panelStats2.ResumeLayout(false);
             this.panelStats2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTodayLogs)).EndInit();
             this.panelStats3.ResumeLayout(false);
             this.panelStats3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picUniqueUsers)).EndInit();
             this.panelFilters.ResumeLayout(false);
             this.panelFilters.PerformLayout();
             this.panelDataGrid.ResumeLayout(false);
@@ -1323,9 +1326,6 @@ namespace SkolarAid.form
             this.panelDetailView.PerformLayout();
             this.panelPagination.ResumeLayout(false);
             this.panelPagination.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picUniqueUsers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTodayLogs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTotalLogs)).EndInit();
             this.panelSidebar.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

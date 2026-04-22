@@ -46,15 +46,19 @@ namespace SkolarAid.form
             this.panelStats1 = new SATAUiFramework.SATAPanel();
             this.lblTotalSent = new System.Windows.Forms.Label();
             this.lblTotalSentLabel = new System.Windows.Forms.Label();
+            this.picTotalSent = new System.Windows.Forms.PictureBox();
             this.panelStats2 = new SATAUiFramework.SATAPanel();
             this.lblPendingSMS = new System.Windows.Forms.Label();
             this.lblPendingSMSLabel = new System.Windows.Forms.Label();
+            this.picPendingSMS = new System.Windows.Forms.PictureBox();
             this.panelStats3 = new SATAUiFramework.SATAPanel();
             this.lblDelivered = new System.Windows.Forms.Label();
             this.lblDeliveredLabel = new System.Windows.Forms.Label();
+            this.picDelivered = new System.Windows.Forms.PictureBox();
             this.panelStats4 = new SATAUiFramework.SATAPanel();
             this.lblFailedSMS = new System.Windows.Forms.Label();
             this.lblFailedSMSLabel = new System.Windows.Forms.Label();
+            this.picFailedSMS = new System.Windows.Forms.PictureBox();
             this.panelFilters = new SATAUiFramework.SATAPanel();
             this.cmbNotificationType = new System.Windows.Forms.ComboBox();
             this.lblNotificationType = new System.Windows.Forms.Label();
@@ -78,6 +82,7 @@ namespace SkolarAid.form
             this.lblNotificationTitle = new System.Windows.Forms.Label();
             this.txtNotificationMessage = new System.Windows.Forms.RichTextBox();
             this.lblMessage = new System.Windows.Forms.Label();
+            this.btnSendNotification = new FrameworkTest.SATAButton();
             this.btnClearForm = new FrameworkTest.SATAButton();
             this.panelDataGrid = new SATAUiFramework.SATAPanel();
             this.dgvNotifications = new System.Windows.Forms.DataGridView();
@@ -99,11 +104,6 @@ namespace SkolarAid.form
             this.txtDetailMessage = new System.Windows.Forms.RichTextBox();
             this.lblDetailMessage = new System.Windows.Forms.Label();
             this.btnResend = new FrameworkTest.SATAButton();
-            this.btnSendNotification = new FrameworkTest.SATAButton();
-            this.picFailedSMS = new System.Windows.Forms.PictureBox();
-            this.picDelivered = new System.Windows.Forms.PictureBox();
-            this.picPendingSMS = new System.Windows.Forms.PictureBox();
-            this.picTotalSent = new System.Windows.Forms.PictureBox();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnReminder = new FrameworkTest.SATAButton();
             this.btnActivityLog = new FrameworkTest.SATAButton();
@@ -118,18 +118,18 @@ namespace SkolarAid.form
             this.picUser = new System.Windows.Forms.PictureBox();
             this.lblRole = new System.Windows.Forms.Label();
             this.panelStats1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTotalSent)).BeginInit();
             this.panelStats2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPendingSMS)).BeginInit();
             this.panelStats3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDelivered)).BeginInit();
             this.panelStats4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFailedSMS)).BeginInit();
             this.panelFilters.SuspendLayout();
             this.panelCompose.SuspendLayout();
             this.panelDataGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNotifications)).BeginInit();
             this.panelDetailView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFailedSMS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDelivered)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPendingSMS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTotalSent)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
@@ -177,6 +177,16 @@ namespace SkolarAid.form
             this.lblTotalSentLabel.TabIndex = 0;
             this.lblTotalSentLabel.Text = "Total Sent";
             // 
+            // picTotalSent
+            // 
+            this.picTotalSent.Image = global::SkolarAid.Properties.Resources.bell__1_;
+            this.picTotalSent.Location = new System.Drawing.Point(15, 40);
+            this.picTotalSent.Name = "picTotalSent";
+            this.picTotalSent.Size = new System.Drawing.Size(45, 48);
+            this.picTotalSent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picTotalSent.TabIndex = 2;
+            this.picTotalSent.TabStop = false;
+            // 
             // panelStats2
             // 
             this.panelStats2.BackColor = System.Drawing.Color.White;
@@ -217,6 +227,15 @@ namespace SkolarAid.form
             this.lblPendingSMSLabel.Size = new System.Drawing.Size(102, 18);
             this.lblPendingSMSLabel.TabIndex = 0;
             this.lblPendingSMSLabel.Text = "Pending SMS";
+            // 
+            // picPendingSMS
+            // 
+            this.picPendingSMS.Location = new System.Drawing.Point(15, 40);
+            this.picPendingSMS.Name = "picPendingSMS";
+            this.picPendingSMS.Size = new System.Drawing.Size(45, 48);
+            this.picPendingSMS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPendingSMS.TabIndex = 2;
+            this.picPendingSMS.TabStop = false;
             // 
             // panelStats3
             // 
@@ -259,6 +278,15 @@ namespace SkolarAid.form
             this.lblDeliveredLabel.TabIndex = 0;
             this.lblDeliveredLabel.Text = "Delivered";
             // 
+            // picDelivered
+            // 
+            this.picDelivered.Location = new System.Drawing.Point(15, 40);
+            this.picDelivered.Name = "picDelivered";
+            this.picDelivered.Size = new System.Drawing.Size(45, 48);
+            this.picDelivered.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picDelivered.TabIndex = 2;
+            this.picDelivered.TabStop = false;
+            // 
             // panelStats4
             // 
             this.panelStats4.BackColor = System.Drawing.Color.White;
@@ -299,6 +327,15 @@ namespace SkolarAid.form
             this.lblFailedSMSLabel.Size = new System.Drawing.Size(87, 18);
             this.lblFailedSMSLabel.TabIndex = 0;
             this.lblFailedSMSLabel.Text = "Failed SMS";
+            // 
+            // picFailedSMS
+            // 
+            this.picFailedSMS.Location = new System.Drawing.Point(15, 40);
+            this.picFailedSMS.Name = "picFailedSMS";
+            this.picFailedSMS.Size = new System.Drawing.Size(45, 48);
+            this.picFailedSMS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picFailedSMS.TabIndex = 2;
+            this.picFailedSMS.TabStop = false;
             // 
             // panelFilters
             // 
@@ -519,7 +556,7 @@ namespace SkolarAid.form
             this.panelCompose.Controls.Add(this.btnClearForm);
             this.panelCompose.Location = new System.Drawing.Point(321, 350);
             this.panelCompose.Name = "panelCompose";
-            this.panelCompose.Size = new System.Drawing.Size(580, 672);
+            this.panelCompose.Size = new System.Drawing.Size(580, 611);
             this.panelCompose.TabIndex = 9;
             // 
             // lblComposeTitle
@@ -585,7 +622,7 @@ namespace SkolarAid.form
             // 
             this.chkSendSMS.AutoSize = true;
             this.chkSendSMS.Font = new System.Drawing.Font("Century Gothic", 10F);
-            this.chkSendSMS.Location = new System.Drawing.Point(200, 125);
+            this.chkSendSMS.Location = new System.Drawing.Point(251, 125);
             this.chkSendSMS.Name = "chkSendSMS";
             this.chkSendSMS.Size = new System.Drawing.Size(94, 23);
             this.chkSendSMS.TabIndex = 4;
@@ -642,6 +679,44 @@ namespace SkolarAid.form
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "Message";
             // 
+            // btnSendNotification
+            // 
+            this.btnSendNotification.ButtonText = "Send Notification";
+            this.btnSendNotification.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(61)))), ((int)(((byte)(61)))));
+            this.btnSendNotification.CheckedForeColor = System.Drawing.Color.White;
+            this.btnSendNotification.CheckedImageTint = System.Drawing.Color.White;
+            this.btnSendNotification.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.btnSendNotification.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnSendNotification.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
+            this.btnSendNotification.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
+            this.btnSendNotification.HoverForeColor = System.Drawing.Color.White;
+            this.btnSendNotification.HoverImage = null;
+            this.btnSendNotification.HoverImageTint = System.Drawing.Color.White;
+            this.btnSendNotification.HoverOutline = System.Drawing.Color.Empty;
+            this.btnSendNotification.Image = global::SkolarAid.Properties.Resources.bell__1_;
+            this.btnSendNotification.ImageAutoCenter = true;
+            this.btnSendNotification.ImageExpand = new System.Drawing.Point(8, 8);
+            this.btnSendNotification.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnSendNotification.ImageTint = System.Drawing.Color.White;
+            this.btnSendNotification.IsToggleButton = false;
+            this.btnSendNotification.IsToggled = false;
+            this.btnSendNotification.Location = new System.Drawing.Point(350, 480);
+            this.btnSendNotification.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnSendNotification.Name = "btnSendNotification";
+            this.btnSendNotification.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnSendNotification.NormalForeColor = System.Drawing.Color.White;
+            this.btnSendNotification.NormalOutline = System.Drawing.Color.Empty;
+            this.btnSendNotification.OutlineThickness = 2F;
+            this.btnSendNotification.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnSendNotification.PressedForeColor = System.Drawing.Color.White;
+            this.btnSendNotification.PressedImageTint = System.Drawing.Color.White;
+            this.btnSendNotification.PressedOutline = System.Drawing.Color.Empty;
+            this.btnSendNotification.Rounding = new System.Windows.Forms.Padding(5);
+            this.btnSendNotification.Size = new System.Drawing.Size(200, 50);
+            this.btnSendNotification.TabIndex = 6;
+            this.btnSendNotification.TextAutoCenter = true;
+            this.btnSendNotification.TextOffset = new System.Drawing.Point(-10, 0);
+            // 
             // btnClearForm
             // 
             this.btnClearForm.ButtonText = "Clear Form";
@@ -692,9 +767,9 @@ namespace SkolarAid.form
             this.panelDataGrid.BorderRadius = borderRadius7;
             this.panelDataGrid.BorderThickness = 0;
             this.panelDataGrid.Controls.Add(this.dgvNotifications);
-            this.panelDataGrid.Location = new System.Drawing.Point(921, 350);
+            this.panelDataGrid.Location = new System.Drawing.Point(916, 350);
             this.panelDataGrid.Name = "panelDataGrid";
-            this.panelDataGrid.Size = new System.Drawing.Size(475, 672);
+            this.panelDataGrid.Size = new System.Drawing.Size(475, 605);
             this.panelDataGrid.TabIndex = 10;
             // 
             // dgvNotifications
@@ -747,7 +822,7 @@ namespace SkolarAid.form
             this.dgvNotifications.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvNotifications.RowTemplate.Height = 35;
             this.dgvNotifications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNotifications.Size = new System.Drawing.Size(475, 672);
+            this.dgvNotifications.Size = new System.Drawing.Size(475, 605);
             this.dgvNotifications.TabIndex = 0;
             // 
             // colNotificationID
@@ -815,9 +890,9 @@ namespace SkolarAid.form
             this.panelDetailView.Controls.Add(this.txtDetailMessage);
             this.panelDetailView.Controls.Add(this.lblDetailMessage);
             this.panelDetailView.Controls.Add(this.btnResend);
-            this.panelDetailView.Location = new System.Drawing.Point(1414, 350);
+            this.panelDetailView.Location = new System.Drawing.Point(1398, 350);
             this.panelDetailView.Name = "panelDetailView";
-            this.panelDetailView.Size = new System.Drawing.Size(263, 672);
+            this.panelDetailView.Size = new System.Drawing.Size(263, 605);
             this.panelDetailView.TabIndex = 11;
             // 
             // lblDetailTitle
@@ -899,7 +974,7 @@ namespace SkolarAid.form
             this.txtDetailMessage.Location = new System.Drawing.Point(20, 240);
             this.txtDetailMessage.Name = "txtDetailMessage";
             this.txtDetailMessage.ReadOnly = true;
-            this.txtDetailMessage.Size = new System.Drawing.Size(226, 349);
+            this.txtDetailMessage.Size = new System.Drawing.Size(226, 303);
             this.txtDetailMessage.TabIndex = 5;
             this.txtDetailMessage.Text = "";
             // 
@@ -935,7 +1010,7 @@ namespace SkolarAid.form
             this.btnResend.ImageTint = System.Drawing.Color.White;
             this.btnResend.IsToggleButton = false;
             this.btnResend.IsToggled = false;
-            this.btnResend.Location = new System.Drawing.Point(20, 610);
+            this.btnResend.Location = new System.Drawing.Point(20, 549);
             this.btnResend.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnResend.Name = "btnResend";
             this.btnResend.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -952,81 +1027,6 @@ namespace SkolarAid.form
             this.btnResend.TextAutoCenter = true;
             this.btnResend.TextOffset = new System.Drawing.Point(0, 0);
             // 
-            // btnSendNotification
-            // 
-            this.btnSendNotification.ButtonText = "Send Notification";
-            this.btnSendNotification.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(61)))), ((int)(((byte)(61)))));
-            this.btnSendNotification.CheckedForeColor = System.Drawing.Color.White;
-            this.btnSendNotification.CheckedImageTint = System.Drawing.Color.White;
-            this.btnSendNotification.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.btnSendNotification.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnSendNotification.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
-            this.btnSendNotification.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(122)))), ((int)(((byte)(122)))));
-            this.btnSendNotification.HoverForeColor = System.Drawing.Color.White;
-            this.btnSendNotification.HoverImage = null;
-            this.btnSendNotification.HoverImageTint = System.Drawing.Color.White;
-            this.btnSendNotification.HoverOutline = System.Drawing.Color.Empty;
-            this.btnSendNotification.Image = global::SkolarAid.Properties.Resources.bell__1_;
-            this.btnSendNotification.ImageAutoCenter = true;
-            this.btnSendNotification.ImageExpand = new System.Drawing.Point(8, 8);
-            this.btnSendNotification.ImageOffset = new System.Drawing.Point(-20, 0);
-            this.btnSendNotification.ImageTint = System.Drawing.Color.White;
-            this.btnSendNotification.IsToggleButton = false;
-            this.btnSendNotification.IsToggled = false;
-            this.btnSendNotification.Location = new System.Drawing.Point(300, 480);
-            this.btnSendNotification.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSendNotification.Name = "btnSendNotification";
-            this.btnSendNotification.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.btnSendNotification.NormalForeColor = System.Drawing.Color.White;
-            this.btnSendNotification.NormalOutline = System.Drawing.Color.Empty;
-            this.btnSendNotification.OutlineThickness = 2F;
-            this.btnSendNotification.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnSendNotification.PressedForeColor = System.Drawing.Color.White;
-            this.btnSendNotification.PressedImageTint = System.Drawing.Color.White;
-            this.btnSendNotification.PressedOutline = System.Drawing.Color.Empty;
-            this.btnSendNotification.Rounding = new System.Windows.Forms.Padding(5);
-            this.btnSendNotification.Size = new System.Drawing.Size(250, 50);
-            this.btnSendNotification.TabIndex = 6;
-            this.btnSendNotification.TextAutoCenter = true;
-            this.btnSendNotification.TextOffset = new System.Drawing.Point(-10, 0);
-            // 
-            // picFailedSMS
-            // 
-            this.picFailedSMS.Location = new System.Drawing.Point(15, 40);
-            this.picFailedSMS.Name = "picFailedSMS";
-            this.picFailedSMS.Size = new System.Drawing.Size(45, 48);
-            this.picFailedSMS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picFailedSMS.TabIndex = 2;
-            this.picFailedSMS.TabStop = false;
-            // 
-            // picDelivered
-            // 
-            this.picDelivered.Location = new System.Drawing.Point(15, 40);
-            this.picDelivered.Name = "picDelivered";
-            this.picDelivered.Size = new System.Drawing.Size(45, 48);
-            this.picDelivered.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picDelivered.TabIndex = 2;
-            this.picDelivered.TabStop = false;
-            // 
-            // picPendingSMS
-            // 
-            this.picPendingSMS.Location = new System.Drawing.Point(15, 40);
-            this.picPendingSMS.Name = "picPendingSMS";
-            this.picPendingSMS.Size = new System.Drawing.Size(45, 48);
-            this.picPendingSMS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPendingSMS.TabIndex = 2;
-            this.picPendingSMS.TabStop = false;
-            // 
-            // picTotalSent
-            // 
-            this.picTotalSent.Image = global::SkolarAid.Properties.Resources.bell__1_;
-            this.picTotalSent.Location = new System.Drawing.Point(15, 40);
-            this.picTotalSent.Name = "picTotalSent";
-            this.picTotalSent.Size = new System.Drawing.Size(45, 48);
-            this.picTotalSent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picTotalSent.TabIndex = 2;
-            this.picTotalSent.TabStop = false;
-            // 
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
@@ -1039,7 +1039,7 @@ namespace SkolarAid.form
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 970);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
             this.panelSidebar.TabIndex = 12;
             // 
             // btnReminder
@@ -1378,7 +1378,7 @@ namespace SkolarAid.form
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1050);
+            this.ClientSize = new System.Drawing.Size(1700, 1000);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelDetailView);
@@ -1400,12 +1400,16 @@ namespace SkolarAid.form
             this.Load += new System.EventHandler(this.FrmNotifications_Load);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picTotalSent)).EndInit();
             this.panelStats2.ResumeLayout(false);
             this.panelStats2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPendingSMS)).EndInit();
             this.panelStats3.ResumeLayout(false);
             this.panelStats3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picDelivered)).EndInit();
             this.panelStats4.ResumeLayout(false);
             this.panelStats4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFailedSMS)).EndInit();
             this.panelFilters.ResumeLayout(false);
             this.panelFilters.PerformLayout();
             this.panelCompose.ResumeLayout(false);
@@ -1414,10 +1418,6 @@ namespace SkolarAid.form
             ((System.ComponentModel.ISupportInitialize)(this.dgvNotifications)).EndInit();
             this.panelDetailView.ResumeLayout(false);
             this.panelDetailView.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picFailedSMS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picDelivered)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPendingSMS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picTotalSent)).EndInit();
             this.panelSidebar.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();

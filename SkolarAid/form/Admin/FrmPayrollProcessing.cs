@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SkolarAid.form.Admin;
 
 namespace SkolarAid
 {
@@ -73,6 +74,11 @@ namespace SkolarAid
 
             // Hide or close the current Register form
             this.Hide();
+        }
+
+        private void FrmPayrollProcessing_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

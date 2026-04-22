@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius9 = new SATAUiFramework.BorderRadius();

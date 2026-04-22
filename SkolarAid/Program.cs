@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using SkolarAid.Data;
+using SkolarAid.form.Scholar;
+using SkolarAid.form.Admin;
 
 namespace SkolarAid
 {
@@ -18,7 +20,7 @@ namespace SkolarAid
             // Test database connection on startup
             if (DatabaseHelper.TestConnection())
             {
-                Application.Run(new Login());
+                Application.Run(new FrmAdminDashboard());
             }
             else
             {

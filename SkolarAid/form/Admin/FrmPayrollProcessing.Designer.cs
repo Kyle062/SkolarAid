@@ -645,7 +645,7 @@
             this.panelDataGrid.Controls.Add(this.dgvScholars);
             this.panelDataGrid.Location = new System.Drawing.Point(321, 425);
             this.panelDataGrid.Name = "panelDataGrid";
-            this.panelDataGrid.Size = new System.Drawing.Size(974, 589);
+            this.panelDataGrid.Size = new System.Drawing.Size(974, 547);
             this.panelDataGrid.TabIndex = 10;
             // 
             // dgvScholars
@@ -697,7 +697,7 @@
             this.dgvScholars.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvScholars.RowTemplate.Height = 35;
             this.dgvScholars.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvScholars.Size = new System.Drawing.Size(974, 589);
+            this.dgvScholars.Size = new System.Drawing.Size(974, 547);
             this.dgvScholars.TabIndex = 0;
             // 
             // colSelect
@@ -764,7 +764,7 @@
             this.panelSummary.Controls.Add(this.lblSummaryTitle);
             this.panelSummary.Location = new System.Drawing.Point(1313, 425);
             this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(364, 589);
+            this.panelSummary.Size = new System.Drawing.Size(364, 547);
             this.panelSummary.TabIndex = 11;
             // 
             // lblSummaryMethod
@@ -820,7 +820,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 970);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
             this.panelSidebar.TabIndex = 12;
             // 
             // btnReminder
@@ -1159,7 +1159,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1050);
+            this.ClientSize = new System.Drawing.Size(1700, 1000);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelSummary);
@@ -1175,6 +1175,7 @@
             this.Name = "FrmPayrollProcessing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Payroll Processing - ScholarAid";
+            this.Load += new System.EventHandler(this.FrmPayrollProcessing_Load_1);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEligible)).EndInit();
