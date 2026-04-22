@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+
             SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
@@ -94,13 +95,13 @@
             this.btnReports = new FrameworkTest.SATAButton();
             this.btnPayroll = new FrameworkTest.SATAButton();
             this.btnScholarMgmt = new FrameworkTest.SATAButton();
-            this.btnDashboard = new FrameworkTest.SATAButton();
             this.panelHeader = new SATAUiFramework.SATAPanel();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.lblBrand = new System.Windows.Forms.Label();
             this.btnLogout = new FrameworkTest.SATAButton();
             this.picUser = new System.Windows.Forms.PictureBox();
             this.lblRole = new System.Windows.Forms.Label();
+            this.btnDashboard = new FrameworkTest.SATAButton();
             this.panelStats1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEligible)).BeginInit();
             this.panelStats2.SuspendLayout();
@@ -119,6 +120,27 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).BeginInit();
             this.SuspendLayout();
+
+            // ========== NAVIGATION EVENT HANDLERS ==========
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            this.btnScholarMgmt.Click += new System.EventHandler(this.btnScholarMgmt_Click);
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
+            this.btnReminder.Click += new System.EventHandler(this.btnReminder_Click);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+
+            // ========== FUNCTIONAL EVENT HANDLERS ==========
+            this.btnSelectAll.Click += new System.EventHandler(this.BtnSelectAll_Click);
+            this.btnClearSelection.Click += new System.EventHandler(this.BtnClearSelection_Click);
+            this.btnProcessPayroll.Click += new System.EventHandler(this.BtnProcessPayroll_Click);
+            this.btnPreviewPayroll.Click += new System.EventHandler(this.BtnPreviewPayroll_Click);
+            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
+            this.cmbScholarshipType.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            this.dgvScholars.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvScholars_CellValueChanged);
+            this.dgvScholars.CurrentCellDirtyStateChanged += new System.EventHandler(this.DgvScholars_CurrentCellDirtyStateChanged);
+
+
             // 
             // panelStats1
             // 
@@ -961,7 +983,7 @@
             this.btnPayroll.Location = new System.Drawing.Point(0, 195);
             this.btnPayroll.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnPayroll.Name = "btnPayroll";
-            this.btnPayroll.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.btnPayroll.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
             this.btnPayroll.NormalForeColor = System.Drawing.Color.White;
             this.btnPayroll.NormalOutline = System.Drawing.Color.Empty;
             this.btnPayroll.OutlineThickness = 2F;
@@ -1012,44 +1034,6 @@
             this.btnScholarMgmt.TabIndex = 1;
             this.btnScholarMgmt.TextAutoCenter = true;
             this.btnScholarMgmt.TextOffset = new System.Drawing.Point(0, 0);
-            // 
-            // btnDashboard
-            // 
-            this.btnDashboard.ButtonText = "Dashboard";
-            this.btnDashboard.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
-            this.btnDashboard.CheckedForeColor = System.Drawing.Color.White;
-            this.btnDashboard.CheckedImageTint = System.Drawing.Color.White;
-            this.btnDashboard.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
-            this.btnDashboard.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnDashboard.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.btnDashboard.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
-            this.btnDashboard.HoverForeColor = System.Drawing.Color.White;
-            this.btnDashboard.HoverImage = null;
-            this.btnDashboard.HoverImageTint = System.Drawing.Color.White;
-            this.btnDashboard.HoverOutline = System.Drawing.Color.Empty;
-            this.btnDashboard.Image = global::SkolarAid.Properties.Resources.dashboard__3_;
-            this.btnDashboard.ImageAutoCenter = true;
-            this.btnDashboard.ImageExpand = new System.Drawing.Point(10, 10);
-            this.btnDashboard.ImageOffset = new System.Drawing.Point(-40, 0);
-            this.btnDashboard.ImageTint = System.Drawing.Color.White;
-            this.btnDashboard.IsToggleButton = false;
-            this.btnDashboard.IsToggled = true;
-            this.btnDashboard.Location = new System.Drawing.Point(0, 45);
-            this.btnDashboard.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnDashboard.Name = "btnDashboard";
-            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
-            this.btnDashboard.NormalForeColor = System.Drawing.Color.White;
-            this.btnDashboard.NormalOutline = System.Drawing.Color.Empty;
-            this.btnDashboard.OutlineThickness = 2F;
-            this.btnDashboard.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnDashboard.PressedForeColor = System.Drawing.Color.White;
-            this.btnDashboard.PressedImageTint = System.Drawing.Color.White;
-            this.btnDashboard.PressedOutline = System.Drawing.Color.Empty;
-            this.btnDashboard.Rounding = new System.Windows.Forms.Padding(0);
-            this.btnDashboard.Size = new System.Drawing.Size(280, 55);
-            this.btnDashboard.TabIndex = 0;
-            this.btnDashboard.TextAutoCenter = true;
-            this.btnDashboard.TextOffset = new System.Drawing.Point(-30, 0);
             // 
             // panelHeader
             // 
@@ -1153,6 +1137,44 @@
             this.lblRole.Size = new System.Drawing.Size(111, 19);
             this.lblRole.TabIndex = 4;
             this.lblRole.Text = "Administrator";
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.ButtonText = "Dashboard";
+            this.btnDashboard.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
+            this.btnDashboard.CheckedForeColor = System.Drawing.Color.White;
+            this.btnDashboard.CheckedImageTint = System.Drawing.Color.White;
+            this.btnDashboard.CheckedOutline = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.btnDashboard.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnDashboard.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.btnDashboard.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
+            this.btnDashboard.HoverForeColor = System.Drawing.Color.White;
+            this.btnDashboard.HoverImage = null;
+            this.btnDashboard.HoverImageTint = System.Drawing.Color.White;
+            this.btnDashboard.HoverOutline = System.Drawing.Color.Empty;
+            this.btnDashboard.Image = global::SkolarAid.Properties.Resources.dashboard__3_;
+            this.btnDashboard.ImageAutoCenter = true;
+            this.btnDashboard.ImageExpand = new System.Drawing.Point(10, 10);
+            this.btnDashboard.ImageOffset = new System.Drawing.Point(-40, 0);
+            this.btnDashboard.ImageTint = System.Drawing.Color.White;
+            this.btnDashboard.IsToggleButton = false;
+            this.btnDashboard.IsToggled = true;
+            this.btnDashboard.Location = new System.Drawing.Point(0, 45);
+            this.btnDashboard.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.btnDashboard.NormalForeColor = System.Drawing.Color.White;
+            this.btnDashboard.NormalOutline = System.Drawing.Color.Empty;
+            this.btnDashboard.OutlineThickness = 2F;
+            this.btnDashboard.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnDashboard.PressedForeColor = System.Drawing.Color.White;
+            this.btnDashboard.PressedImageTint = System.Drawing.Color.White;
+            this.btnDashboard.PressedOutline = System.Drawing.Color.Empty;
+            this.btnDashboard.Rounding = new System.Windows.Forms.Padding(0);
+            this.btnDashboard.Size = new System.Drawing.Size(280, 55);
+            this.btnDashboard.TabIndex = 0;
+            this.btnDashboard.TextAutoCenter = true;
+            this.btnDashboard.TextOffset = new System.Drawing.Point(-30, 0);
             // 
             // FrmPayrollProcessing
             // 
@@ -1270,12 +1292,12 @@
         private FrameworkTest.SATAButton btnReports;
         private FrameworkTest.SATAButton btnPayroll;
         private FrameworkTest.SATAButton btnScholarMgmt;
-        private FrameworkTest.SATAButton btnDashboard;
         private SATAUiFramework.SATAPanel panelHeader;
         private System.Windows.Forms.PictureBox picLogo;
         private System.Windows.Forms.Label lblBrand;
         private FrameworkTest.SATAButton btnLogout;
         private System.Windows.Forms.PictureBox picUser;
         private System.Windows.Forms.Label lblRole;
+        private FrameworkTest.SATAButton btnDashboard;
     }
 }

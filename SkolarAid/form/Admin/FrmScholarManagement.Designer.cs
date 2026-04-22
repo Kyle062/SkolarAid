@@ -293,7 +293,7 @@
             this.btnReminder1.TabIndex = 5;
             this.btnReminder1.TextAutoCenter = true;
             this.btnReminder1.TextOffset = new System.Drawing.Point(10, 0);
-            this.btnReminder1.Click += new System.EventHandler(this.btnReminder_Click);
+            this.btnReminder1.Click += new System.EventHandler(this.btnReminder1_Click);
             // 
             // btnActivityLog1
             // 
@@ -332,7 +332,7 @@
             this.btnActivityLog1.TabIndex = 4;
             this.btnActivityLog1.TextAutoCenter = true;
             this.btnActivityLog1.TextOffset = new System.Drawing.Point(-25, 0);
-            this.btnActivityLog1.Click += new System.EventHandler(this.btnActivityLog_Click);
+            this.btnActivityLog1.Click += new System.EventHandler(this.btnActivityLog1_Click);
             // 
             // btnReports1
             // 
@@ -371,7 +371,7 @@
             this.btnReports1.TabIndex = 3;
             this.btnReports1.TextAutoCenter = true;
             this.btnReports1.TextOffset = new System.Drawing.Point(-5, 0);
-            this.btnReports1.Click += new System.EventHandler(this.btnReports_Click);
+            this.btnReports1.Click += new System.EventHandler(this.btnReports1_Click);
             // 
             // btnPayroll1
             // 
@@ -410,7 +410,7 @@
             this.btnPayroll1.TabIndex = 2;
             this.btnPayroll1.TextAutoCenter = true;
             this.btnPayroll1.TextOffset = new System.Drawing.Point(-15, 0);
-            this.btnPayroll1.Click += new System.EventHandler(this.btnPayroll_Click);
+            this.btnPayroll1.Click += new System.EventHandler(this.btnPayroll1_Click);
             // 
             // btnScholarMgmt1
             // 
@@ -487,7 +487,7 @@
             this.btnDashboard1.TabIndex = 0;
             this.btnDashboard1.TextAutoCenter = true;
             this.btnDashboard1.TextOffset = new System.Drawing.Point(-30, 0);
-            this.btnDashboard1.Click += new System.EventHandler(this.btnDashboard_Click);
+            this.btnDashboard1.Click += new System.EventHandler(this.btnDashboard1_Click);
             // 
             // panelSearchBar
             // 

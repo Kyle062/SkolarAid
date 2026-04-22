@@ -24,111 +24,6 @@ namespace SkolarAid
             string adminName = SessionManager.CurrentUser?.Name ?? "Administrator";
             lblGreeting.Text = $"Scholar Management - {adminName}";
 
-            LoadScholarsGrid();
-            LoadFilterOptions();
-            LoadScholarshipTypes();
-            LoadCourses();
-            ClearForm();
-
-            dtpEnrollmentDate.Value = DateTime.Now;
-            dtpExpectedGraduation.Value = DateTime.Now.AddYears(4);
-
-            txtSearch.Text = "Search scholar...";
-            txtSearch.ForeColor = Color.Gray;
-        }
-
-        #region Database Loading Methods
-
-        private void LoadScholarsGrid()
-        {
-            try
-            {
-                using (MySqlConnection conn = DatabaseHelper.GetConnection())
-                {
-                    conn.Open();
-
-                    string query = @"SELECT s.id, s.scholar_number, 
-                                    CONCAT(s.first_name, ' ', s.last_name) AS full_name,
-                                    s.course, s.year_level, st.name AS scholarship_name, s.status
-                                    FROM scholars s
-                                    LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
-                                    WHERE 1=1";
-
-                    if (cmbFilterStatus.SelectedIndex > 0)
-                        query += " AND s.status = @status";
-
-                    if (cmbFilterScholarship.SelectedIndex > 0)
-                        query += " AND st.name = @scholarship";
-
-                    if (!string.IsNullOrEmpty(txtSearch.Text) && txtSearch.Text != "Search scholar...")
-                        query += " AND (s.scholar_number LIKE @search OR s.first_name LIKE @search OR s.last_name LIKE @search)";
-
-                    query += " ORDER BY s.id DESC";
-
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                    if (cmbFilterStatus.SelectedIndex > 0)
-                        cmd.Parameters.AddWithValue("@status", cmbFilterStatus.SelectedItem.ToString());
-
-                    if (cmbFilterScholarship.SelectedIndex > 0)
-                        cmd.Parameters.AddWithValue("@scholarship", cmbFilterScholarship.SelectedItem.ToString());
-
-                    if (!string.IsNullOrEmpty(txtSearch.Text) && txtSearch.Text != "Search scholar...")
-                        cmd.Parameters.AddWithValue("@search", $"%{txtSearch.Text}%");
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        dgvScholars.Rows.Clear();
-
-                        while (reader.Read())
-                        {
-                            int rowIndex = dgvScholars.Rows.Add();
-                            dgvScholars.Rows[rowIndex].Cells["colScholarID"].Value = reader["id"];
-                            dgvScholars.Rows[rowIndex].Cells["colScholarNumber"].Value = reader["scholar_number"];
-                            dgvScholars.Rows[rowIndex].Cells["colName"].Value = reader["full_name"];
-                            dgvScholars.Rows[rowIndex].Cells["colCourse"].Value = reader["course"];
-                            dgvScholars.Rows[rowIndex].Cells["colYearLevel"].Value = reader["year_level"];
-                            dgvScholars.Rows[rowIndex].Cells["colScholarship"].Value = reader["scholarship_name"];
-                            dgvScholars.Rows[rowIndex].Cells["colStatus"].Value = reader["status"];
-
-                            string status = reader["status"].ToString();
-                            var statusCell = dgvScholars.Rows[rowIndex].Cells["colStatus"];
-                            if (status == "Active")
-                            {
-                                statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
-                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
-                            }
-                            else if (status == "Inactive")
-                            {
-                                statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0);
-                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
-                            }
-                            else if (status == "Graduated")
-                            {
-                                statusCell.Style.ForeColor = Color.FromArgb(0, 123, 255);
-                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
-                            }
-                            else if (status == "Terminated")
-                            {
-                                statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
-                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading scholars: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void FrmScholarManagement_Load(object sender, EventArgs e)
-        {
-            string adminName = SessionManager.CurrentUser?.Name ?? "Administrator";
-            lblGreeting.Text = $"Scholar Management - {adminName}";
-
             // Load filter options FIRST before setting selected index
             LoadFilterOptions();
 
@@ -192,6 +87,94 @@ namespace SkolarAid
             }
         }
 
+        #region Database Loading Methods
+
+        private void LoadScholarsGrid()
+        {
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    string query = @"SELECT s.id, s.scholar_number, 
+                            CONCAT(s.first_name, ' ', s.last_name) AS full_name,
+                            s.course, s.year_level, st.name AS scholarship_name, s.status
+                            FROM scholars s
+                            LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
+                            WHERE 1=1";
+
+                    // Apply filters - CHECK IF ITEMS EXIST AND SELECTED INDEX > 0
+                    if (cmbFilterStatus.SelectedIndex > 0 && cmbFilterStatus.SelectedItem != null)
+                        query += " AND s.status = @status";
+
+                    if (cmbFilterScholarship.SelectedIndex > 0 && cmbFilterScholarship.SelectedItem != null)
+                        query += " AND st.name = @scholarship";
+
+                    if (!string.IsNullOrEmpty(txtSearch.Text) && txtSearch.Text != "Search scholar...")
+                        query += " AND (s.scholar_number LIKE @search OR s.first_name LIKE @search OR s.last_name LIKE @search)";
+
+                    query += " ORDER BY s.id DESC";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                    if (cmbFilterStatus.SelectedIndex > 0 && cmbFilterStatus.SelectedItem != null)
+                        cmd.Parameters.AddWithValue("@status", cmbFilterStatus.SelectedItem.ToString());
+
+                    if (cmbFilterScholarship.SelectedIndex > 0 && cmbFilterScholarship.SelectedItem != null)
+                        cmd.Parameters.AddWithValue("@scholarship", cmbFilterScholarship.SelectedItem.ToString());
+
+                    if (!string.IsNullOrEmpty(txtSearch.Text) && txtSearch.Text != "Search scholar...")
+                        cmd.Parameters.AddWithValue("@search", $"%{txtSearch.Text}%");
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        dgvScholars.Rows.Clear();
+
+                        while (reader.Read())
+                        {
+                            int rowIndex = dgvScholars.Rows.Add();
+                            dgvScholars.Rows[rowIndex].Cells["colScholarID"].Value = reader["id"];
+                            dgvScholars.Rows[rowIndex].Cells["colScholarNumber"].Value = reader["scholar_number"];
+                            dgvScholars.Rows[rowIndex].Cells["colName"].Value = reader["full_name"];
+                            dgvScholars.Rows[rowIndex].Cells["colCourse"].Value = reader["course"];
+                            dgvScholars.Rows[rowIndex].Cells["colYearLevel"].Value = reader["year_level"];
+                            dgvScholars.Rows[rowIndex].Cells["colScholarship"].Value = reader["scholarship_name"];
+                            dgvScholars.Rows[rowIndex].Cells["colStatus"].Value = reader["status"];
+
+                            string status = reader["status"].ToString();
+                            var statusCell = dgvScholars.Rows[rowIndex].Cells["colStatus"];
+                            if (status == "Active")
+                            {
+                                statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
+                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
+                            }
+                            else if (status == "Inactive")
+                            {
+                                statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0);
+                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
+                            }
+                            else if (status == "Graduated")
+                            {
+                                statusCell.Style.ForeColor = Color.FromArgb(0, 123, 255);
+                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
+                            }
+                            else if (status == "Terminated")
+                            {
+                                statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
+                                statusCell.Style.Font = new Font(dgvScholars.Font, FontStyle.Bold);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading scholars: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void LoadScholarshipTypes()
         {
             try
@@ -217,7 +200,11 @@ namespace SkolarAid
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading scholarship types: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadCourses()
@@ -621,35 +608,35 @@ namespace SkolarAid
 
         #region Navigation
 
-        private void btnDashboard_Click(object sender, EventArgs e)
+        private void btnDashboard1_Click(object sender, EventArgs e)
         {
             FrmAdminDashboard dashboard = new FrmAdminDashboard();
             dashboard.Show();
             this.Hide();
         }
 
-        private void btnPayroll_Click(object sender, EventArgs e)
+        private void btnPayroll1_Click(object sender, EventArgs e)
         {
             FrmPayrollProcessing payroll = new FrmPayrollProcessing();
             payroll.Show();
             this.Hide();
         }
 
-        private void btnReports_Click(object sender, EventArgs e)
+        private void btnReports1_Click(object sender, EventArgs e)
         {
             FrmReportsAnalytics reports = new FrmReportsAnalytics();
             reports.Show();
             this.Hide();
         }
 
-        private void btnActivityLog_Click(object sender, EventArgs e)
+        private void btnActivityLog1_Click(object sender, EventArgs e)
         {
             FrmActivityLogs activityLogs = new FrmActivityLogs();
             activityLogs.Show();
             this.Hide();
         }
 
-        private void btnReminder_Click(object sender, EventArgs e)
+        private void btnReminder1_Click(object sender, EventArgs e)
         {
             FrmNotifications notifications = new FrmNotifications();
             notifications.Show();
@@ -672,13 +659,9 @@ namespace SkolarAid
         private void panelContent_Paint(object sender, PaintEventArgs e) { }
         private void panelContent_Paint_1(object sender, PaintEventArgs e) { }
         private void panelContent_Paint_2(object sender, PaintEventArgs e) { }
+        private void panelContent_Paint_3(object sender, PaintEventArgs e) { }
         private void dgvScholars_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         #endregion
-
-        private void panelContent_Paint_3(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 
     // Helper class for ComboBox items
