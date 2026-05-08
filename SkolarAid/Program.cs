@@ -19,8 +19,9 @@ namespace SkolarAid
 
             // Test database connection on startup
             if (DatabaseHelper.TestConnection())
-            {
-                Application.Run(new FrmAdminDashboard());
+            {   
+              
+                Application.Run(new Login());
             }
             else
             {

@@ -128,8 +128,8 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=9.6.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.9.6.0\lib\net462\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=9.7.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.9.7.0\lib\net462\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="SATAUiFramework, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SATAUiFramework.1.1.3\lib\net40\SATAUiFramework.dll</HintPath>
@@ -347,6 +347,9 @@
   <ItemGroup>
     <Compile Include="Classes\ActivityLogger.cs" />
     <Compile Include="Data\SessionManager.cs" />
+    <Compile Include="form\Admin\FrmScholarDetailsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Models\ActivityLog.cs" />
     <Compile Include="Models\ComplianceRecord.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -446,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="form\Admin\FrmReports&amp;Analytics.resx">
       <DependentUpon>FrmReports&amp;Analytics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\Admin\FrmScholarDetailsView.resx">
+      <DependentUpon>FrmScholarDetailsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form\Scholar\FrmPaymentHistory.resx">
       <DependentUpon>FrmPaymentHistory.cs</DependentUpon>

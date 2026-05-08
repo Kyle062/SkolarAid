@@ -17,19 +17,19 @@
 
         private void InitializeComponent()
         {
-            SATAUiFramework.BorderRadius borderRadius27 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius28 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius29 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius30 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius31 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius32 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius33 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius34 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius35 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius36 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius37 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius38 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius39 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius9 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius10 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius11 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius12 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius13 = new SATAUiFramework.BorderRadius();
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnReminder = new FrameworkTest.SATAButton();
@@ -133,7 +133,7 @@
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(0, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1700, 1000);
+            this.panelContent.Size = new System.Drawing.Size(1920, 1061);
             this.panelContent.TabIndex = 4;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
@@ -149,7 +149,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 981);
             this.panelSidebar.TabIndex = 2;
             // 
             // btnReminder
@@ -390,11 +390,11 @@
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius27.BottomLeft = 1;
-            borderRadius27.BottomRight = 1;
-            borderRadius27.TopLeft = 1;
-            borderRadius27.TopRight = 1;
-            this.panelHeader.BorderRadius = borderRadius27;
+            borderRadius1.BottomLeft = 1;
+            borderRadius1.BottomRight = 1;
+            borderRadius1.TopLeft = 1;
+            borderRadius1.TopRight = 1;
+            this.panelHeader.BorderRadius = borderRadius1;
             this.panelHeader.BorderThickness = 0;
             this.panelHeader.Controls.Add(this.picLogo);
             this.panelHeader.Controls.Add(this.lblBrand);
@@ -404,7 +404,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1700, 80);
+            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
             this.panelHeader.TabIndex = 3;
             this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
@@ -426,9 +426,9 @@
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(85, 28);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(203, 26);
+            this.lblBrand.Size = new System.Drawing.Size(194, 26);
             this.lblBrand.TabIndex = 1;
-            this.lblBrand.Text = "ScholarAid Admin";
+            this.lblBrand.Text = "IskolarAid Admin";
             // 
             // btnLogout
             // 
@@ -451,7 +451,7 @@
             this.btnLogout.ImageTint = System.Drawing.Color.White;
             this.btnLogout.IsToggleButton = false;
             this.btnLogout.IsToggled = false;
-            this.btnLogout.Location = new System.Drawing.Point(1567, 14);
+            this.btnLogout.Location = new System.Drawing.Point(1777, 25);
             this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
@@ -472,7 +472,7 @@
             // picUser
             // 
             this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUser.Location = new System.Drawing.Point(1398, 19);
+            this.picUser.Location = new System.Drawing.Point(1608, 24);
             this.picUser.Name = "picUser";
             this.picUser.Size = new System.Drawing.Size(36, 35);
             this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -484,7 +484,7 @@
             this.lblRole.AutoSize = true;
             this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.lblRole.Location = new System.Drawing.Point(1440, 27);
+            this.lblRole.Location = new System.Drawing.Point(1650, 32);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(111, 19);
             this.lblRole.TabIndex = 4;
@@ -498,7 +498,7 @@
             this.tabControlReports.Location = new System.Drawing.Point(288, 125);
             this.tabControlReports.Name = "tabControlReports";
             this.tabControlReports.SelectedIndex = 0;
-            this.tabControlReports.Size = new System.Drawing.Size(1389, 903);
+            this.tabControlReports.Size = new System.Drawing.Size(1606, 903);
             this.tabControlReports.TabIndex = 0;
             // 
             // tabPageReports
@@ -508,7 +508,7 @@
             this.tabPageReports.Location = new System.Drawing.Point(4, 25);
             this.tabPageReports.Name = "tabPageReports";
             this.tabPageReports.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageReports.Size = new System.Drawing.Size(1381, 874);
+            this.tabPageReports.Size = new System.Drawing.Size(1598, 874);
             this.tabPageReports.TabIndex = 0;
             this.tabPageReports.Text = "Generate Reports";
             // 
@@ -517,11 +517,11 @@
             this.panelReports.BackColor = System.Drawing.Color.White;
             this.panelReports.BackColor2 = System.Drawing.Color.White;
             this.panelReports.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius28.BottomLeft = 10;
-            borderRadius28.BottomRight = 10;
-            borderRadius28.TopLeft = 10;
-            borderRadius28.TopRight = 10;
-            this.panelReports.BorderRadius = borderRadius28;
+            borderRadius2.BottomLeft = 10;
+            borderRadius2.BottomRight = 10;
+            borderRadius2.TopLeft = 10;
+            borderRadius2.TopRight = 10;
+            this.panelReports.BorderRadius = borderRadius2;
             this.panelReports.BorderThickness = 1;
             this.panelReports.Controls.Add(this.btnPrint);
             this.panelReports.Controls.Add(this.btnExportExcel);
@@ -541,7 +541,7 @@
             this.panelReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelReports.Location = new System.Drawing.Point(3, 3);
             this.panelReports.Name = "panelReports";
-            this.panelReports.Size = new System.Drawing.Size(1375, 868);
+            this.panelReports.Size = new System.Drawing.Size(1592, 868);
             this.panelReports.TabIndex = 0;
             // 
             // btnPrint
@@ -828,11 +828,11 @@
             this.panelReportPreview.BackColor = System.Drawing.Color.White;
             this.panelReportPreview.BackColor2 = System.Drawing.Color.White;
             this.panelReportPreview.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius29.BottomLeft = 10;
-            borderRadius29.BottomRight = 10;
-            borderRadius29.TopLeft = 10;
-            borderRadius29.TopRight = 10;
-            this.panelReportPreview.BorderRadius = borderRadius29;
+            borderRadius3.BottomLeft = 10;
+            borderRadius3.BottomRight = 10;
+            borderRadius3.TopLeft = 10;
+            borderRadius3.TopRight = 10;
+            this.panelReportPreview.BorderRadius = borderRadius3;
             this.panelReportPreview.BorderThickness = 1;
             this.panelReportPreview.Controls.Add(this.dgvReportData);
             this.panelReportPreview.Location = new System.Drawing.Point(25, 115);
@@ -862,7 +862,7 @@
             this.tabPageAnalytics.Location = new System.Drawing.Point(4, 25);
             this.tabPageAnalytics.Name = "tabPageAnalytics";
             this.tabPageAnalytics.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAnalytics.Size = new System.Drawing.Size(1381, 874);
+            this.tabPageAnalytics.Size = new System.Drawing.Size(1598, 874);
             this.tabPageAnalytics.TabIndex = 1;
             this.tabPageAnalytics.Text = "Analytics Dashboard";
             // 
@@ -871,18 +871,18 @@
             this.panelAnalytics.BackColor = System.Drawing.Color.White;
             this.panelAnalytics.BackColor2 = System.Drawing.Color.White;
             this.panelAnalytics.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius30.BottomLeft = 10;
-            borderRadius30.BottomRight = 10;
-            borderRadius30.TopLeft = 10;
-            borderRadius30.TopRight = 10;
-            this.panelAnalytics.BorderRadius = borderRadius30;
+            borderRadius4.BottomLeft = 10;
+            borderRadius4.BottomRight = 10;
+            borderRadius4.TopLeft = 10;
+            borderRadius4.TopRight = 10;
+            this.panelAnalytics.BorderRadius = borderRadius4;
             this.panelAnalytics.BorderThickness = 1;
             this.panelAnalytics.Controls.Add(this.panelCharts);
             this.panelAnalytics.Controls.Add(this.panelStatsCards);
             this.panelAnalytics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelAnalytics.Location = new System.Drawing.Point(3, 3);
             this.panelAnalytics.Name = "panelAnalytics";
-            this.panelAnalytics.Size = new System.Drawing.Size(1375, 868);
+            this.panelAnalytics.Size = new System.Drawing.Size(1592, 868);
             this.panelAnalytics.TabIndex = 0;
             // 
             // panelCharts
@@ -890,11 +890,11 @@
             this.panelCharts.BackColor = System.Drawing.Color.White;
             this.panelCharts.BackColor2 = System.Drawing.Color.White;
             this.panelCharts.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius31.BottomLeft = 10;
-            borderRadius31.BottomRight = 10;
-            borderRadius31.TopLeft = 10;
-            borderRadius31.TopRight = 10;
-            this.panelCharts.BorderRadius = borderRadius31;
+            borderRadius5.BottomLeft = 10;
+            borderRadius5.BottomRight = 10;
+            borderRadius5.TopLeft = 10;
+            borderRadius5.TopRight = 10;
+            this.panelCharts.BorderRadius = borderRadius5;
             this.panelCharts.BorderThickness = 1;
             this.panelCharts.Controls.Add(this.labelCharts);
             this.panelCharts.Controls.Add(this.panelChartPayments);
@@ -921,11 +921,11 @@
             this.panelChartPayments.BackColor = System.Drawing.Color.White;
             this.panelChartPayments.BackColor2 = System.Drawing.Color.White;
             this.panelChartPayments.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius32.BottomLeft = 10;
-            borderRadius32.BottomRight = 10;
-            borderRadius32.TopLeft = 10;
-            borderRadius32.TopRight = 10;
-            this.panelChartPayments.BorderRadius = borderRadius32;
+            borderRadius6.BottomLeft = 10;
+            borderRadius6.BottomRight = 10;
+            borderRadius6.TopLeft = 10;
+            borderRadius6.TopRight = 10;
+            this.panelChartPayments.BorderRadius = borderRadius6;
             this.panelChartPayments.BorderThickness = 1;
             this.panelChartPayments.Controls.Add(this.labelChart3Title);
             this.panelChartPayments.Controls.Add(this.pictureBoxChart3);
@@ -960,11 +960,11 @@
             this.panelChartCourse.BackColor = System.Drawing.Color.White;
             this.panelChartCourse.BackColor2 = System.Drawing.Color.White;
             this.panelChartCourse.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius33.BottomLeft = 10;
-            borderRadius33.BottomRight = 10;
-            borderRadius33.TopLeft = 10;
-            borderRadius33.TopRight = 10;
-            this.panelChartCourse.BorderRadius = borderRadius33;
+            borderRadius7.BottomLeft = 10;
+            borderRadius7.BottomRight = 10;
+            borderRadius7.TopLeft = 10;
+            borderRadius7.TopRight = 10;
+            this.panelChartCourse.BorderRadius = borderRadius7;
             this.panelChartCourse.BorderThickness = 1;
             this.panelChartCourse.Controls.Add(this.labelChart2Title);
             this.panelChartCourse.Controls.Add(this.pictureBoxChart2);
@@ -999,11 +999,11 @@
             this.panelChartScholarship.BackColor = System.Drawing.Color.White;
             this.panelChartScholarship.BackColor2 = System.Drawing.Color.White;
             this.panelChartScholarship.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius34.BottomLeft = 10;
-            borderRadius34.BottomRight = 10;
-            borderRadius34.TopLeft = 10;
-            borderRadius34.TopRight = 10;
-            this.panelChartScholarship.BorderRadius = borderRadius34;
+            borderRadius8.BottomLeft = 10;
+            borderRadius8.BottomRight = 10;
+            borderRadius8.TopLeft = 10;
+            borderRadius8.TopRight = 10;
+            this.panelChartScholarship.BorderRadius = borderRadius8;
             this.panelChartScholarship.BorderThickness = 1;
             this.panelChartScholarship.Controls.Add(this.labelChart1Title);
             this.panelChartScholarship.Controls.Add(this.pictureBoxChart1);
@@ -1038,11 +1038,11 @@
             this.panelStatsCards.BackColor = System.Drawing.Color.White;
             this.panelStatsCards.BackColor2 = System.Drawing.Color.White;
             this.panelStatsCards.BorderColor = System.Drawing.Color.LightGray;
-            borderRadius35.BottomLeft = 10;
-            borderRadius35.BottomRight = 10;
-            borderRadius35.TopLeft = 10;
-            borderRadius35.TopRight = 10;
-            this.panelStatsCards.BorderRadius = borderRadius35;
+            borderRadius9.BottomLeft = 10;
+            borderRadius9.BottomRight = 10;
+            borderRadius9.TopLeft = 10;
+            borderRadius9.TopRight = 10;
+            this.panelStatsCards.BorderRadius = borderRadius9;
             this.panelStatsCards.BorderThickness = 1;
             this.panelStatsCards.Controls.Add(this.btnRefreshAnalytics);
             this.panelStatsCards.Controls.Add(this.panelPendingPayments);
@@ -1097,11 +1097,11 @@
             this.panelPendingPayments.BackColor = System.Drawing.Color.White;
             this.panelPendingPayments.BackColor2 = System.Drawing.Color.White;
             this.panelPendingPayments.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            borderRadius36.BottomLeft = 10;
-            borderRadius36.BottomRight = 10;
-            borderRadius36.TopLeft = 10;
-            borderRadius36.TopRight = 10;
-            this.panelPendingPayments.BorderRadius = borderRadius36;
+            borderRadius10.BottomLeft = 10;
+            borderRadius10.BottomRight = 10;
+            borderRadius10.TopLeft = 10;
+            borderRadius10.TopRight = 10;
+            this.panelPendingPayments.BorderRadius = borderRadius10;
             this.panelPendingPayments.BorderThickness = 2;
             this.panelPendingPayments.Controls.Add(this.pictureBoxPending);
             this.panelPendingPayments.Controls.Add(this.lblPendingPaymentsTitle);
@@ -1148,11 +1148,11 @@
             this.panelTotalDisbursed.BackColor = System.Drawing.Color.White;
             this.panelTotalDisbursed.BackColor2 = System.Drawing.Color.White;
             this.panelTotalDisbursed.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            borderRadius37.BottomLeft = 10;
-            borderRadius37.BottomRight = 10;
-            borderRadius37.TopLeft = 10;
-            borderRadius37.TopRight = 10;
-            this.panelTotalDisbursed.BorderRadius = borderRadius37;
+            borderRadius11.BottomLeft = 10;
+            borderRadius11.BottomRight = 10;
+            borderRadius11.TopLeft = 10;
+            borderRadius11.TopRight = 10;
+            this.panelTotalDisbursed.BorderRadius = borderRadius11;
             this.panelTotalDisbursed.BorderThickness = 2;
             this.panelTotalDisbursed.Controls.Add(this.pictureBoxDisbursed);
             this.panelTotalDisbursed.Controls.Add(this.lblTotalDisbursedTitle);
@@ -1199,11 +1199,11 @@
             this.panelActiveScholars.BackColor = System.Drawing.Color.White;
             this.panelActiveScholars.BackColor2 = System.Drawing.Color.White;
             this.panelActiveScholars.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            borderRadius38.BottomLeft = 10;
-            borderRadius38.BottomRight = 10;
-            borderRadius38.TopLeft = 10;
-            borderRadius38.TopRight = 10;
-            this.panelActiveScholars.BorderRadius = borderRadius38;
+            borderRadius12.BottomLeft = 10;
+            borderRadius12.BottomRight = 10;
+            borderRadius12.TopLeft = 10;
+            borderRadius12.TopRight = 10;
+            this.panelActiveScholars.BorderRadius = borderRadius12;
             this.panelActiveScholars.BorderThickness = 2;
             this.panelActiveScholars.Controls.Add(this.pictureBoxActive);
             this.panelActiveScholars.Controls.Add(this.lblActiveScholarsTitle);
@@ -1250,11 +1250,11 @@
             this.panelTotalScholars.BackColor = System.Drawing.Color.White;
             this.panelTotalScholars.BackColor2 = System.Drawing.Color.White;
             this.panelTotalScholars.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
-            borderRadius39.BottomLeft = 10;
-            borderRadius39.BottomRight = 10;
-            borderRadius39.TopLeft = 10;
-            borderRadius39.TopRight = 10;
-            this.panelTotalScholars.BorderRadius = borderRadius39;
+            borderRadius13.BottomLeft = 10;
+            borderRadius13.BottomRight = 10;
+            borderRadius13.TopLeft = 10;
+            borderRadius13.TopRight = 10;
+            this.panelTotalScholars.BorderRadius = borderRadius13;
             this.panelTotalScholars.BorderThickness = 2;
             this.panelTotalScholars.Controls.Add(this.pictureBoxScholars);
             this.panelTotalScholars.Controls.Add(this.lblTotalScholarsTitle);
@@ -1301,13 +1301,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1000);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.panelContent);
             this.Font = new System.Drawing.Font("Century Gothic", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmReportsAnalytics";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reports & Analytics";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelContent.ResumeLayout(false);
             this.panelSidebar.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);

@@ -101,7 +101,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 981);
             this.panelSidebar.TabIndex = 0;
             // 
             // btnReminder
@@ -357,7 +357,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1700, 80);
+            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
             this.panelHeader.TabIndex = 1;
             // 
             // picLogo
@@ -378,9 +378,9 @@
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(85, 28);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(203, 26);
+            this.lblBrand.Size = new System.Drawing.Size(194, 26);
             this.lblBrand.TabIndex = 1;
-            this.lblBrand.Text = "ScholarAid Admin";
+            this.lblBrand.Text = "IskolarAid Admin";
             // 
             // btnLogout
             // 
@@ -403,7 +403,7 @@
             this.btnLogout.ImageTint = System.Drawing.Color.White;
             this.btnLogout.IsToggleButton = false;
             this.btnLogout.IsToggled = false;
-            this.btnLogout.Location = new System.Drawing.Point(1567, 14);
+            this.btnLogout.Location = new System.Drawing.Point(1782, 21);
             this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
@@ -424,7 +424,7 @@
             // picUser
             // 
             this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUser.Location = new System.Drawing.Point(1398, 19);
+            this.picUser.Location = new System.Drawing.Point(1622, 24);
             this.picUser.Name = "picUser";
             this.picUser.Size = new System.Drawing.Size(36, 35);
             this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -436,7 +436,7 @@
             this.lblRole.AutoSize = true;
             this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.lblRole.Location = new System.Drawing.Point(1440, 27);
+            this.lblRole.Location = new System.Drawing.Point(1664, 32);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(111, 19);
             this.lblRole.TabIndex = 4;
@@ -748,7 +748,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(244)))), ((int)(((byte)(246)))));
-            this.ClientSize = new System.Drawing.Size(1700, 1000);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.panelUpcomingPayments);
             this.Controls.Add(this.panelRecentActivity);
             this.Controls.Add(this.panelStats4);
@@ -770,6 +770,7 @@
             this.Name = "FrmAdminDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ScholarAid - Admin Dashboard";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmAdminDashboard_Load);
             this.panelSidebar.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);

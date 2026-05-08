@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-
             SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
@@ -83,7 +82,7 @@
             this.colScholarshipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStipendAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colComplianceStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEligible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colEligible = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelSummary = new SATAUiFramework.SATAPanel();
             this.lblSummaryMethod = new System.Windows.Forms.Label();
             this.lblSummaryAmount = new System.Windows.Forms.Label();
@@ -95,13 +94,13 @@
             this.btnReports = new FrameworkTest.SATAButton();
             this.btnPayroll = new FrameworkTest.SATAButton();
             this.btnScholarMgmt = new FrameworkTest.SATAButton();
+            this.btnDashboard = new FrameworkTest.SATAButton();
             this.panelHeader = new SATAUiFramework.SATAPanel();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.lblBrand = new System.Windows.Forms.Label();
             this.btnLogout = new FrameworkTest.SATAButton();
             this.picUser = new System.Windows.Forms.PictureBox();
             this.lblRole = new System.Windows.Forms.Label();
-            this.btnDashboard = new FrameworkTest.SATAButton();
             this.panelStats1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEligible)).BeginInit();
             this.panelStats2.SuspendLayout();
@@ -120,27 +119,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).BeginInit();
             this.SuspendLayout();
-
-            // ========== NAVIGATION EVENT HANDLERS ==========
-            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            this.btnScholarMgmt.Click += new System.EventHandler(this.btnScholarMgmt_Click);
-            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
-            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
-            this.btnReminder.Click += new System.EventHandler(this.btnReminder_Click);
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-
-            // ========== FUNCTIONAL EVENT HANDLERS ==========
-            this.btnSelectAll.Click += new System.EventHandler(this.BtnSelectAll_Click);
-            this.btnClearSelection.Click += new System.EventHandler(this.BtnClearSelection_Click);
-            this.btnProcessPayroll.Click += new System.EventHandler(this.BtnProcessPayroll_Click);
-            this.btnPreviewPayroll.Click += new System.EventHandler(this.BtnPreviewPayroll_Click);
-            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
-            this.cmbScholarshipType.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
-            this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
-            this.dgvScholars.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvScholars_CellValueChanged);
-            this.dgvScholars.CurrentCellDirtyStateChanged += new System.EventHandler(this.DgvScholars_CurrentCellDirtyStateChanged);
-
-
             // 
             // panelStats1
             // 
@@ -380,6 +358,7 @@
             this.cmbScholarshipType.Name = "cmbScholarshipType";
             this.cmbScholarshipType.Size = new System.Drawing.Size(180, 28);
             this.cmbScholarshipType.TabIndex = 3;
+            this.cmbScholarshipType.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
             // 
             // lblScholarshipType
             // 
@@ -406,6 +385,7 @@
             this.cmbYearLevel.Name = "cmbYearLevel";
             this.cmbYearLevel.Size = new System.Drawing.Size(130, 28);
             this.cmbYearLevel.TabIndex = 3;
+            this.cmbYearLevel.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
             // 
             // lblYearLevel
             // 
@@ -424,6 +404,7 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(500, 26);
             this.txtSearch.TabIndex = 1;
+            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
             // 
             // lblSearch
             // 
@@ -472,6 +453,7 @@
             this.btnSelectAll.TabIndex = 4;
             this.btnSelectAll.TextAutoCenter = true;
             this.btnSelectAll.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnSelectAll.Click += new System.EventHandler(this.BtnSelectAll_Click);
             // 
             // btnClearSelection
             // 
@@ -510,6 +492,7 @@
             this.btnClearSelection.TabIndex = 5;
             this.btnClearSelection.TextAutoCenter = true;
             this.btnClearSelection.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnClearSelection.Click += new System.EventHandler(this.BtnClearSelection_Click);
             // 
             // panelBatchControls
             // 
@@ -614,6 +597,7 @@
             this.btnProcessPayroll.TabIndex = 4;
             this.btnProcessPayroll.TextAutoCenter = true;
             this.btnProcessPayroll.TextOffset = new System.Drawing.Point(-10, 0);
+            this.btnProcessPayroll.Click += new System.EventHandler(this.BtnProcessPayroll_Click);
             // 
             // btnPreviewPayroll
             // 
@@ -652,6 +636,7 @@
             this.btnPreviewPayroll.TabIndex = 5;
             this.btnPreviewPayroll.TextAutoCenter = true;
             this.btnPreviewPayroll.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnPreviewPayroll.Click += new System.EventHandler(this.BtnPreviewPayroll_Click);
             // 
             // panelDataGrid
             // 
@@ -721,6 +706,8 @@
             this.dgvScholars.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvScholars.Size = new System.Drawing.Size(974, 547);
             this.dgvScholars.TabIndex = 0;
+            this.dgvScholars.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvScholars_CellValueChanged);
+            this.dgvScholars.CurrentCellDirtyStateChanged += new System.EventHandler(this.DgvScholars_CurrentCellDirtyStateChanged);
             // 
             // colSelect
             // 
@@ -842,7 +829,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 981);
             this.panelSidebar.TabIndex = 12;
             // 
             // btnReminder
@@ -882,6 +869,7 @@
             this.btnReminder.TabIndex = 5;
             this.btnReminder.TextAutoCenter = true;
             this.btnReminder.TextOffset = new System.Drawing.Point(10, 0);
+            this.btnReminder.Click += new System.EventHandler(this.btnReminder_Click);
             // 
             // btnActivityLog
             // 
@@ -920,6 +908,7 @@
             this.btnActivityLog.TabIndex = 4;
             this.btnActivityLog.TextAutoCenter = true;
             this.btnActivityLog.TextOffset = new System.Drawing.Point(-25, 0);
+            this.btnActivityLog.Click += new System.EventHandler(this.btnActivityLog_Click);
             // 
             // btnReports
             // 
@@ -958,6 +947,7 @@
             this.btnReports.TabIndex = 3;
             this.btnReports.TextAutoCenter = true;
             this.btnReports.TextOffset = new System.Drawing.Point(-5, 0);
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // btnPayroll
             // 
@@ -1034,109 +1024,7 @@
             this.btnScholarMgmt.TabIndex = 1;
             this.btnScholarMgmt.TextAutoCenter = true;
             this.btnScholarMgmt.TextOffset = new System.Drawing.Point(0, 0);
-            // 
-            // panelHeader
-            // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.panelHeader.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius9.BottomLeft = 1;
-            borderRadius9.BottomRight = 1;
-            borderRadius9.TopLeft = 1;
-            borderRadius9.TopRight = 1;
-            this.panelHeader.BorderRadius = borderRadius9;
-            this.panelHeader.BorderThickness = 0;
-            this.panelHeader.Controls.Add(this.picLogo);
-            this.panelHeader.Controls.Add(this.lblBrand);
-            this.panelHeader.Controls.Add(this.btnLogout);
-            this.panelHeader.Controls.Add(this.picUser);
-            this.panelHeader.Controls.Add(this.lblRole);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1700, 80);
-            this.panelHeader.TabIndex = 13;
-            // 
-            // picLogo
-            // 
-            this.picLogo.Image = global::SkolarAid.Properties.Resources.scholar;
-            this.picLogo.Location = new System.Drawing.Point(20, 15);
-            this.picLogo.Name = "picLogo";
-            this.picLogo.Size = new System.Drawing.Size(55, 50);
-            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picLogo.TabIndex = 0;
-            this.picLogo.TabStop = false;
-            // 
-            // lblBrand
-            // 
-            this.lblBrand.AutoSize = true;
-            this.lblBrand.BackColor = System.Drawing.Color.Transparent;
-            this.lblBrand.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold);
-            this.lblBrand.ForeColor = System.Drawing.Color.White;
-            this.lblBrand.Location = new System.Drawing.Point(85, 28);
-            this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(203, 26);
-            this.lblBrand.TabIndex = 1;
-            this.lblBrand.Text = "ScholarAid Admin";
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.ButtonText = "Logout";
-            this.btnLogout.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.btnLogout.CheckedForeColor = System.Drawing.Color.White;
-            this.btnLogout.CheckedImageTint = System.Drawing.Color.White;
-            this.btnLogout.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnLogout.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnLogout.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
-            this.btnLogout.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnLogout.HoverForeColor = System.Drawing.Color.White;
-            this.btnLogout.HoverImage = null;
-            this.btnLogout.HoverImageTint = System.Drawing.Color.White;
-            this.btnLogout.HoverOutline = System.Drawing.Color.Empty;
-            this.btnLogout.Image = null;
-            this.btnLogout.ImageAutoCenter = true;
-            this.btnLogout.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnLogout.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnLogout.ImageTint = System.Drawing.Color.White;
-            this.btnLogout.IsToggleButton = false;
-            this.btnLogout.IsToggled = false;
-            this.btnLogout.Location = new System.Drawing.Point(1567, 14);
-            this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnLogout.NormalForeColor = System.Drawing.Color.White;
-            this.btnLogout.NormalOutline = System.Drawing.Color.Empty;
-            this.btnLogout.OutlineThickness = 2F;
-            this.btnLogout.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnLogout.PressedForeColor = System.Drawing.Color.White;
-            this.btnLogout.PressedImageTint = System.Drawing.Color.White;
-            this.btnLogout.PressedOutline = System.Drawing.Color.Empty;
-            this.btnLogout.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnLogout.Size = new System.Drawing.Size(110, 40);
-            this.btnLogout.TabIndex = 2;
-            this.btnLogout.TextAutoCenter = true;
-            this.btnLogout.TextOffset = new System.Drawing.Point(0, 0);
-            // 
-            // picUser
-            // 
-            this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUser.Location = new System.Drawing.Point(1398, 19);
-            this.picUser.Name = "picUser";
-            this.picUser.Size = new System.Drawing.Size(36, 35);
-            this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picUser.TabIndex = 3;
-            this.picUser.TabStop = false;
-            // 
-            // lblRole
-            // 
-            this.lblRole.AutoSize = true;
-            this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
-            this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.lblRole.Location = new System.Drawing.Point(1440, 27);
-            this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(111, 19);
-            this.lblRole.TabIndex = 4;
-            this.lblRole.Text = "Administrator";
+            this.btnScholarMgmt.Click += new System.EventHandler(this.btnScholarMgmt_Click);
             // 
             // btnDashboard
             // 
@@ -1175,13 +1063,118 @@
             this.btnDashboard.TabIndex = 0;
             this.btnDashboard.TextAutoCenter = true;
             this.btnDashboard.TextOffset = new System.Drawing.Point(-30, 0);
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
+            // 
+            // panelHeader
+            // 
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.panelHeader.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.panelHeader.BorderColor = System.Drawing.Color.Black;
+            borderRadius9.BottomLeft = 1;
+            borderRadius9.BottomRight = 1;
+            borderRadius9.TopLeft = 1;
+            borderRadius9.TopRight = 1;
+            this.panelHeader.BorderRadius = borderRadius9;
+            this.panelHeader.BorderThickness = 0;
+            this.panelHeader.Controls.Add(this.picLogo);
+            this.panelHeader.Controls.Add(this.lblBrand);
+            this.panelHeader.Controls.Add(this.btnLogout);
+            this.panelHeader.Controls.Add(this.picUser);
+            this.panelHeader.Controls.Add(this.lblRole);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
+            this.panelHeader.TabIndex = 13;
+            // 
+            // picLogo
+            // 
+            this.picLogo.Image = global::SkolarAid.Properties.Resources.scholar;
+            this.picLogo.Location = new System.Drawing.Point(20, 15);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(55, 50);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogo.TabIndex = 0;
+            this.picLogo.TabStop = false;
+            // 
+            // lblBrand
+            // 
+            this.lblBrand.AutoSize = true;
+            this.lblBrand.BackColor = System.Drawing.Color.Transparent;
+            this.lblBrand.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold);
+            this.lblBrand.ForeColor = System.Drawing.Color.White;
+            this.lblBrand.Location = new System.Drawing.Point(85, 28);
+            this.lblBrand.Name = "lblBrand";
+            this.lblBrand.Size = new System.Drawing.Size(194, 26);
+            this.lblBrand.TabIndex = 1;
+            this.lblBrand.Text = "IskolarAid Admin";
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.ButtonText = "Logout";
+            this.btnLogout.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.btnLogout.CheckedForeColor = System.Drawing.Color.White;
+            this.btnLogout.CheckedImageTint = System.Drawing.Color.White;
+            this.btnLogout.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.btnLogout.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnLogout.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
+            this.btnLogout.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.btnLogout.HoverForeColor = System.Drawing.Color.White;
+            this.btnLogout.HoverImage = null;
+            this.btnLogout.HoverImageTint = System.Drawing.Color.White;
+            this.btnLogout.HoverOutline = System.Drawing.Color.Empty;
+            this.btnLogout.Image = null;
+            this.btnLogout.ImageAutoCenter = true;
+            this.btnLogout.ImageExpand = new System.Drawing.Point(0, 0);
+            this.btnLogout.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnLogout.ImageTint = System.Drawing.Color.White;
+            this.btnLogout.IsToggleButton = false;
+            this.btnLogout.IsToggled = false;
+            this.btnLogout.Location = new System.Drawing.Point(1771, 19);
+            this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.btnLogout.NormalForeColor = System.Drawing.Color.White;
+            this.btnLogout.NormalOutline = System.Drawing.Color.Empty;
+            this.btnLogout.OutlineThickness = 2F;
+            this.btnLogout.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnLogout.PressedForeColor = System.Drawing.Color.White;
+            this.btnLogout.PressedImageTint = System.Drawing.Color.White;
+            this.btnLogout.PressedOutline = System.Drawing.Color.Empty;
+            this.btnLogout.Rounding = new System.Windows.Forms.Padding(8);
+            this.btnLogout.Size = new System.Drawing.Size(110, 40);
+            this.btnLogout.TabIndex = 2;
+            this.btnLogout.TextAutoCenter = true;
+            this.btnLogout.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // picUser
+            // 
+            this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
+            this.picUser.Location = new System.Drawing.Point(1602, 24);
+            this.picUser.Name = "picUser";
+            this.picUser.Size = new System.Drawing.Size(36, 35);
+            this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picUser.TabIndex = 3;
+            this.picUser.TabStop = false;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.lblRole.Location = new System.Drawing.Point(1644, 32);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(111, 19);
+            this.lblRole.TabIndex = 4;
+            this.lblRole.Text = "Administrator";
             // 
             // FrmPayrollProcessing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1000);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelSummary);
@@ -1197,6 +1190,7 @@
             this.Name = "FrmPayrollProcessing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Payroll Processing - ScholarAid";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmPayrollProcessing_Load_1);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
@@ -1278,7 +1272,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colScholarshipType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStipendAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn colComplianceStatus;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colEligible;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEligible;
 
         // Summary Panel
         private SATAUiFramework.SATAPanel panelSummary;

@@ -234,7 +234,7 @@
             this.txtPassword.PlaceholderText = "";
             this.txtPassword.Size = new System.Drawing.Size(305, 38);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.Texts = "";
+            this.txtPassword.Texts = "admin123";
             this.txtPassword.UnderlinedStyle = false;
             this.txtPassword.Click += new System.EventHandler(this.sataTextBox1_Click);
             // 
@@ -255,7 +255,7 @@
             this.txtStudentID.PlaceholderText = "";
             this.txtStudentID.Size = new System.Drawing.Size(306, 40);
             this.txtStudentID.TabIndex = 1;
-            this.txtStudentID.Texts = "";
+            this.txtStudentID.Texts = "admin";
             this.txtStudentID.UnderlinedStyle = false;
             this.txtStudentID.Click += new System.EventHandler(this.sataTextBox1_Click);
             // 

@@ -215,8 +215,8 @@ namespace SkolarAid.form
             // Create Total Records label
             this.lblTotalRecords = new Label
             {
-                Location = new Point(15, panelDataGrid.Height - 25),
-                Size = new Size(200, 20),
+                Location = new Point(15, panelDataGrid.Height - 40),
+                Size = new Size(200, 40),
                 Font = new Font("Century Gothic", 9F),
                 ForeColor = Color.FromArgb(100, 100, 100),
                 Text = "Showing 0 notifications"

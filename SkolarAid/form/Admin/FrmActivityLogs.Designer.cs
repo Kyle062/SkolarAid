@@ -116,7 +116,6 @@ namespace SkolarAid.form
             this.panelDataGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityLogs)).BeginInit();
             this.panelDetailView.SuspendLayout();
-            this.panelPagination.SuspendLayout();
             this.panelSidebar.SuspendLayout();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
@@ -771,14 +770,9 @@ namespace SkolarAid.form
             borderRadius7.TopRight = 10;
             this.panelPagination.BorderRadius = borderRadius7;
             this.panelPagination.BorderThickness = 0;
-            this.panelPagination.Controls.Add(this.btnLastPage);
-            this.panelPagination.Controls.Add(this.btnNextPage);
-            this.panelPagination.Controls.Add(this.lblPageInfo);
-            this.panelPagination.Controls.Add(this.btnPrevPage);
-            this.panelPagination.Controls.Add(this.btnFirstPage);
-            this.panelPagination.Location = new System.Drawing.Point(327, 914);
+            this.panelPagination.Location = new System.Drawing.Point(327, 906);
             this.panelPagination.Name = "panelPagination";
-            this.panelPagination.Size = new System.Drawing.Size(990, 15);
+            this.panelPagination.Size = new System.Drawing.Size(1142, 23);
             this.panelPagination.TabIndex = 10;
             this.panelPagination.Visible = false;
             // 
@@ -803,7 +797,7 @@ namespace SkolarAid.form
             this.btnLastPage.ImageTint = System.Drawing.Color.White;
             this.btnLastPage.IsToggleButton = false;
             this.btnLastPage.IsToggled = false;
-            this.btnLastPage.Location = new System.Drawing.Point(945, -1);
+            this.btnLastPage.Location = new System.Drawing.Point(1380, 1031);
             this.btnLastPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnLastPage.Name = "btnLastPage";
             this.btnLastPage.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -815,10 +809,11 @@ namespace SkolarAid.form
             this.btnLastPage.PressedImageTint = System.Drawing.Color.White;
             this.btnLastPage.PressedOutline = System.Drawing.Color.Empty;
             this.btnLastPage.Rounding = new System.Windows.Forms.Padding(3);
-            this.btnLastPage.Size = new System.Drawing.Size(40, 15);
+            this.btnLastPage.Size = new System.Drawing.Size(40, 21);
             this.btnLastPage.TabIndex = 4;
             this.btnLastPage.TextAutoCenter = true;
             this.btnLastPage.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnLastPage.Click += new System.EventHandler(this.btnLastPage_Click_1);
             // 
             // btnNextPage
             // 
@@ -841,7 +836,7 @@ namespace SkolarAid.form
             this.btnNextPage.ImageTint = System.Drawing.Color.White;
             this.btnNextPage.IsToggleButton = false;
             this.btnNextPage.IsToggled = false;
-            this.btnNextPage.Location = new System.Drawing.Point(895, -1);
+            this.btnNextPage.Location = new System.Drawing.Point(1330, 1031);
             this.btnNextPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnNextPage.Name = "btnNextPage";
             this.btnNextPage.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -853,22 +848,24 @@ namespace SkolarAid.form
             this.btnNextPage.PressedImageTint = System.Drawing.Color.White;
             this.btnNextPage.PressedOutline = System.Drawing.Color.Empty;
             this.btnNextPage.Rounding = new System.Windows.Forms.Padding(3);
-            this.btnNextPage.Size = new System.Drawing.Size(40, 15);
+            this.btnNextPage.Size = new System.Drawing.Size(40, 21);
             this.btnNextPage.TabIndex = 3;
             this.btnNextPage.TextAutoCenter = true;
             this.btnNextPage.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnNextPage.Click += new System.EventHandler(this.btnNextPage_Click_1);
             // 
             // lblPageInfo
             // 
             this.lblPageInfo.AutoSize = true;
             this.lblPageInfo.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblPageInfo.ForeColor = System.Drawing.Color.Black;
-            this.lblPageInfo.Location = new System.Drawing.Point(459, -1);
+            this.lblPageInfo.Location = new System.Drawing.Point(749, 1031);
             this.lblPageInfo.Name = "lblPageInfo";
             this.lblPageInfo.Size = new System.Drawing.Size(94, 19);
             this.lblPageInfo.TabIndex = 2;
             this.lblPageInfo.Text = "Page 1 of 10";
             this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblPageInfo.Click += new System.EventHandler(this.lblPageInfo_Click);
             // 
             // btnPrevPage
             // 
@@ -891,7 +888,7 @@ namespace SkolarAid.form
             this.btnPrevPage.ImageTint = System.Drawing.Color.White;
             this.btnPrevPage.IsToggleButton = false;
             this.btnPrevPage.IsToggled = false;
-            this.btnPrevPage.Location = new System.Drawing.Point(70, 0);
+            this.btnPrevPage.Location = new System.Drawing.Point(361, 1031);
             this.btnPrevPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnPrevPage.Name = "btnPrevPage";
             this.btnPrevPage.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -903,10 +900,11 @@ namespace SkolarAid.form
             this.btnPrevPage.PressedImageTint = System.Drawing.Color.White;
             this.btnPrevPage.PressedOutline = System.Drawing.Color.Empty;
             this.btnPrevPage.Rounding = new System.Windows.Forms.Padding(3);
-            this.btnPrevPage.Size = new System.Drawing.Size(40, 15);
+            this.btnPrevPage.Size = new System.Drawing.Size(40, 21);
             this.btnPrevPage.TabIndex = 1;
             this.btnPrevPage.TextAutoCenter = true;
             this.btnPrevPage.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnPrevPage.Click += new System.EventHandler(this.btnPrevPage_Click_1);
             // 
             // btnFirstPage
             // 
@@ -929,7 +927,7 @@ namespace SkolarAid.form
             this.btnFirstPage.ImageTint = System.Drawing.Color.White;
             this.btnFirstPage.IsToggleButton = false;
             this.btnFirstPage.IsToggled = false;
-            this.btnFirstPage.Location = new System.Drawing.Point(20, 0);
+            this.btnFirstPage.Location = new System.Drawing.Point(311, 1031);
             this.btnFirstPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnFirstPage.Name = "btnFirstPage";
             this.btnFirstPage.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(92)))), ((int)(((byte)(92)))));
@@ -941,10 +939,11 @@ namespace SkolarAid.form
             this.btnFirstPage.PressedImageTint = System.Drawing.Color.White;
             this.btnFirstPage.PressedOutline = System.Drawing.Color.Empty;
             this.btnFirstPage.Rounding = new System.Windows.Forms.Padding(3);
-            this.btnFirstPage.Size = new System.Drawing.Size(40, 15);
+            this.btnFirstPage.Size = new System.Drawing.Size(40, 21);
             this.btnFirstPage.TabIndex = 0;
             this.btnFirstPage.TextAutoCenter = true;
             this.btnFirstPage.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnFirstPage.Click += new System.EventHandler(this.btnFirstPage_Click_1);
             // 
             // panelSidebar
             // 
@@ -958,7 +957,7 @@ namespace SkolarAid.form
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 981);
             this.panelSidebar.TabIndex = 11;
             // 
             // btnReminder
@@ -1213,7 +1212,7 @@ namespace SkolarAid.form
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1700, 80);
+            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
             this.panelHeader.TabIndex = 12;
             // 
             // picLogo
@@ -1234,9 +1233,9 @@ namespace SkolarAid.form
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(85, 28);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(203, 26);
+            this.lblBrand.Size = new System.Drawing.Size(194, 26);
             this.lblBrand.TabIndex = 1;
-            this.lblBrand.Text = "ScholarAid Admin";
+            this.lblBrand.Text = "IskolarAid Admin";
             // 
             // btnLogout
             // 
@@ -1259,7 +1258,7 @@ namespace SkolarAid.form
             this.btnLogout.ImageTint = System.Drawing.Color.White;
             this.btnLogout.IsToggleButton = false;
             this.btnLogout.IsToggled = false;
-            this.btnLogout.Location = new System.Drawing.Point(1567, 14);
+            this.btnLogout.Location = new System.Drawing.Point(1769, 20);
             this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
@@ -1280,7 +1279,7 @@ namespace SkolarAid.form
             // picUser
             // 
             this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUser.Location = new System.Drawing.Point(1398, 19);
+            this.picUser.Location = new System.Drawing.Point(1600, 25);
             this.picUser.Name = "picUser";
             this.picUser.Size = new System.Drawing.Size(36, 35);
             this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1292,7 +1291,7 @@ namespace SkolarAid.form
             this.lblRole.AutoSize = true;
             this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.lblRole.Location = new System.Drawing.Point(1440, 27);
+            this.lblRole.Location = new System.Drawing.Point(1642, 33);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(111, 19);
             this.lblRole.TabIndex = 4;
@@ -1303,7 +1302,12 @@ namespace SkolarAid.form
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1000);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
+            this.Controls.Add(this.lblPageInfo);
+            this.Controls.Add(this.btnPrevPage);
+            this.Controls.Add(this.btnLastPage);
+            this.Controls.Add(this.btnFirstPage);
+            this.Controls.Add(this.btnNextPage);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelPagination);
@@ -1318,6 +1322,7 @@ namespace SkolarAid.form
             this.Name = "FrmActivityLogs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Activity Logs - ScholarAid";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmActivityLogs_Load_1);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
@@ -1334,14 +1339,13 @@ namespace SkolarAid.form
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityLogs)).EndInit();
             this.panelDetailView.ResumeLayout(false);
             this.panelDetailView.PerformLayout();
-            this.panelPagination.ResumeLayout(false);
-            this.panelPagination.PerformLayout();
             this.panelSidebar.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
