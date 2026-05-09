@@ -4,6 +4,7 @@ using SkolarAid.Data;
 using SkolarAid.form;
 using SkolarAid.form.Admin;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -15,7 +16,6 @@ namespace SkolarAid
 {
     public partial class FrmReportsAnalytics : Form
     {
-        // Charts
         private Chart chartScholarshipDist;
         private Chart chartCourseDist;
         private Chart chartMonthlyDisbursement;
@@ -30,64 +30,164 @@ namespace SkolarAid
 
         private void FrmReportsAnalytics_Resize(object sender, EventArgs e)
         {
-            if (chartScholarshipDist != null)
+            AdjustLayoutForFullscreen();
+        }
+
+        private void AdjustLayoutForFullscreen()
+        {
+            int screenWidth = this.ClientSize.Width;
+            int screenHeight = this.ClientSize.Height;
+
+            if (tabControlReports != null)
             {
-                chartScholarshipDist.Size = new Size(panelChartScholarship.Width - 20, panelChartScholarship.Height - 55);
-                chartCourseDist.Size = new Size(panelChartCourse.Width - 20, panelChartCourse.Height - 55);
-                chartMonthlyDisbursement.Size = new Size(panelChartPayments.Width - 20, panelChartPayments.Height - 55);
+                tabControlReports.Location = new Point(301, 100);
+                tabControlReports.Size = new Size(screenWidth - 321, screenHeight - 130);
+            }
+
+            if (tabControlReports != null)
+            {
+                int tabWidth = tabControlReports.Width - 40;
+                int chartPanelWidth = (tabWidth - 80) / 3;
+
+                // Position chart panels evenly across the width
+                if (panelChartScholarship != null)
+                {
+                    panelChartScholarship.Location = new Point(20, 45);
+                    panelChartScholarship.Size = new Size(chartPanelWidth, panelCharts.Height - 65);
+                }
+                if (panelChartCourse != null)
+                {
+                    panelChartCourse.Location = new Point(30 + chartPanelWidth, 45);
+                    panelChartCourse.Size = new Size(chartPanelWidth, panelCharts.Height - 65);
+                }
+                if (panelChartPayments != null)
+                {
+                    panelChartPayments.Location = new Point(40 + chartPanelWidth * 2, 45);
+                    panelChartPayments.Size = new Size(chartPanelWidth, panelCharts.Height - 65);
+                }
+
+                // Adjust charts to fill their panels
+                if (chartScholarshipDist != null && panelChartScholarship != null)
+                {
+                    chartScholarshipDist.Size = new Size(panelChartScholarship.Width - 20, panelChartScholarship.Height - 55);
+                    chartScholarshipDist.Location = new Point(10, 45);
+                }
+                if (chartCourseDist != null && panelChartCourse != null)
+                {
+                    chartCourseDist.Size = new Size(panelChartCourse.Width - 20, panelChartCourse.Height - 55);
+                    chartCourseDist.Location = new Point(10, 45);
+                }
+                if (chartMonthlyDisbursement != null && panelChartPayments != null)
+                {
+                    chartMonthlyDisbursement.Size = new Size(panelChartPayments.Width - 20, panelChartPayments.Height - 55);
+                    chartMonthlyDisbursement.Location = new Point(10, 45);
+                }
+
+                if (panelReportPreview != null)
+                    panelReportPreview.Size = new Size(tabWidth - 50, tabControlReports.Height - 160);
+                if (dgvReportData != null && panelReportPreview != null)
+                    dgvReportData.Size = new Size(panelReportPreview.Width - 10, panelReportPreview.Height - 10);
+                if (panelCharts != null)
+                    panelCharts.Size = new Size(tabWidth - 50, tabControlReports.Height - 250);
+                if (panelStatsCards != null)
+                    panelStatsCards.Size = new Size(tabWidth - 50, 160);
             }
         }
 
         private void FrmReportsAnalytics_Load(object sender, EventArgs e)
         {
-            // Set default date range
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+
             dtpDateFrom.Value = DateTime.Now.AddMonths(-6);
             dtpDateTo.Value = DateTime.Now;
 
-            // Set default selections
-            cmbReportType.SelectedIndex = 0;
-            cmbFilterStatus.SelectedIndex = 0;
-            cmbFilterScholarship.SelectedIndex = 0;
-            cmbFilterCourse.SelectedIndex = 0;
+            if (cmbReportType.Items.Count > 0) cmbReportType.SelectedIndex = 0;
 
-            // Set chart titles
-            labelChart1Title.Text = "📊 Scholarship Distribution";
-            labelChart1Title.Font = new Font("Century Gothic", 11F, FontStyle.Bold);
-            labelChart1Title.ForeColor = Color.FromArgb(0, 68, 79);
-            labelChart1Title.TextAlign = ContentAlignment.MiddleCenter;
+            // Update scholar courses to approved list (run once)
+            UpdateScholarCourses();
 
-            labelChart2Title.Text = "📊 Scholars by Course";
-            labelChart2Title.Font = new Font("Century Gothic", 11F, FontStyle.Bold);
-            labelChart2Title.ForeColor = Color.FromArgb(0, 68, 79);
-            labelChart2Title.TextAlign = ContentAlignment.MiddleCenter;
-
-            labelChart3Title.Text = "📈 Monthly Disbursements";
-            labelChart3Title.Font = new Font("Century Gothic", 11F, FontStyle.Bold);
-            labelChart3Title.ForeColor = Color.FromArgb(0, 68, 79);
-            labelChart3Title.TextAlign = ContentAlignment.MiddleCenter;
-
-            // Load filter options from database
             LoadFilterOptions();
-
-            // Load analytics data
             LoadAnalyticsData();
 
-            // Wire up events
             btnRefreshAnalytics.Click += BtnRefreshAnalytics_Click;
             btnGenerateReport.Click += BtnGenerateReport_Click;
             btnExportPDF.Click += BtnExportPDF_Click;
             btnExportExcel.Click += BtnExportExcel_Click;
             btnPrint.Click += BtnPrint_Click;
+
+            AdjustLayoutForFullscreen();
+        }
+
+        /// <summary>
+        /// Updates all scholars with old course names to the new approved course names
+        /// </summary>
+        private void UpdateScholarCourses()
+        {
+            try
+            {
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+
+                    // Mapping of old course names to new approved course names
+                    var courseMapping = new Dictionary<string, string>
+                    {
+                        { "BS Computer Science", "Bachelor of Science in Information Technology" },
+                        { "BS Information Systems", "Bachelor of Science in Information Technology" },
+                        { "BS Information Technology", "Bachelor of Science in Information Technology" },
+                        { "BS Business Administration", "Bachelor of Science in Business Administration (Major in Financial Management)" },
+                        { "BS Education", "Bachelor of Elementary Education (Generalist)" },
+                        { "BS Elementary Education", "Bachelor of Elementary Education (Generalist)" },
+                        { "BS Criminology", "Bachelor of Science in Criminology" },
+                        { "BS Tourism Management", "Bachelor of Science in Tourism Management" },
+                        { "BS Accountancy", "Bachelor of Science in Business Administration (Major in Financial Management)" },
+                        { "BS Civil Engineering", "Bachelor of Science in Information Technology" },
+                        { "BS Nursing", "Bachelor of Science in Information Technology" },
+                        { "BS Hospitality Management", "Bachelor of Science in Tourism Management" },
+                        { "BS Psychology", "Bachelor of Secondary Education (Major in Values Education)" },
+                        { "BS Agriculture", "Bachelor of Science in Information Technology" },
+                        { "BS Social Work", "Bachelor of Secondary Education (Major in Social Studies)" },
+                        { "BS Biology", "Bachelor of Secondary Education (Major in Values Education)" },
+                        { "BS Medical Technology", "Bachelor of Science in Information Technology" },
+                        { "BS Physical Education", "Bachelor of Secondary Education (Major in Values Education)" },
+                        { "BS Music Education", "Bachelor of Secondary Education (Major in English)" },
+                        { "BA Communication", "Bachelor of Secondary Education (Major in English)" },
+                        { "BA Broadcasting", "Bachelor of Secondary Education (Major in English)" },
+                        { "BS Entrepreneurship", "Bachelor of Science in Business Administration (Major in Marketing Management)" },
+                        { "BS Environmental Science", "Bachelor of Science in Information Technology" },
+                        { "BS Marketing Management", "Bachelor of Science in Business Administration (Major in Marketing Management)" }
+                    };
+
+                    int updatedCount = 0;
+                    foreach (var mapping in courseMapping)
+                    {
+                        string updateQuery = "UPDATE scholars SET course = @newCourse, degree_program = @newCourse WHERE course = @oldCourse";
+                        MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
+                        cmd.Parameters.AddWithValue("@newCourse", mapping.Value);
+                        cmd.Parameters.AddWithValue("@oldCourse", mapping.Key);
+                        updatedCount += cmd.ExecuteNonQuery();
+                    }
+
+                    if (updatedCount > 0)
+                    {
+                        Console.WriteLine($"Updated {updatedCount} scholar courses to approved list.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating scholar courses: {ex.Message}");
+            }
         }
 
         private void InitializeCharts()
         {
-            // Clear any existing controls in the chart panels first
             panelChartScholarship.Controls.Clear();
             panelChartCourse.Controls.Clear();
             panelChartPayments.Controls.Clear();
 
-            // ========== SCHOLARSHIP DISTRIBUTION CHART (PIE) ==========
+            // ========== SCHOLARSHIP DISTRIBUTION CHART (PIE with counts) ==========
             chartScholarshipDist = new Chart
             {
                 Dock = DockStyle.None,
@@ -99,21 +199,21 @@ namespace SkolarAid
             ChartArea pieArea = new ChartArea("MainArea")
             {
                 BackColor = Color.White,
-                Position = new ElementPosition(5, 5, 90, 85)
+                Position = new ElementPosition(3, 5, 94, 80)
             };
             chartScholarshipDist.ChartAreas.Add(pieArea);
 
             chartScholarshipDist.Legends.Add(new Legend
             {
                 Docking = Docking.Bottom,
-                Font = new Font("Century Gothic", 8F),
+                Font = new Font("Century Gothic", 7F),
                 BackColor = Color.Transparent,
                 Alignment = StringAlignment.Center
             });
 
             panelChartScholarship.Controls.Add(chartScholarshipDist);
 
-            // ========== COURSE DISTRIBUTION CHART (BAR) ==========
+            // ========== COURSE DISTRIBUTION CHART (DONUT with counts) ==========
             chartCourseDist = new Chart
             {
                 Dock = DockStyle.None,
@@ -122,58 +222,49 @@ namespace SkolarAid
                 Size = new Size(panelChartCourse.Width - 20, panelChartCourse.Height - 55)
             };
 
-            ChartArea barArea = new ChartArea("MainArea")
+            ChartArea donutArea = new ChartArea("MainArea")
             {
                 BackColor = Color.White,
-                Position = new ElementPosition(8, 5, 88, 80)
+                Position = new ElementPosition(3, 5, 94, 80)
             };
-            barArea.AxisX.LabelStyle.Angle = -45;
-            barArea.AxisX.LabelStyle.Font = new Font("Century Gothic", 8F);
-            barArea.AxisY.LabelStyle.Font = new Font("Century Gothic", 8F);
-            barArea.AxisX.Interval = 1;
-            barArea.AxisX.MajorGrid.Enabled = false;
-            chartCourseDist.ChartAreas.Add(barArea);
+            chartCourseDist.ChartAreas.Add(donutArea);
 
             chartCourseDist.Legends.Add(new Legend
             {
-                Docking = Docking.Top,
-                Font = new Font("Century Gothic", 8F),
+                Docking = Docking.Bottom,
+                Font = new Font("Century Gothic", 7F),
                 BackColor = Color.Transparent,
                 Alignment = StringAlignment.Center
             });
 
             panelChartCourse.Controls.Add(chartCourseDist);
 
-            // ========== MONTHLY DISBURSEMENT CHART (COLUMN + LINE) ==========
+            // ========== MONTHLY DISBURSEMENT CHART ==========
             chartMonthlyDisbursement = new Chart
             {
-                Dock = DockStyle.Fill,
+                Dock = DockStyle.None,
                 BackColor = Color.White,
-                Location = new Point(5, 45),
-                Size = new Size(panelChartPayments.Width - 420, panelChartPayments.Height - 35)
+                Location = new Point(10, 45),
+                Size = new Size(panelChartPayments.Width - 20, panelChartPayments.Height - 55)
             };
 
             ChartArea lineArea = new ChartArea("MainArea")
             {
                 BackColor = Color.White,
-                Position = new ElementPosition(8, 8, 88, 75)
+                Position = new ElementPosition(5, 5, 90, 75)
             };
-            lineArea.AxisX.Title = "Month11";
-            lineArea.AxisX.TitleFont = new Font("Century Gothic", 9F, FontStyle.Bold);
-            lineArea.AxisX.LabelStyle.Font = new Font("Century Gothic", 8F);
             lineArea.AxisX.LabelStyle.Angle = -45;
-            lineArea.AxisX.MajorGrid.Enabled = false;
-            lineArea.AxisY.Title = "Amount (₱)";
-            lineArea.AxisY.TitleFont = new Font("Century Gothic", 9F, FontStyle.Bold);
-            lineArea.AxisY.LabelStyle.Font = new Font("Century Gothic", 8F);
+            lineArea.AxisX.LabelStyle.Font = new Font("Century Gothic", 7F);
+            lineArea.AxisY.LabelStyle.Font = new Font("Century Gothic", 7F);
             lineArea.AxisY.LabelStyle.Format = "₱#,##0";
             lineArea.AxisX.Interval = 1;
+            lineArea.AxisX.MajorGrid.Enabled = false;
             chartMonthlyDisbursement.ChartAreas.Add(lineArea);
 
             chartMonthlyDisbursement.Legends.Add(new Legend
             {
                 Docking = Docking.Top,
-                Font = new Font("Century Gothic", 8F),
+                Font = new Font("Century Gothic", 7F),
                 BackColor = Color.Transparent,
                 Alignment = StringAlignment.Center
             });
@@ -191,8 +282,8 @@ namespace SkolarAid
                 {
                     conn.Open();
 
-                    // Load scholarship types for filter
-                    string scholarshipQuery = "SELECT name FROM scholarship_types WHERE is_active = TRUE ORDER BY name";
+                    // Load ACTIVE scholarship types only
+                    string scholarshipQuery = "SELECT id, name FROM scholarship_types WHERE is_active = TRUE ORDER BY name";
                     MySqlCommand cmd = new MySqlCommand(scholarshipQuery, conn);
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -202,20 +293,40 @@ namespace SkolarAid
                             cmbFilterScholarship.Items.Add(reader["name"].ToString());
                     }
 
-                    // Load courses for filter
-                    string courseQuery = "SELECT DISTINCT course FROM scholars WHERE course IS NOT NULL ORDER BY course";
-                    MySqlCommand courseCmd = new MySqlCommand(courseQuery, conn);
-                    using (MySqlDataReader reader = courseCmd.ExecuteReader())
-                    {
-                        cmbFilterCourse.Items.Clear();
-                        cmbFilterCourse.Items.Add("All Courses");
-                        while (reader.Read())
-                            cmbFilterCourse.Items.Add(reader["course"].ToString());
-                    }
+                    // Load approved courses
+                    cmbFilterCourse.Items.Clear();
+                    cmbFilterCourse.Items.Add("All Courses");
+                    cmbFilterCourse.Items.AddRange(new object[] {
+                        "Bachelor of Science in Business Administration (Major in Financial Management)",
+                        "Bachelor of Science in Business Administration (Major in Marketing Management)",
+                        "Bachelor of Science in Business Administration (Major in Human Resource Management)",
+                        "Bachelor of Science in Criminology",
+                        "Bachelor of Elementary Education (Generalist)",
+                        "Bachelor of Secondary Education (Major in English)",
+                        "Bachelor of Secondary Education (Major in Social Studies)",
+                        "Bachelor of Secondary Education (Major in Values Education)",
+                        "Bachelor of Science in Information Technology",
+                        "Bachelor of Science in Tourism Management"
+                    });
+
+                    // Status filter
+                    cmbFilterStatus.Items.Clear();
+                    cmbFilterStatus.Items.Add("All Status");
+                    cmbFilterStatus.Items.Add("Active");
+                    cmbFilterStatus.Items.Add("Inactive");
+                    cmbFilterStatus.Items.Add("Probation");
+                    cmbFilterStatus.Items.Add("Suspended");
+                    cmbFilterStatus.Items.Add("Graduated");
+                    cmbFilterStatus.Items.Add("Terminated");
+                    cmbFilterStatus.Items.Add("Withdrawn");
+                    cmbFilterStatus.Items.Add("Expelled");
+                    cmbFilterStatus.Items.Add("Completed");
+                    cmbFilterStatus.Items.Add("Dropped");
                 }
 
                 if (cmbFilterScholarship.Items.Count > 0) cmbFilterScholarship.SelectedIndex = 0;
                 if (cmbFilterCourse.Items.Count > 0) cmbFilterCourse.SelectedIndex = 0;
+                if (cmbFilterStatus.Items.Count > 0) cmbFilterStatus.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -246,23 +357,18 @@ namespace SkolarAid
 
         private void LoadStatisticsCards(MySqlConnection conn)
         {
-            // Total Active Scholars
-            string totalQuery = "SELECT COUNT(*) FROM scholars WHERE status = 'Active'";
-            MySqlCommand cmd = new MySqlCommand(totalQuery, conn);
-            lblTotalScholarsValue.Text = Convert.ToInt32(cmd.ExecuteScalar()).ToString();
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM scholars WHERE status = 'Active'", conn);
+            lblTotalScholarsValue.Text = cmd.ExecuteScalar().ToString();
 
-            // Active Scholarships Count
-            string activeQuery = "SELECT COUNT(*) FROM scholars WHERE status = 'Active'";
-            lblActiveScholarsValue.Text = Convert.ToInt32(new MySqlCommand(activeQuery, conn).ExecuteScalar()).ToString();
+            cmd = new MySqlCommand("SELECT COUNT(*) FROM scholars WHERE status = 'Active'", conn);
+            lblActiveScholarsValue.Text = cmd.ExecuteScalar().ToString();
 
-            // Total Disbursed
-            string disbursedQuery = "SELECT COALESCE(SUM(amount), 0) FROM payments WHERE status = 'Released'";
-            decimal disbursed = Convert.ToDecimal(new MySqlCommand(disbursedQuery, conn).ExecuteScalar());
+            cmd = new MySqlCommand("SELECT COALESCE(SUM(amount), 0) FROM payments WHERE status = 'Released'", conn);
+            decimal disbursed = Convert.ToDecimal(cmd.ExecuteScalar());
             lblTotalDisbursedValue.Text = $"₱{disbursed:N0}";
 
-            // Pending Payments
-            string pendingQuery = "SELECT COUNT(*) FROM payments WHERE status IN ('Pending', 'Processed')";
-            lblPendingPaymentsValue.Text = Convert.ToInt32(new MySqlCommand(pendingQuery, conn).ExecuteScalar()).ToString();
+            cmd = new MySqlCommand("SELECT COUNT(*) FROM payments WHERE status IN ('Pending', 'Processed')", conn);
+            lblPendingPaymentsValue.Text = cmd.ExecuteScalar().ToString();
         }
 
         private void LoadScholarshipDistributionChart(MySqlConnection conn)
@@ -272,7 +378,6 @@ namespace SkolarAid
                             LEFT JOIN scholars s ON st.id = s.scholarship_type_id AND s.status = 'Active'
                             WHERE st.is_active = TRUE
                             GROUP BY st.id, st.name
-                            HAVING scholar_count > 0
                             ORDER BY scholar_count DESC";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -284,8 +389,8 @@ namespace SkolarAid
                 {
                     ChartType = SeriesChartType.Pie,
                     IsValueShownAsLabel = true,
-                    LabelFormat = "#PERCENT{P0}",
-                    Font = new Font("Century Gothic", 9F, FontStyle.Bold)
+                    Label = "#VALX\n(#VALY scholars)", // Show name and count
+                    Font = new Font("Century Gothic", 8F, FontStyle.Bold)
                 };
                 chartScholarshipDist.Series.Add(series);
 
@@ -294,10 +399,10 @@ namespace SkolarAid
                     Color.FromArgb(40, 167, 69),
                     Color.FromArgb(255, 193, 7),
                     Color.FromArgb(0, 123, 255),
-                    Color.FromArgb(111, 66, 193)
+                    Color.FromArgb(111, 66, 193),
+                    Color.FromArgb(220, 53, 69)
                 };
                 int colorIndex = 0;
-                bool hasData = false;
 
                 while (reader.Read())
                 {
@@ -305,25 +410,16 @@ namespace SkolarAid
                     int count = Convert.ToInt32(reader["scholar_count"]);
                     if (count > 0)
                     {
-                        hasData = true;
                         int idx = series.Points.AddXY(name, count);
                         series.Points[idx].Color = colors[colorIndex % colors.Length];
-                        series.Points[idx].LegendText = $"{name} ({count})";
+                        series.Points[idx].LegendText = $"{name} ({count} scholars)";
                         colorIndex++;
                     }
                 }
 
                 chartScholarshipDist.Titles.Clear();
-                if (!hasData)
-                {
-                    chartScholarshipDist.Titles.Add(new Title("No data available",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.Gray));
-                }
-                else
-                {
-                    chartScholarshipDist.Titles.Add(new Title("Scholarship Distribution",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
-                }
+                chartScholarshipDist.Titles.Add(new Title("Scholarship Distribution",
+                    Docking.Top, new Font("Century Gothic", 10F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
             }
         }
 
@@ -334,7 +430,7 @@ namespace SkolarAid
                             WHERE status = 'Active' AND course IS NOT NULL
                             GROUP BY course
                             ORDER BY scholar_count DESC
-                            LIMIT 8";
+                            LIMIT 10";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -343,40 +439,44 @@ namespace SkolarAid
 
                 Series series = new Series("By Course")
                 {
-                    ChartType = SeriesChartType.Column,
-                    Color = Color.FromArgb(0, 68, 79),
+                    ChartType = SeriesChartType.Doughnut,
                     IsValueShownAsLabel = true,
-                    Font = new Font("Century Gothic", 9F)
+                    Label = "#VALX\n(#VALY scholars)", // Show name and count
+                    Font = new Font("Century Gothic", 7F, FontStyle.Bold)
                 };
                 chartCourseDist.Series.Add(series);
 
-                bool hasData = false;
+                Color[] colors = {
+                    Color.FromArgb(0, 68, 79),
+                    Color.FromArgb(40, 167, 69),
+                    Color.FromArgb(255, 193, 7),
+                    Color.FromArgb(0, 123, 255),
+                    Color.FromArgb(111, 66, 193),
+                    Color.FromArgb(220, 53, 69),
+                    Color.FromArgb(23, 162, 184),
+                    Color.FromArgb(255, 140, 0),
+                    Color.FromArgb(75, 192, 192),
+                    Color.FromArgb(153, 102, 255)
+                };
+                int colorIndex = 0;
+
                 while (reader.Read())
                 {
                     string course = reader["course"].ToString();
-                    if (course.Length > 20) course = course.Substring(0, 18) + "..";
+                    if (course.Length > 28) course = course.Substring(0, 26) + "..";
                     int count = Convert.ToInt32(reader["scholar_count"]);
                     if (count > 0)
                     {
-                        hasData = true;
-                        series.Points.AddXY(course, count);
+                        int idx = series.Points.AddXY(course, count);
+                        series.Points[idx].Color = colors[colorIndex % colors.Length];
+                        series.Points[idx].LegendText = $"{course} ({count})";
+                        colorIndex++;
                     }
                 }
 
-                chartCourseDist.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
-                chartCourseDist.ChartAreas[0].AxisX.Interval = 1;
-
                 chartCourseDist.Titles.Clear();
-                if (!hasData)
-                {
-                    chartCourseDist.Titles.Add(new Title("No data available",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.Gray));
-                }
-                else
-                {
-                    chartCourseDist.Titles.Add(new Title("Scholars by Course",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
-                }
+                chartCourseDist.Titles.Add(new Title("Scholars by Course",
+                    Docking.Top, new Font("Century Gothic", 10F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
             }
         }
 
@@ -404,7 +504,8 @@ namespace SkolarAid
                     ChartType = SeriesChartType.Column,
                     Color = Color.FromArgb(0, 68, 79),
                     IsValueShownAsLabel = true,
-                    Font = new Font("Century Gothic", 9F)
+                    LabelFormat = "₱#,##0",
+                    Font = new Font("Century Gothic", 7F)
                 };
                 chartMonthlyDisbursement.Series.Add(columnSeries);
 
@@ -412,40 +513,27 @@ namespace SkolarAid
                 {
                     ChartType = SeriesChartType.Line,
                     Color = Color.FromArgb(239, 68, 68),
-                    BorderWidth = 3,
+                    BorderWidth = 2,
                     MarkerStyle = MarkerStyle.Circle,
-                    MarkerSize = 8,
+                    MarkerSize = 6,
                     MarkerColor = Color.FromArgb(239, 68, 68)
                 };
                 chartMonthlyDisbursement.Series.Add(lineSeries);
 
-                bool hasData = false;
                 while (reader.Read())
                 {
                     string month = reader["month_label"].ToString();
                     decimal amount = Convert.ToDecimal(reader["total_amount"]);
-                    if (amount > 0)
-                    {
-                        hasData = true;
-                        columnSeries.Points.AddXY(month, amount);
-                        lineSeries.Points.AddXY(month, amount);
-                    }
+                    columnSeries.Points.AddXY(month, amount);
+                    lineSeries.Points.AddXY(month, amount);
                 }
 
                 chartMonthlyDisbursement.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
                 chartMonthlyDisbursement.ChartAreas[0].AxisX.Interval = 1;
 
                 chartMonthlyDisbursement.Titles.Clear();
-                if (!hasData)
-                {
-                    chartMonthlyDisbursement.Titles.Add(new Title("No data available for selected period",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.Gray));
-                }
-                else
-                {
-                    chartMonthlyDisbursement.Titles.Add(new Title("Monthly Disbursement Trend",
-                        Docking.Top, new Font("Century Gothic", 11F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
-                }
+                chartMonthlyDisbursement.Titles.Add(new Title("Monthly Disbursement Trend",
+                    Docking.Top, new Font("Century Gothic", 10F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
             }
         }
 
@@ -466,12 +554,18 @@ namespace SkolarAid
                     cmd.Parameters.AddWithValue("@dateFrom", dateFrom);
                     cmd.Parameters.AddWithValue("@dateTo", dateTo);
 
+                    if (cmbFilterStatus.SelectedIndex > 0)
+                        cmd.Parameters.AddWithValue("@status", cmbFilterStatus.SelectedItem.ToString());
+                    if (cmbFilterScholarship.SelectedIndex > 0)
+                        cmd.Parameters.AddWithValue("@scholarship", cmbFilterScholarship.SelectedItem.ToString());
+                    if (cmbFilterCourse.SelectedIndex > 0)
+                        cmd.Parameters.AddWithValue("@course", cmbFilterCourse.SelectedItem.ToString());
+
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     System.Data.DataTable dt = new System.Data.DataTable();
                     adapter.Fill(dt);
                     dgvReportData.DataSource = dt;
 
-                    // Style the grid
                     dgvReportData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 68, 79);
                     dgvReportData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                     dgvReportData.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
@@ -495,17 +589,21 @@ namespace SkolarAid
 
         private string GetReportQuery(string reportType)
         {
+            string statusFilter = cmbFilterStatus.SelectedIndex > 0 ? " AND s.status = @status" : "";
+            string scholarshipFilter = cmbFilterScholarship.SelectedIndex > 0 ? " AND st.name = @scholarship" : "";
+            string courseFilter = cmbFilterCourse.SelectedIndex > 0 ? " AND s.course = @course" : "";
+
             switch (reportType)
             {
                 case "Scholar Census Report":
-                    return @"SELECT scholar_number AS 'Scholar #', 
-                                    CONCAT(first_name, ' ', last_name) AS 'Name',
-                                    course AS 'Course', year_level AS 'Year',
+                    return $@"SELECT s.scholar_number AS 'Scholar #', 
+                                    CONCAT(s.first_name, ' ', s.last_name) AS 'Name',
+                                    s.course AS 'Course', s.year_level AS 'Year',
                                     COALESCE(st.name, 'Not Assigned') AS 'Scholarship', 
-                                    status AS 'Status'
+                                    s.status AS 'Status'
                              FROM scholars s
                              LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
-                             WHERE s.created_at BETWEEN @dateFrom AND @dateTo
+                             WHERE s.created_at BETWEEN @dateFrom AND @dateTo{statusFilter}{scholarshipFilter}{courseFilter}
                              ORDER BY s.id";
 
                 case "Payroll Summary Report":
@@ -519,16 +617,19 @@ namespace SkolarAid
                              ORDER BY payment_period DESC";
 
                 case "Compliance Report":
-                    return @"SELECT s.scholar_number AS 'Scholar #',
+                    return $@"SELECT s.scholar_number AS 'Scholar #',
                                     CONCAT(s.first_name, ' ', s.last_name) AS 'Name',
+                                    s.course AS 'Course',
                                     cr.requirement_type AS 'Requirement',
                                     cr.status AS 'Status',
                                     cr.due_date AS 'Due Date',
-                                    cr.date_submitted AS 'Date Submitted'
+                                    cr.date_submitted AS 'Date Submitted',
+                                    cr.remarks AS 'Remarks'
                              FROM compliance_records cr
                              JOIN scholars s ON cr.scholar_id = s.id
-                             WHERE cr.due_date BETWEEN @dateFrom AND @dateTo
-                             ORDER BY cr.due_date DESC";
+                             LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
+                             WHERE 1=1{scholarshipFilter}{courseFilter}
+                             ORDER BY s.last_name, cr.requirement_type";
 
                 case "Payment History Report":
                     return @"SELECT s.scholar_number AS 'Scholar #',
@@ -556,8 +657,7 @@ namespace SkolarAid
                     return @"SELECT scholar_number AS 'Scholar #',
                                     CONCAT(first_name, ' ', last_name) AS 'Name',
                                     course AS 'Course', status AS 'Status'
-                             FROM scholars
-                             ORDER BY id";
+                             FROM scholars ORDER BY id";
             }
         }
 
@@ -582,205 +682,114 @@ namespace SkolarAid
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
                     sw.WriteLine("<!DOCTYPE html>");
-                    sw.WriteLine("<html><head><meta charset='UTF-8'>");
-                    sw.WriteLine("<title>" + reportTitle + "</title>");
+                    sw.WriteLine("<html><head><meta charset='UTF-8'><title>" + reportTitle + "</title>");
                     sw.WriteLine("<style>");
-                    sw.WriteLine("body { font-family: 'Segoe UI', Arial, sans-serif; margin: 30px; background: #f5f5f5; }");
-                    sw.WriteLine(".container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }");
-                    sw.WriteLine("h1 { color: #00444F; border-bottom: 3px solid #00444F; padding-bottom: 10px; }");
-                    sw.WriteLine("h3 { color: #666; margin-top: 5px; }");
-                    sw.WriteLine(".date-range { background: #e8f4f4; padding: 10px; border-radius: 5px; margin: 15px 0; }");
-                    sw.WriteLine("table { width: 100%; border-collapse: collapse; margin-top: 20px; }");
-                    sw.WriteLine("th { background-color: #00444F; color: white; padding: 12px; text-align: left; font-weight: bold; }");
-                    sw.WriteLine("td { padding: 10px; border-bottom: 1px solid #ddd; }");
-                    sw.WriteLine("tr:hover { background-color: #f0f8f8; }");
-                    sw.WriteLine(".footer { margin-top: 30px; text-align: right; color: #888; font-size: 12px; }");
-                    sw.WriteLine("@media print { body { background: white; margin: 0.5in; } .container { box-shadow: none; padding: 0; } }");
-                    sw.WriteLine("</style>");
-                    sw.WriteLine("</head><body>");
-                    sw.WriteLine("<div class='container'>");
-                    sw.WriteLine("<h1>📊 " + reportTitle + "</h1>");
-                    sw.WriteLine("<h3>IskolarAid - Legacy College of Compostela</h3>");
-                    sw.WriteLine("<div class='date-range'><strong>Date Range:</strong> " + dateRange + "</div>");
-                    sw.WriteLine("<div><strong>Total Records:</strong> " + dgvReportData.Rows.Count + "</div>");
-                    sw.WriteLine("<table>");
+                    sw.WriteLine("@page { size: landscape; margin: 15mm; }");
+                    sw.WriteLine("body { font-family: 'Segoe UI', Arial, sans-serif; margin: 20px; background: #fff; }");
+                    sw.WriteLine(".header { display: flex; align-items: center; border-bottom: 2px solid #00444F; padding-bottom: 15px; margin-bottom: 20px; }");
+                    sw.WriteLine(".logo-container img { width: 80px; height: 80px; margin-right: 20px; }");
+                    sw.WriteLine(".title-section { text-align: center; flex-grow: 1; }");
+                    sw.WriteLine("h1 { color: #00444F; font-size: 20px; margin: 0; }");
+                    sw.WriteLine("h3 { color: #666; font-size: 14px; margin: 5px 0; }");
+                    sw.WriteLine(".info-bar { background: #e8f4f4; padding: 10px; border-radius: 5px; margin: 15px 0; }");
+                    sw.WriteLine("table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 10px; }");
+                    sw.WriteLine("th { background-color: #00444F; color: white; padding: 8px 6px; text-align: left; font-weight: bold; font-size: 10px; }");
+                    sw.WriteLine("td { padding: 6px; border-bottom: 1px solid #ddd; }");
+                    sw.WriteLine("tr:nth-child(even) { background-color: #f9f9f9; }");
+                    sw.WriteLine(".footer { margin-top: 30px; display: flex; justify-content: space-between; }");
+                    sw.WriteLine(".signature-box { text-align: center; width: 45%; }");
+                    sw.WriteLine(".sig-line { border-top: 1px solid #000; margin: 50px 20px 5px 20px; }");
+                    sw.WriteLine(".sig-name { font-weight: bold; }");
+                    sw.WriteLine(".sig-title { font-size: 11px; color: #666; }");
+                    sw.WriteLine("@media print { body { margin: 0.5in; } }");
+                    sw.WriteLine("</style></head><body>");
 
-                    // Headers
-                    sw.WriteLine("<tr>");
+                    sw.WriteLine("<div class='header'>");
+                    sw.WriteLine("<div class='logo-container'><img src='file:///C:/Users/kylea/OneDrive/Desktop/SkolarAid/SkolarAid/Resources/LCC_Logo.png' alt='LCC Logo'/></div>");
+                    sw.WriteLine("<div class='title-section'><h3>Legacy College of Compostela</h3><h1>" + reportTitle + "</h1><p style='color:#666;'>IskolarAid Scholarship Management System</p></div>");
+                    sw.WriteLine("</div>");
+
+                    sw.WriteLine("<div class='info-bar'><strong>Date Range:</strong> " + dateRange + " | <strong>Total Records:</strong> " + dgvReportData.Rows.Count + " | <strong>Generated:</strong> " + DateTime.Now.ToString("MMMM dd, yyyy HH:mm:ss") + "</div>");
+
+                    sw.WriteLine("<table><tr>");
                     foreach (DataGridViewColumn col in dgvReportData.Columns)
-                    {
                         sw.WriteLine("<th>" + col.HeaderText + "</th>");
-                    }
                     sw.WriteLine("</tr>");
 
-                    // Data
                     foreach (DataGridViewRow row in dgvReportData.Rows)
                     {
                         sw.WriteLine("<tr>");
                         foreach (DataGridViewCell cell in row.Cells)
-                        {
-                            string value = cell.Value?.ToString() ?? "";
-                            sw.WriteLine("<td>" + WebUtility.HtmlEncode(value) + "</td>");
-                        }
+                            sw.WriteLine("<td>" + WebUtility.HtmlEncode(cell.Value?.ToString() ?? "") + "</td>");
                         sw.WriteLine("</tr>");
                     }
-
                     sw.WriteLine("</table>");
-                    sw.WriteLine("<div class='footer'>Generated on: " + DateTime.Now.ToString("MMMM dd, yyyy HH:mm:ss") + " | IskolarAid System</div>");
+
+                    sw.WriteLine("<div class='footer'>");
+                    sw.WriteLine("<div class='signature-box'><div class='sig-line'></div><p class='sig-name'>MRS. WENDY ALCALA</p><p class='sig-title'>Scholarship Coordinator</p></div>");
+                    sw.WriteLine("<div class='signature-box'><div class='sig-line'></div><p class='sig-name'>________________________</p><p class='sig-title'>HR Officer / Administrator</p></div>");
                     sw.WriteLine("</div>");
 
-                    if (autoPrint)
-                    {
-                        sw.WriteLine("<script>window.onload = function() { window.print(); }</script>");
-                    }
+                    sw.WriteLine("<p style='text-align:center;color:#888;font-size:10px;margin-top:30px;'>Generated by IskolarAid System | Legacy College of Compostela | " + DateTime.Now.Year + "</p>");
 
+                    if (autoPrint) sw.WriteLine("<script>window.onload = function() { window.print(); }</script>");
                     sw.WriteLine("</body></html>");
                 }
 
                 Process.Start(fileName);
                 ActivityLogger.Log("EXPORT", $"Exported {reportTitle} to HTML");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error exporting: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show($"Error exporting: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void ExportToCSV()
         {
-            if (dgvReportData.Rows.Count == 0)
-            {
-                MessageBox.Show("No data to export.", "Export Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
+            if (dgvReportData.Rows.Count == 0) { MessageBox.Show("No data to export.", "Export Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             try
             {
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {
-                    sfd.Filter = "CSV File|*.csv";
-                    sfd.FileName = $"Report_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
-
+                    sfd.Filter = "CSV File|*.csv"; sfd.FileName = $"Report_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
                     if (sfd.ShowDialog() == DialogResult.OK)
                     {
                         using (StreamWriter sw = new StreamWriter(sfd.FileName))
                         {
-                            // Headers
-                            for (int i = 0; i < dgvReportData.Columns.Count; i++)
-                            {
-                                sw.Write(dgvReportData.Columns[i].HeaderText);
-                                if (i < dgvReportData.Columns.Count - 1) sw.Write(",");
-                            }
+                            for (int i = 0; i < dgvReportData.Columns.Count; i++) { sw.Write(dgvReportData.Columns[i].HeaderText); if (i < dgvReportData.Columns.Count - 1) sw.Write(","); }
                             sw.WriteLine();
-
-                            // Data
                             foreach (DataGridViewRow row in dgvReportData.Rows)
                             {
-                                for (int i = 0; i < dgvReportData.Columns.Count; i++)
-                                {
-                                    string value = row.Cells[i].Value?.ToString() ?? "";
-                                    if (value.Contains(",")) value = $"\"{value}\"";
-                                    sw.Write(value);
-                                    if (i < dgvReportData.Columns.Count - 1) sw.Write(",");
-                                }
+                                for (int i = 0; i < dgvReportData.Columns.Count; i++) { string v = row.Cells[i].Value?.ToString() ?? ""; if (v.Contains(",")) v = $"\"{v}\""; sw.Write(v); if (i < dgvReportData.Columns.Count - 1) sw.Write(","); }
                                 sw.WriteLine();
                             }
                         }
-
-                        MessageBox.Show($"Report exported successfully!\n\nFile: {sfd.FileName}", "Export Complete",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        MessageBox.Show($"Report exported!\nFile: {sfd.FileName}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         ActivityLogger.Log("EXPORT", $"Exported report to CSV: {sfd.FileName}");
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error exporting: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         #endregion
 
         #region Event Handlers
-
-        private void BtnRefreshAnalytics_Click(object sender, EventArgs e)
-        {
-            LoadAnalyticsData();
-        }
-
-        private void BtnGenerateReport_Click(object sender, EventArgs e)
-        {
-            GenerateReport();
-        }
-
-        private void BtnExportPDF_Click(object sender, EventArgs e)
-        {
-            ExportToHTMLAndOpen(false);
-        }
-
-        private void BtnExportExcel_Click(object sender, EventArgs e)
-        {
-            ExportToCSV();
-        }
-
-        private void BtnPrint_Click(object sender, EventArgs e)
-        {
-            ExportToHTMLAndOpen(true);
-        }
-
+        private void BtnRefreshAnalytics_Click(object sender, EventArgs e) { LoadAnalyticsData(); }
+        private void BtnGenerateReport_Click(object sender, EventArgs e) { GenerateReport(); }
+        private void BtnExportPDF_Click(object sender, EventArgs e) { ExportToHTMLAndOpen(false); }
+        private void BtnExportExcel_Click(object sender, EventArgs e) { ExportToCSV(); }
+        private void BtnPrint_Click(object sender, EventArgs e) { ExportToHTMLAndOpen(true); }
         #endregion
 
         #region Navigation
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            FrmAdminDashboard dashboard = new FrmAdminDashboard();
-            dashboard.Show();
-            this.Hide();
-        }
-
-        private void btnScholarMgmt_Click(object sender, EventArgs e)
-        {
-            FrmScholarManagement scholarMgmt = new FrmScholarManagement();
-            scholarMgmt.Show();
-            this.Hide();
-        }
-
-        private void btnPayroll_Click(object sender, EventArgs e)
-        {
-            FrmPayrollProcessing payroll = new FrmPayrollProcessing();
-            payroll.Show();
-            this.Hide();
-        }
-
-        private void btnActivityLog_Click(object sender, EventArgs e)
-        {
-            FrmActivityLogs activityLogs = new FrmActivityLogs();
-            activityLogs.Show();
-            this.Hide();
-        }
-
-        private void btnReminder_Click(object sender, EventArgs e)
-        {
-            FrmNotifications notifications = new FrmNotifications();
-            notifications.Show();
-            this.Hide();
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            ActivityLogger.LogLogout(SessionManager.CurrentUser?.Id ?? 0, SessionManager.CurrentUser?.Name ?? "");
-            SessionManager.ClearSession();
-
-            Login loginForm = new Login();
-            loginForm.Show();
-            this.Close();
-        }
-
+        private void btnDashboard_Click(object sender, EventArgs e) { new FrmAdminDashboard().Show(); this.Hide(); }
+        private void btnScholarMgmt_Click(object sender, EventArgs e) { new FrmScholarManagement().Show(); this.Hide(); }
+        private void btnPayroll_Click(object sender, EventArgs e) { new FrmPayrollProcessing().Show(); this.Hide(); }
+        private void btnActivityLog_Click(object sender, EventArgs e) { new FrmActivityLogs().Show(); this.Hide(); }
+        private void btnReminder_Click(object sender, EventArgs e) { new FrmNotifications().Show(); this.Hide(); }
+        private void btnLogout_Click(object sender, EventArgs e) { ActivityLogger.LogLogout(SessionManager.CurrentUser?.Id ?? 0, SessionManager.CurrentUser?.Name ?? ""); SessionManager.ClearSession(); new Login().Show(); this.Close(); }
         #endregion
 
-        #region Designer Event Handlers (Keep for compatibility)
+        #region Designer Event Handlers
         private void FrmReports_Load(object sender, EventArgs e) { }
         private void sataButton1_Click(object sender, EventArgs e) => btnDashboard_Click(sender, e);
         private void sataButton2_Click(object sender, EventArgs e) => btnScholarMgmt_Click(sender, e);
@@ -797,11 +806,7 @@ namespace SkolarAid
         private void label1_Click(object sender, EventArgs e) { }
         private void ScholarAid_Click(object sender, EventArgs e) { }
         private void panelContent_Paint(object sender, PaintEventArgs e) { }
+        private void panelHeader_Paint(object sender, PaintEventArgs e) { }
         #endregion
-
-        private void panelHeader_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

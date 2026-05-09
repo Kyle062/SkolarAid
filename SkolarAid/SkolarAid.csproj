@@ -549,6 +549,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Resources\bell2.png" />
+    <Content Include="Resources\LCC_Logo.png" />
     <None Include="Resources\open-folder.png" />
     <None Include="Resources\bell21.png" />
     <Content Include="Resources\dolllar2.png" />

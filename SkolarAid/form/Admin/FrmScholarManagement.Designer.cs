@@ -22,6 +22,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
             SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
             this.panelScholarList = new SATAUiFramework.SATAPanel();
@@ -57,10 +58,26 @@
             this.picUser = new System.Windows.Forms.PictureBox();
             this.lblRole = new System.Windows.Forms.Label();
             this.panelForm = new SATAUiFramework.SATAPanel();
+            this.sataButton1 = new FrameworkTest.SATAButton();
+            this.btnDeactivate = new FrameworkTest.SATAButton();
+            this.btnUpdate = new FrameworkTest.SATAButton();
+            this.btnSave = new FrameworkTest.SATAButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btnCancel = new FrameworkTest.SATAButton();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblFormTitle = new System.Windows.Forms.Label();
             this.lblSectionBasic = new System.Windows.Forms.Label();
             this.lblSectionAcademic = new System.Windows.Forms.Label();
             this.lblSectionScholarship = new System.Windows.Forms.Label();
+            this.lblSectionBank = new System.Windows.Forms.Label();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.lblFirstName = new System.Windows.Forms.Label();
             this.txtLastName = new System.Windows.Forms.TextBox();
@@ -71,25 +88,42 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtContactNumber = new System.Windows.Forms.TextBox();
             this.lblContact = new System.Windows.Forms.Label();
+            this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
+            this.lblDOB = new System.Windows.Forms.Label();
+            this.cmbGender = new System.Windows.Forms.ComboBox();
+            this.lblGender = new System.Windows.Forms.Label();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.lblAddress = new System.Windows.Forms.Label();
+            this.txtStudentId = new System.Windows.Forms.TextBox();
+            this.lblStudentId = new System.Windows.Forms.Label();
             this.cmbCourse = new System.Windows.Forms.ComboBox();
             this.lblCourse = new System.Windows.Forms.Label();
             this.cmbYearLevel = new System.Windows.Forms.ComboBox();
             this.lblYearLevel = new System.Windows.Forms.Label();
             this.cmbScholarshipType = new System.Windows.Forms.ComboBox();
             this.lblScholarship = new System.Windows.Forms.Label();
+            this.txtStipendAmount = new System.Windows.Forms.TextBox();
+            this.lblStipendAmount = new System.Windows.Forms.Label();
+            this.cmbStipendFrequency = new System.Windows.Forms.ComboBox();
+            this.lblStipendFrequency = new System.Windows.Forms.Label();
+            this.cmbFundSource = new System.Windows.Forms.ComboBox();
+            this.lblFundSource = new System.Windows.Forms.Label();
+            this.txtRenewalConditions = new System.Windows.Forms.TextBox();
+            this.lblRenewalConditions = new System.Windows.Forms.Label();
+            this.txtBankName = new System.Windows.Forms.TextBox();
+            this.lblBankName = new System.Windows.Forms.Label();
+            this.txtBankAccountNumber = new System.Windows.Forms.TextBox();
+            this.lblBankAccountNumber = new System.Windows.Forms.Label();
             this.dtpEnrollmentDate = new System.Windows.Forms.DateTimePicker();
             this.lblEnrollmentDate = new System.Windows.Forms.Label();
             this.dtpExpectedGraduation = new System.Windows.Forms.DateTimePicker();
             this.lblExpectedGrad = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.txtScholarNumber = new System.Windows.Forms.TextBox();
             this.lblScholarNumber = new System.Windows.Forms.Label();
-            this.btnCancel = new FrameworkTest.SATAButton();
-            this.btnDeactivate = new FrameworkTest.SATAButton();
-            this.btnViewDetails = new FrameworkTest.SATAButton();
-            this.btnUpdate = new FrameworkTest.SATAButton();
-            this.btnSave = new FrameworkTest.SATAButton();
+            this.sataPanel1 = new SATAUiFramework.SATAPanel();
             this.panelScholarList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvScholars)).BeginInit();
             this.panelContent.SuspendLayout();
@@ -99,6 +133,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).BeginInit();
             this.panelForm.SuspendLayout();
+            this.sataPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelScholarList
@@ -234,13 +269,12 @@
             this.panelContent.Controls.Add(this.lblGreeting);
             this.panelContent.Controls.Add(this.panelSidebar);
             this.panelContent.Controls.Add(this.panelSearchBar);
-            this.panelContent.Controls.Add(this.panelHeader);
             this.panelContent.Controls.Add(this.panelForm);
             this.panelContent.Controls.Add(this.panelScholarList);
-            this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContent.Controls.Add(this.panelHeader);
             this.panelContent.Location = new System.Drawing.Point(0, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1920, 1061);
+            this.panelContent.Size = new System.Drawing.Size(4920, 1061);
             this.panelContent.TabIndex = 2;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint_3);
             // 
@@ -529,7 +563,7 @@
             // 
             this.txtSearch.Font = new System.Drawing.Font("Century Gothic", 12F);
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(283, 25);
+            this.txtSearch.Location = new System.Drawing.Point(380, 21);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(658, 27);
             this.txtSearch.TabIndex = 3;
@@ -543,7 +577,7 @@
             this.lblSearchIcon.AutoSize = true;
             this.lblSearchIcon.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblSearchIcon.ForeColor = System.Drawing.Color.Gray;
-            this.lblSearchIcon.Location = new System.Drawing.Point(256, 28);
+            this.lblSearchIcon.Location = new System.Drawing.Point(353, 24);
             this.lblSearchIcon.Name = "lblSearchIcon";
             this.lblSearchIcon.Size = new System.Drawing.Size(32, 21);
             this.lblSearchIcon.TabIndex = 4;
@@ -590,7 +624,7 @@
             // 
             // btnAddScholar
             // 
-            this.btnAddScholar.ButtonText = "+ Add New Scholar";
+            this.btnAddScholar.ButtonText = "View Scholarships Management";
             this.btnAddScholar.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
             this.btnAddScholar.CheckedForeColor = System.Drawing.Color.White;
             this.btnAddScholar.CheckedImageTint = System.Drawing.Color.White;
@@ -621,22 +655,22 @@
             this.btnAddScholar.PressedImageTint = System.Drawing.Color.White;
             this.btnAddScholar.PressedOutline = System.Drawing.Color.Empty;
             this.btnAddScholar.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnAddScholar.Size = new System.Drawing.Size(207, 35);
+            this.btnAddScholar.Size = new System.Drawing.Size(277, 35);
             this.btnAddScholar.TabIndex = 0;
             this.btnAddScholar.TextAutoCenter = true;
             this.btnAddScholar.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnAddScholar.Click += new System.EventHandler(this.btnAddScholar_Click);
+            //this.btnAddScholar.Click += new System.EventHandler(this.btnAddScholar_Click);
             // 
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
             this.panelHeader.BorderColor = System.Drawing.Color.Black;
-            borderRadius3.BottomLeft = 1;
-            borderRadius3.BottomRight = 1;
-            borderRadius3.TopLeft = 1;
-            borderRadius3.TopRight = 1;
-            this.panelHeader.BorderRadius = borderRadius3;
+            borderRadius5.BottomLeft = 1;
+            borderRadius5.BottomRight = 1;
+            borderRadius5.TopLeft = 1;
+            borderRadius5.TopRight = 1;
+            this.panelHeader.BorderRadius = borderRadius5;
             this.panelHeader.BorderThickness = 0;
             this.panelHeader.Controls.Add(this.picLogo);
             this.panelHeader.Controls.Add(this.lblBrand);
@@ -646,7 +680,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
+            this.panelHeader.Size = new System.Drawing.Size(4920, 80);
             this.panelHeader.TabIndex = 7;
             // 
             // picLogo
@@ -736,16 +770,32 @@
             this.panelForm.BackColor = System.Drawing.Color.White;
             this.panelForm.BackColor2 = System.Drawing.Color.White;
             this.panelForm.BorderColor = System.Drawing.Color.Black;
-            borderRadius4.BottomLeft = 15;
-            borderRadius4.BottomRight = 15;
-            borderRadius4.TopLeft = 15;
-            borderRadius4.TopRight = 15;
-            this.panelForm.BorderRadius = borderRadius4;
+            borderRadius3.BottomLeft = 15;
+            borderRadius3.BottomRight = 15;
+            borderRadius3.TopLeft = 15;
+            borderRadius3.TopRight = 15;
+            this.panelForm.BorderRadius = borderRadius3;
             this.panelForm.BorderThickness = 0;
-            this.panelForm.Controls.Add(this.lblFormTitle);
+            this.panelForm.Controls.Add(this.sataPanel1);
+            this.panelForm.Controls.Add(this.sataButton1);
+            this.panelForm.Controls.Add(this.btnDeactivate);
+            this.panelForm.Controls.Add(this.btnUpdate);
+            this.panelForm.Controls.Add(this.btnSave);
+            this.panelForm.Controls.Add(this.label6);
+            this.panelForm.Controls.Add(this.comboBox5);
+            this.panelForm.Controls.Add(this.label5);
+            this.panelForm.Controls.Add(this.btnCancel);
+            this.panelForm.Controls.Add(this.comboBox4);
+            this.panelForm.Controls.Add(this.label4);
+            this.panelForm.Controls.Add(this.comboBox3);
+            this.panelForm.Controls.Add(this.label3);
+            this.panelForm.Controls.Add(this.comboBox2);
+            this.panelForm.Controls.Add(this.label2);
+            this.panelForm.Controls.Add(this.label1);
             this.panelForm.Controls.Add(this.lblSectionBasic);
             this.panelForm.Controls.Add(this.lblSectionAcademic);
             this.panelForm.Controls.Add(this.lblSectionScholarship);
+            this.panelForm.Controls.Add(this.lblSectionBank);
             this.panelForm.Controls.Add(this.txtFirstName);
             this.panelForm.Controls.Add(this.lblFirstName);
             this.panelForm.Controls.Add(this.txtLastName);
@@ -756,40 +806,368 @@
             this.panelForm.Controls.Add(this.lblEmail);
             this.panelForm.Controls.Add(this.txtContactNumber);
             this.panelForm.Controls.Add(this.lblContact);
+            this.panelForm.Controls.Add(this.dtpDateOfBirth);
+            this.panelForm.Controls.Add(this.lblDOB);
+            this.panelForm.Controls.Add(this.cmbGender);
+            this.panelForm.Controls.Add(this.lblGender);
+            this.panelForm.Controls.Add(this.txtAddress);
+            this.panelForm.Controls.Add(this.lblAddress);
+            this.panelForm.Controls.Add(this.txtStudentId);
+            this.panelForm.Controls.Add(this.lblStudentId);
             this.panelForm.Controls.Add(this.cmbCourse);
             this.panelForm.Controls.Add(this.lblCourse);
             this.panelForm.Controls.Add(this.cmbYearLevel);
             this.panelForm.Controls.Add(this.lblYearLevel);
             this.panelForm.Controls.Add(this.cmbScholarshipType);
             this.panelForm.Controls.Add(this.lblScholarship);
+            this.panelForm.Controls.Add(this.txtStipendAmount);
+            this.panelForm.Controls.Add(this.lblStipendAmount);
+            this.panelForm.Controls.Add(this.cmbStipendFrequency);
+            this.panelForm.Controls.Add(this.lblStipendFrequency);
+            this.panelForm.Controls.Add(this.cmbFundSource);
+            this.panelForm.Controls.Add(this.lblFundSource);
+            this.panelForm.Controls.Add(this.txtRenewalConditions);
+            this.panelForm.Controls.Add(this.lblRenewalConditions);
+            this.panelForm.Controls.Add(this.txtBankName);
+            this.panelForm.Controls.Add(this.lblBankName);
+            this.panelForm.Controls.Add(this.txtBankAccountNumber);
+            this.panelForm.Controls.Add(this.lblBankAccountNumber);
             this.panelForm.Controls.Add(this.dtpEnrollmentDate);
             this.panelForm.Controls.Add(this.lblEnrollmentDate);
             this.panelForm.Controls.Add(this.dtpExpectedGraduation);
             this.panelForm.Controls.Add(this.lblExpectedGrad);
+            this.panelForm.Controls.Add(this.comboBox1);
             this.panelForm.Controls.Add(this.cmbStatus);
             this.panelForm.Controls.Add(this.lblStatus);
             this.panelForm.Controls.Add(this.txtScholarNumber);
             this.panelForm.Controls.Add(this.lblScholarNumber);
-            this.panelForm.Controls.Add(this.btnCancel);
-            this.panelForm.Controls.Add(this.btnDeactivate);
-            this.panelForm.Controls.Add(this.btnViewDetails);
-            this.panelForm.Controls.Add(this.btnUpdate);
-            this.panelForm.Controls.Add(this.btnSave);
-            this.panelForm.Location = new System.Drawing.Point(1292, 275);
+            this.panelForm.Location = new System.Drawing.Point(1328, 275);
             this.panelForm.Name = "panelForm";
-            this.panelForm.Size = new System.Drawing.Size(569, 721);
+            this.panelForm.Size = new System.Drawing.Size(569, 730);
             this.panelForm.TabIndex = 5;
+            // 
+            // sataButton1
+            // 
+            this.sataButton1.ButtonText = "View";
+            this.sataButton1.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(140)))));
+            this.sataButton1.CheckedForeColor = System.Drawing.Color.White;
+            this.sataButton1.CheckedImageTint = System.Drawing.Color.White;
+            this.sataButton1.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.sataButton1.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.sataButton1.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.sataButton1.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(110)))), ((int)(((byte)(160)))));
+            this.sataButton1.HoverForeColor = System.Drawing.Color.White;
+            this.sataButton1.HoverImage = null;
+            this.sataButton1.HoverImageTint = System.Drawing.Color.White;
+            this.sataButton1.HoverOutline = System.Drawing.Color.Empty;
+            this.sataButton1.Image = null;
+            this.sataButton1.ImageAutoCenter = true;
+            this.sataButton1.ImageExpand = new System.Drawing.Point(0, 0);
+            this.sataButton1.ImageOffset = new System.Drawing.Point(0, 0);
+            this.sataButton1.ImageTint = System.Drawing.Color.White;
+            this.sataButton1.IsToggleButton = false;
+            this.sataButton1.IsToggled = false;
+            this.sataButton1.Location = new System.Drawing.Point(272, 1028);
+            this.sataButton1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.sataButton1.Name = "sataButton1";
+            this.sataButton1.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.sataButton1.NormalForeColor = System.Drawing.Color.White;
+            this.sataButton1.NormalOutline = System.Drawing.Color.Empty;
+            this.sataButton1.OutlineThickness = 2F;
+            this.sataButton1.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.sataButton1.PressedForeColor = System.Drawing.Color.White;
+            this.sataButton1.PressedImageTint = System.Drawing.Color.White;
+            this.sataButton1.PressedOutline = System.Drawing.Color.Empty;
+            this.sataButton1.Rounding = new System.Windows.Forms.Padding(8);
+            this.sataButton1.Size = new System.Drawing.Size(70, 35);
+            this.sataButton1.TabIndex = 7;
+            this.sataButton1.TextAutoCenter = true;
+            this.sataButton1.TextOffset = new System.Drawing.Point(0, 0);
+            // 
+            // btnDeactivate
+            // 
+            this.btnDeactivate.ButtonText = "Deactivate";
+            this.btnDeactivate.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.btnDeactivate.CheckedForeColor = System.Drawing.Color.White;
+            this.btnDeactivate.CheckedImageTint = System.Drawing.Color.White;
+            this.btnDeactivate.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.btnDeactivate.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnDeactivate.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnDeactivate.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(150)))), ((int)(((byte)(0)))));
+            this.btnDeactivate.HoverForeColor = System.Drawing.Color.White;
+            this.btnDeactivate.HoverImage = null;
+            this.btnDeactivate.HoverImageTint = System.Drawing.Color.White;
+            this.btnDeactivate.HoverOutline = System.Drawing.Color.Empty;
+            this.btnDeactivate.Image = null;
+            this.btnDeactivate.ImageAutoCenter = true;
+            this.btnDeactivate.ImageExpand = new System.Drawing.Point(0, 0);
+            this.btnDeactivate.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnDeactivate.ImageTint = System.Drawing.Color.White;
+            this.btnDeactivate.IsToggleButton = false;
+            this.btnDeactivate.IsToggled = false;
+            this.btnDeactivate.Location = new System.Drawing.Point(422, 1028);
+            this.btnDeactivate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnDeactivate.Name = "btnDeactivate";
+            this.btnDeactivate.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(170)))), ((int)(((byte)(0)))));
+            this.btnDeactivate.NormalForeColor = System.Drawing.Color.White;
+            this.btnDeactivate.NormalOutline = System.Drawing.Color.Empty;
+            this.btnDeactivate.OutlineThickness = 2F;
+            this.btnDeactivate.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnDeactivate.PressedForeColor = System.Drawing.Color.White;
+            this.btnDeactivate.PressedImageTint = System.Drawing.Color.White;
+            this.btnDeactivate.PressedOutline = System.Drawing.Color.Empty;
+            this.btnDeactivate.Rounding = new System.Windows.Forms.Padding(8);
+            this.btnDeactivate.Size = new System.Drawing.Size(105, 35);
+            this.btnDeactivate.TabIndex = 6;
+            this.btnDeactivate.TextAutoCenter = true;
+            this.btnDeactivate.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnDeactivate.Click += new System.EventHandler(this.btnDeactivate_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.ButtonText = "Update";
+            this.btnUpdate.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(160)))), ((int)(((byte)(0)))));
+            this.btnUpdate.CheckedForeColor = System.Drawing.Color.White;
+            this.btnUpdate.CheckedImageTint = System.Drawing.Color.White;
+            this.btnUpdate.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.btnUpdate.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnUpdate.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnUpdate.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.btnUpdate.HoverForeColor = System.Drawing.Color.White;
+            this.btnUpdate.HoverImage = null;
+            this.btnUpdate.HoverImageTint = System.Drawing.Color.White;
+            this.btnUpdate.HoverOutline = System.Drawing.Color.Empty;
+            this.btnUpdate.Image = null;
+            this.btnUpdate.ImageAutoCenter = true;
+            this.btnUpdate.ImageExpand = new System.Drawing.Point(0, 0);
+            this.btnUpdate.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnUpdate.ImageTint = System.Drawing.Color.White;
+            this.btnUpdate.IsToggleButton = false;
+            this.btnUpdate.IsToggled = false;
+            this.btnUpdate.Location = new System.Drawing.Point(352, 1028);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnUpdate.NormalForeColor = System.Drawing.Color.White;
+            this.btnUpdate.NormalOutline = System.Drawing.Color.Empty;
+            this.btnUpdate.OutlineThickness = 2F;
+            this.btnUpdate.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnUpdate.PressedForeColor = System.Drawing.Color.White;
+            this.btnUpdate.PressedImageTint = System.Drawing.Color.White;
+            this.btnUpdate.PressedOutline = System.Drawing.Color.Empty;
+            this.btnUpdate.Rounding = new System.Windows.Forms.Padding(8);
+            this.btnUpdate.Size = new System.Drawing.Size(60, 35);
+            this.btnUpdate.TabIndex = 6;
+            this.btnUpdate.TextAutoCenter = true;
+            this.btnUpdate.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.ButtonText = "Add new Scholar";
+            this.btnSave.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
+            this.btnSave.CheckedForeColor = System.Drawing.Color.White;
+            this.btnSave.CheckedImageTint = System.Drawing.Color.White;
+            this.btnSave.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.btnSave.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnSave.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnSave.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(110)))), ((int)(((byte)(125)))));
+            this.btnSave.HoverForeColor = System.Drawing.Color.White;
+            this.btnSave.HoverImage = null;
+            this.btnSave.HoverImageTint = System.Drawing.Color.White;
+            this.btnSave.HoverOutline = System.Drawing.Color.Empty;
+            this.btnSave.Image = null;
+            this.btnSave.ImageAutoCenter = true;
+            this.btnSave.ImageExpand = new System.Drawing.Point(0, 0);
+            this.btnSave.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnSave.ImageTint = System.Drawing.Color.White;
+            this.btnSave.IsToggleButton = false;
+            this.btnSave.IsToggled = false;
+            this.btnSave.Location = new System.Drawing.Point(9, 1028);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.btnSave.NormalForeColor = System.Drawing.Color.White;
+            this.btnSave.NormalOutline = System.Drawing.Color.Empty;
+            this.btnSave.OutlineThickness = 2F;
+            this.btnSave.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnSave.PressedForeColor = System.Drawing.Color.White;
+            this.btnSave.PressedImageTint = System.Drawing.Color.White;
+            this.btnSave.PressedOutline = System.Drawing.Color.Empty;
+            this.btnSave.Rounding = new System.Windows.Forms.Padding(8);
+            this.btnSave.Size = new System.Drawing.Size(152, 35);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.TextAutoCenter = true;
+            this.btnSave.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.label6.Location = new System.Drawing.Point(320, 944);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(161, 19);
+            this.label6.TabIndex = 15;
+            this.label6.Text = " Scholarship Contract ";
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox5.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "TBA",
+            "ATTACH FILE"});
+            this.comboBox5.Location = new System.Drawing.Point(319, 966);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(222, 25);
+            this.comboBox5.TabIndex = 14;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.label5.Location = new System.Drawing.Point(187, 944);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(103, 19);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Latest Grades";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.ButtonText = "Clear Fields";
+            this.btnCancel.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnCancel.CheckedForeColor = System.Drawing.Color.White;
+            this.btnCancel.CheckedImageTint = System.Drawing.Color.White;
+            this.btnCancel.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.btnCancel.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.btnCancel.HoverForeColor = System.Drawing.Color.White;
+            this.btnCancel.HoverImage = null;
+            this.btnCancel.HoverImageTint = System.Drawing.Color.White;
+            this.btnCancel.HoverOutline = System.Drawing.Color.Empty;
+            this.btnCancel.Image = null;
+            this.btnCancel.ImageAutoCenter = true;
+            this.btnCancel.ImageExpand = new System.Drawing.Point(0, 0);
+            this.btnCancel.ImageOffset = new System.Drawing.Point(0, 0);
+            this.btnCancel.ImageTint = System.Drawing.Color.White;
+            this.btnCancel.IsToggleButton = false;
+            this.btnCancel.IsToggled = false;
+            this.btnCancel.Location = new System.Drawing.Point(171, 1028);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+            this.btnCancel.NormalForeColor = System.Drawing.Color.White;
+            this.btnCancel.NormalOutline = System.Drawing.Color.Empty;
+            this.btnCancel.OutlineThickness = 2F;
+            this.btnCancel.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.btnCancel.PressedForeColor = System.Drawing.Color.White;
+            this.btnCancel.PressedImageTint = System.Drawing.Color.White;
+            this.btnCancel.PressedOutline = System.Drawing.Color.Empty;
+            this.btnCancel.Rounding = new System.Windows.Forms.Padding(8);
+            this.btnCancel.Size = new System.Drawing.Size(91, 35);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.TextAutoCenter = true;
+            this.btnCancel.TextOffset = new System.Drawing.Point(0, 0);
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "TBA",
+            "ATTACH FILE"});
+            this.comboBox4.Location = new System.Drawing.Point(187, 967);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(125, 25);
+            this.comboBox4.TabIndex = 12;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.label4.Location = new System.Drawing.Point(39, 944);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 19);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "COR";
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "TBA",
+            "ATTACH FILE"});
+            this.comboBox3.Location = new System.Drawing.Point(38, 966);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(140, 25);
+            this.comboBox3.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.label3.Location = new System.Drawing.Point(307, 887);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 19);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "COE (current sem) ";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "TBA",
+            "ATTACH FILE"});
+            this.comboBox2.Location = new System.Drawing.Point(307, 910);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(234, 25);
+            this.comboBox2.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.label2.Location = new System.Drawing.Point(36, 888);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(146, 19);
+            this.label2.TabIndex = 7;
+            this.label2.Text = " PSA Birth Certificate";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.label1.Location = new System.Drawing.Point(32, 859);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(134, 18);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Files Attachments";
             // 
             // lblFormTitle
             // 
             this.lblFormTitle.AutoSize = true;
-            this.lblFormTitle.Font = new System.Drawing.Font("Century Gothic", 16F, System.Drawing.FontStyle.Bold);
+            this.lblFormTitle.Font = new System.Drawing.Font("Century Gothic", 18F, System.Drawing.FontStyle.Bold);
             this.lblFormTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.lblFormTitle.Location = new System.Drawing.Point(20, 20);
+            this.lblFormTitle.Location = new System.Drawing.Point(17, 7);
             this.lblFormTitle.Name = "lblFormTitle";
-            this.lblFormTitle.Size = new System.Drawing.Size(218, 26);
+            this.lblFormTitle.Size = new System.Drawing.Size(427, 28);
             this.lblFormTitle.TabIndex = 0;
-            this.lblFormTitle.Text = "Scholar Information";
+            this.lblFormTitle.Text = "Scholar Information/Adding Scholar";
             // 
             // lblSectionBasic
             // 
@@ -807,7 +1185,7 @@
             this.lblSectionAcademic.AutoSize = true;
             this.lblSectionAcademic.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
             this.lblSectionAcademic.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.lblSectionAcademic.Location = new System.Drawing.Point(20, 310);
+            this.lblSectionAcademic.Location = new System.Drawing.Point(26, 349);
             this.lblSectionAcademic.Name = "lblSectionAcademic";
             this.lblSectionAcademic.Size = new System.Drawing.Size(140, 18);
             this.lblSectionAcademic.TabIndex = 1;
@@ -818,11 +1196,22 @@
             this.lblSectionScholarship.AutoSize = true;
             this.lblSectionScholarship.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
             this.lblSectionScholarship.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.lblSectionScholarship.Location = new System.Drawing.Point(20, 462);
+            this.lblSectionScholarship.Location = new System.Drawing.Point(25, 444);
             this.lblSectionScholarship.Name = "lblSectionScholarship";
             this.lblSectionScholarship.Size = new System.Drawing.Size(146, 18);
             this.lblSectionScholarship.TabIndex = 1;
             this.lblSectionScholarship.Text = "Scholarship Details";
+            // 
+            // lblSectionBank
+            // 
+            this.lblSectionBank.AutoSize = true;
+            this.lblSectionBank.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
+            this.lblSectionBank.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            this.lblSectionBank.Location = new System.Drawing.Point(29, 651);
+            this.lblSectionBank.Name = "lblSectionBank";
+            this.lblSectionBank.Size = new System.Drawing.Size(132, 18);
+            this.lblSectionBank.TabIndex = 1;
+            this.lblSectionBank.Text = "Bank Information";
             // 
             // txtFirstName
             // 
@@ -865,7 +1254,7 @@
             // txtMiddleName
             // 
             this.txtMiddleName.Font = new System.Drawing.Font("Century Gothic", 11F);
-            this.txtMiddleName.Location = new System.Drawing.Point(25, 160);
+            this.txtMiddleName.Location = new System.Drawing.Point(381, 110);
             this.txtMiddleName.Name = "txtMiddleName";
             this.txtMiddleName.Size = new System.Drawing.Size(160, 25);
             this.txtMiddleName.TabIndex = 2;
@@ -875,7 +1264,7 @@
             this.lblMiddleName.AutoSize = true;
             this.lblMiddleName.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblMiddleName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblMiddleName.Location = new System.Drawing.Point(22, 140);
+            this.lblMiddleName.Location = new System.Drawing.Point(378, 90);
             this.lblMiddleName.Name = "lblMiddleName";
             this.lblMiddleName.Size = new System.Drawing.Size(103, 19);
             this.lblMiddleName.TabIndex = 3;
@@ -884,9 +1273,9 @@
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Century Gothic", 11F);
-            this.txtEmail.Location = new System.Drawing.Point(25, 210);
+            this.txtEmail.Location = new System.Drawing.Point(26, 167);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(335, 25);
+            this.txtEmail.Size = new System.Drawing.Size(264, 25);
             this.txtEmail.TabIndex = 2;
             // 
             // lblEmail
@@ -894,7 +1283,7 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblEmail.Location = new System.Drawing.Point(22, 190);
+            this.lblEmail.Location = new System.Drawing.Point(23, 147);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(46, 19);
             this.lblEmail.TabIndex = 3;
@@ -903,9 +1292,9 @@
             // txtContactNumber
             // 
             this.txtContactNumber.Font = new System.Drawing.Font("Century Gothic", 11F);
-            this.txtContactNumber.Location = new System.Drawing.Point(25, 260);
+            this.txtContactNumber.Location = new System.Drawing.Point(312, 170);
             this.txtContactNumber.Name = "txtContactNumber";
-            this.txtContactNumber.Size = new System.Drawing.Size(200, 25);
+            this.txtContactNumber.Size = new System.Drawing.Size(229, 25);
             this.txtContactNumber.TabIndex = 2;
             // 
             // lblContact
@@ -913,20 +1302,104 @@
             this.lblContact.AutoSize = true;
             this.lblContact.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblContact.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblContact.Location = new System.Drawing.Point(22, 240);
+            this.lblContact.Location = new System.Drawing.Point(309, 150);
             this.lblContact.Name = "lblContact";
             this.lblContact.Size = new System.Drawing.Size(126, 19);
             this.lblContact.TabIndex = 3;
             this.lblContact.Text = "Contact Number";
             // 
+            // dtpDateOfBirth
+            // 
+            this.dtpDateOfBirth.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.dtpDateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(28, 225);
+            this.dtpDateOfBirth.Name = "dtpDateOfBirth";
+            this.dtpDateOfBirth.Size = new System.Drawing.Size(160, 25);
+            this.dtpDateOfBirth.TabIndex = 5;
+            // 
+            // lblDOB
+            // 
+            this.lblDOB.AutoSize = true;
+            this.lblDOB.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblDOB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblDOB.Location = new System.Drawing.Point(25, 205);
+            this.lblDOB.Name = "lblDOB";
+            this.lblDOB.Size = new System.Drawing.Size(93, 19);
+            this.lblDOB.TabIndex = 3;
+            this.lblDOB.Text = "Date of Birth";
+            // 
+            // cmbGender
+            // 
+            this.cmbGender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGender.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.cmbGender.FormattingEnabled = true;
+            this.cmbGender.Items.AddRange(new object[] {
+            "Male",
+            "Female",
+            "Other"});
+            this.cmbGender.Location = new System.Drawing.Point(203, 224);
+            this.cmbGender.Name = "cmbGender";
+            this.cmbGender.Size = new System.Drawing.Size(160, 28);
+            this.cmbGender.TabIndex = 4;
+            // 
+            // lblGender
+            // 
+            this.lblGender.AutoSize = true;
+            this.lblGender.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblGender.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblGender.Location = new System.Drawing.Point(200, 205);
+            this.lblGender.Name = "lblGender";
+            this.lblGender.Size = new System.Drawing.Size(62, 19);
+            this.lblGender.TabIndex = 3;
+            this.lblGender.Text = "Gender";
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtAddress.Location = new System.Drawing.Point(28, 281);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(309, 50);
+            this.txtAddress.TabIndex = 2;
+            // 
+            // lblAddress
+            // 
+            this.lblAddress.AutoSize = true;
+            this.lblAddress.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblAddress.Location = new System.Drawing.Point(25, 261);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(61, 19);
+            this.lblAddress.TabIndex = 3;
+            this.lblAddress.Text = "Address";
+            // 
+            // txtStudentId
+            // 
+            this.txtStudentId.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtStudentId.Location = new System.Drawing.Point(346, 307);
+            this.txtStudentId.Name = "txtStudentId";
+            this.txtStudentId.Size = new System.Drawing.Size(200, 25);
+            this.txtStudentId.TabIndex = 2;
+            // 
+            // lblStudentId
+            // 
+            this.lblStudentId.AutoSize = true;
+            this.lblStudentId.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblStudentId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblStudentId.Location = new System.Drawing.Point(343, 287);
+            this.lblStudentId.Name = "lblStudentId";
+            this.lblStudentId.Size = new System.Drawing.Size(94, 19);
+            this.lblStudentId.TabIndex = 3;
+            this.lblStudentId.Text = "Student ID #";
+            // 
             // cmbCourse
             // 
             this.cmbCourse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCourse.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.cmbCourse.Font = new System.Drawing.Font("Century Gothic", 8F);
             this.cmbCourse.FormattingEnabled = true;
-            this.cmbCourse.Location = new System.Drawing.Point(25, 360);
+            this.cmbCourse.Location = new System.Drawing.Point(31, 399);
             this.cmbCourse.Name = "cmbCourse";
-            this.cmbCourse.Size = new System.Drawing.Size(335, 28);
+            this.cmbCourse.Size = new System.Drawing.Size(431, 24);
             this.cmbCourse.TabIndex = 4;
             // 
             // lblCourse
@@ -934,7 +1407,7 @@
             this.lblCourse.AutoSize = true;
             this.lblCourse.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblCourse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblCourse.Location = new System.Drawing.Point(22, 340);
+            this.lblCourse.Location = new System.Drawing.Point(28, 379);
             this.lblCourse.Name = "lblCourse";
             this.lblCourse.Size = new System.Drawing.Size(56, 19);
             this.lblCourse.TabIndex = 3;
@@ -949,10 +1422,11 @@
             "1st Year",
             "2nd Year",
             "3rd Year",
-            "4th Year"});
-            this.cmbYearLevel.Location = new System.Drawing.Point(25, 420);
+            "4th Year",
+            "5th Year"});
+            this.cmbYearLevel.Location = new System.Drawing.Point(468, 401);
             this.cmbYearLevel.Name = "cmbYearLevel";
-            this.cmbYearLevel.Size = new System.Drawing.Size(160, 28);
+            this.cmbYearLevel.Size = new System.Drawing.Size(78, 28);
             this.cmbYearLevel.TabIndex = 4;
             // 
             // lblYearLevel
@@ -960,7 +1434,7 @@
             this.lblYearLevel.AutoSize = true;
             this.lblYearLevel.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblYearLevel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblYearLevel.Location = new System.Drawing.Point(22, 400);
+            this.lblYearLevel.Location = new System.Drawing.Point(468, 379);
             this.lblYearLevel.Name = "lblYearLevel";
             this.lblYearLevel.Size = new System.Drawing.Size(78, 19);
             this.lblYearLevel.TabIndex = 3;
@@ -971,9 +1445,9 @@
             this.cmbScholarshipType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbScholarshipType.Font = new System.Drawing.Font("Century Gothic", 11F);
             this.cmbScholarshipType.FormattingEnabled = true;
-            this.cmbScholarshipType.Location = new System.Drawing.Point(25, 507);
+            this.cmbScholarshipType.Location = new System.Drawing.Point(30, 489);
             this.cmbScholarshipType.Name = "cmbScholarshipType";
-            this.cmbScholarshipType.Size = new System.Drawing.Size(335, 28);
+            this.cmbScholarshipType.Size = new System.Drawing.Size(307, 28);
             this.cmbScholarshipType.TabIndex = 4;
             // 
             // lblScholarship
@@ -981,19 +1455,152 @@
             this.lblScholarship.AutoSize = true;
             this.lblScholarship.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblScholarship.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblScholarship.Location = new System.Drawing.Point(22, 487);
+            this.lblScholarship.Location = new System.Drawing.Point(27, 469);
             this.lblScholarship.Name = "lblScholarship";
             this.lblScholarship.Size = new System.Drawing.Size(123, 19);
             this.lblScholarship.TabIndex = 3;
             this.lblScholarship.Text = "Scholarship Type";
             // 
+            // txtStipendAmount
+            // 
+            this.txtStipendAmount.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtStipendAmount.Location = new System.Drawing.Point(345, 489);
+            this.txtStipendAmount.Name = "txtStipendAmount";
+            this.txtStipendAmount.Size = new System.Drawing.Size(201, 25);
+            this.txtStipendAmount.TabIndex = 2;
+            this.txtStipendAmount.Text = "0";
+            // 
+            // lblStipendAmount
+            // 
+            this.lblStipendAmount.AutoSize = true;
+            this.lblStipendAmount.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblStipendAmount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblStipendAmount.Location = new System.Drawing.Point(342, 469);
+            this.lblStipendAmount.Name = "lblStipendAmount";
+            this.lblStipendAmount.Size = new System.Drawing.Size(120, 19);
+            this.lblStipendAmount.TabIndex = 3;
+            this.lblStipendAmount.Text = "Stipend Amount";
+            // 
+            // cmbStipendFrequency
+            // 
+            this.cmbStipendFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStipendFrequency.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.cmbStipendFrequency.FormattingEnabled = true;
+            this.cmbStipendFrequency.Items.AddRange(new object[] {
+            "Monthly",
+            "Semester",
+            "Quarterly",
+            "Annually"});
+            this.cmbStipendFrequency.Location = new System.Drawing.Point(30, 550);
+            this.cmbStipendFrequency.Name = "cmbStipendFrequency";
+            this.cmbStipendFrequency.Size = new System.Drawing.Size(160, 28);
+            this.cmbStipendFrequency.TabIndex = 4;
+            // 
+            // lblStipendFrequency
+            // 
+            this.lblStipendFrequency.AutoSize = true;
+            this.lblStipendFrequency.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblStipendFrequency.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblStipendFrequency.Location = new System.Drawing.Point(27, 532);
+            this.lblStipendFrequency.Name = "lblStipendFrequency";
+            this.lblStipendFrequency.Size = new System.Drawing.Size(140, 19);
+            this.lblStipendFrequency.TabIndex = 3;
+            this.lblStipendFrequency.Text = "Stipend Frequency";
+            // 
+            // cmbFundSource
+            // 
+            this.cmbFundSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFundSource.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.cmbFundSource.FormattingEnabled = true;
+            this.cmbFundSource.Items.AddRange(new object[] {
+            "Government",
+            "Private",
+            "Alumni",
+            "Corporate",
+            "Others"});
+            this.cmbFundSource.Location = new System.Drawing.Point(213, 552);
+            this.cmbFundSource.Name = "cmbFundSource";
+            this.cmbFundSource.Size = new System.Drawing.Size(328, 28);
+            this.cmbFundSource.TabIndex = 4;
+            this.cmbFundSource.SelectedIndexChanged += new System.EventHandler(this.cmbFundSource_SelectedIndexChanged);
+            // 
+            // lblFundSource
+            // 
+            this.lblFundSource.AutoSize = true;
+            this.lblFundSource.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblFundSource.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblFundSource.Location = new System.Drawing.Point(210, 532);
+            this.lblFundSource.Name = "lblFundSource";
+            this.lblFundSource.Size = new System.Drawing.Size(177, 19);
+            this.lblFundSource.TabIndex = 3;
+            this.lblFundSource.Text = "Scholarship Fund Source";
+            // 
+            // txtRenewalConditions
+            // 
+            this.txtRenewalConditions.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtRenewalConditions.Location = new System.Drawing.Point(31, 612);
+            this.txtRenewalConditions.Name = "txtRenewalConditions";
+            this.txtRenewalConditions.Size = new System.Drawing.Size(515, 25);
+            this.txtRenewalConditions.TabIndex = 2;
+            // 
+            // lblRenewalConditions
+            // 
+            this.lblRenewalConditions.AutoSize = true;
+            this.lblRenewalConditions.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblRenewalConditions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblRenewalConditions.Location = new System.Drawing.Point(28, 592);
+            this.lblRenewalConditions.Name = "lblRenewalConditions";
+            this.lblRenewalConditions.Size = new System.Drawing.Size(147, 19);
+            this.lblRenewalConditions.TabIndex = 3;
+            this.lblRenewalConditions.Text = "Renewal Conditions";
+            // 
+            // txtBankName
+            // 
+            this.txtBankName.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtBankName.Location = new System.Drawing.Point(31, 700);
+            this.txtBankName.Name = "txtBankName";
+            this.txtBankName.Size = new System.Drawing.Size(294, 25);
+            this.txtBankName.TabIndex = 2;
+            // 
+            // lblBankName
+            // 
+            this.lblBankName.AutoSize = true;
+            this.lblBankName.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblBankName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblBankName.Location = new System.Drawing.Point(28, 680);
+            this.lblBankName.Name = "lblBankName";
+            this.lblBankName.Size = new System.Drawing.Size(89, 19);
+            this.lblBankName.TabIndex = 3;
+            this.lblBankName.Text = "Bank Name";
+            // 
+            // txtBankAccountNumber
+            // 
+            this.txtBankAccountNumber.Font = new System.Drawing.Font("Century Gothic", 11F);
+            this.txtBankAccountNumber.Location = new System.Drawing.Point(346, 700);
+            this.txtBankAccountNumber.Name = "txtBankAccountNumber";
+            this.txtBankAccountNumber.Size = new System.Drawing.Size(195, 25);
+            this.txtBankAccountNumber.TabIndex = 2;
+            this.txtBankAccountNumber.TextChanged += new System.EventHandler(this.txtBankAccountNumber_TextChanged);
+            // 
+            // lblBankAccountNumber
+            // 
+            this.lblBankAccountNumber.AutoSize = true;
+            this.lblBankAccountNumber.Font = new System.Drawing.Font("Century Gothic", 10F);
+            this.lblBankAccountNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblBankAccountNumber.Location = new System.Drawing.Point(343, 680);
+            this.lblBankAccountNumber.Name = "lblBankAccountNumber";
+            this.lblBankAccountNumber.Size = new System.Drawing.Size(127, 19);
+            this.lblBankAccountNumber.TabIndex = 3;
+            this.lblBankAccountNumber.Text = "Account Number";
+            this.lblBankAccountNumber.Click += new System.EventHandler(this.lblBankAccountNumber_Click);
+            // 
             // dtpEnrollmentDate
             // 
             this.dtpEnrollmentDate.Font = new System.Drawing.Font("Century Gothic", 11F);
             this.dtpEnrollmentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEnrollmentDate.Location = new System.Drawing.Point(25, 567);
+            this.dtpEnrollmentDate.Location = new System.Drawing.Point(34, 763);
             this.dtpEnrollmentDate.Name = "dtpEnrollmentDate";
-            this.dtpEnrollmentDate.Size = new System.Drawing.Size(160, 25);
+            this.dtpEnrollmentDate.Size = new System.Drawing.Size(217, 25);
             this.dtpEnrollmentDate.TabIndex = 5;
             // 
             // lblEnrollmentDate
@@ -1001,7 +1608,7 @@
             this.lblEnrollmentDate.AutoSize = true;
             this.lblEnrollmentDate.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblEnrollmentDate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblEnrollmentDate.Location = new System.Drawing.Point(22, 547);
+            this.lblEnrollmentDate.Location = new System.Drawing.Point(31, 743);
             this.lblEnrollmentDate.Name = "lblEnrollmentDate";
             this.lblEnrollmentDate.Size = new System.Drawing.Size(119, 19);
             this.lblEnrollmentDate.TabIndex = 3;
@@ -1011,9 +1618,9 @@
             // 
             this.dtpExpectedGraduation.Font = new System.Drawing.Font("Century Gothic", 11F);
             this.dtpExpectedGraduation.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpExpectedGraduation.Location = new System.Drawing.Point(200, 567);
+            this.dtpExpectedGraduation.Location = new System.Drawing.Point(270, 763);
             this.dtpExpectedGraduation.Name = "dtpExpectedGraduation";
-            this.dtpExpectedGraduation.Size = new System.Drawing.Size(160, 25);
+            this.dtpExpectedGraduation.Size = new System.Drawing.Size(271, 25);
             this.dtpExpectedGraduation.TabIndex = 5;
             // 
             // lblExpectedGrad
@@ -1021,11 +1628,24 @@
             this.lblExpectedGrad.AutoSize = true;
             this.lblExpectedGrad.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblExpectedGrad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblExpectedGrad.Location = new System.Drawing.Point(197, 547);
+            this.lblExpectedGrad.Location = new System.Drawing.Point(267, 743);
             this.lblExpectedGrad.Name = "lblExpectedGrad";
             this.lblExpectedGrad.Size = new System.Drawing.Size(161, 19);
             this.lblExpectedGrad.TabIndex = 3;
             this.lblExpectedGrad.Text = "Expected Graduation";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Century Gothic", 9F);
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "TBA",
+            "ATTACH FILE"});
+            this.comboBox1.Location = new System.Drawing.Point(35, 910);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(255, 25);
+            this.comboBox1.TabIndex = 4;
             // 
             // cmbStatus
             // 
@@ -1035,9 +1655,15 @@
             this.cmbStatus.Items.AddRange(new object[] {
             "Active",
             "Inactive",
+            "Probation",
+            "Suspended",
             "Graduated",
-            "Terminated"});
-            this.cmbStatus.Location = new System.Drawing.Point(25, 627);
+            "Terminated",
+            "Withdrawn",
+            "Expelled",
+            "Completed",
+            "Dropped"});
+            this.cmbStatus.Location = new System.Drawing.Point(34, 826);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(160, 28);
             this.cmbStatus.TabIndex = 4;
@@ -1047,7 +1673,7 @@
             this.lblStatus.AutoSize = true;
             this.lblStatus.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblStatus.Location = new System.Drawing.Point(22, 607);
+            this.lblStatus.Location = new System.Drawing.Point(31, 806);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(50, 19);
             this.lblStatus.TabIndex = 3;
@@ -1057,217 +1683,39 @@
             // 
             this.txtScholarNumber.Enabled = false;
             this.txtScholarNumber.Font = new System.Drawing.Font("Century Gothic", 11F);
-            this.txtScholarNumber.Location = new System.Drawing.Point(200, 627);
+            this.txtScholarNumber.Location = new System.Drawing.Point(209, 827);
             this.txtScholarNumber.Name = "txtScholarNumber";
-            this.txtScholarNumber.Size = new System.Drawing.Size(160, 25);
+            this.txtScholarNumber.Size = new System.Drawing.Size(337, 25);
             this.txtScholarNumber.TabIndex = 2;
+            this.txtScholarNumber.TextChanged += new System.EventHandler(this.txtScholarNumber_TextChanged);
             // 
             // lblScholarNumber
             // 
             this.lblScholarNumber.AutoSize = true;
             this.lblScholarNumber.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.lblScholarNumber.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblScholarNumber.Location = new System.Drawing.Point(197, 607);
+            this.lblScholarNumber.Location = new System.Drawing.Point(206, 807);
             this.lblScholarNumber.Name = "lblScholarNumber";
             this.lblScholarNumber.Size = new System.Drawing.Size(119, 19);
             this.lblScholarNumber.TabIndex = 3;
             this.lblScholarNumber.Text = "Scholar Number";
+            this.lblScholarNumber.Click += new System.EventHandler(this.lblScholarNumber_Click);
             // 
-            // btnCancel
+            // sataPanel1
             // 
-            this.btnCancel.ButtonText = "Cancel";
-            this.btnCancel.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.btnCancel.CheckedForeColor = System.Drawing.Color.White;
-            this.btnCancel.CheckedImageTint = System.Drawing.Color.White;
-            this.btnCancel.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnCancel.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnCancel.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.btnCancel.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
-            this.btnCancel.HoverForeColor = System.Drawing.Color.White;
-            this.btnCancel.HoverImage = null;
-            this.btnCancel.HoverImageTint = System.Drawing.Color.White;
-            this.btnCancel.HoverOutline = System.Drawing.Color.Empty;
-            this.btnCancel.Image = null;
-            this.btnCancel.ImageAutoCenter = true;
-            this.btnCancel.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnCancel.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnCancel.ImageTint = System.Drawing.Color.White;
-            this.btnCancel.IsToggleButton = false;
-            this.btnCancel.IsToggled = false;
-            this.btnCancel.Location = new System.Drawing.Point(290, 673);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.btnCancel.NormalForeColor = System.Drawing.Color.White;
-            this.btnCancel.NormalOutline = System.Drawing.Color.Empty;
-            this.btnCancel.OutlineThickness = 2F;
-            this.btnCancel.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnCancel.PressedForeColor = System.Drawing.Color.White;
-            this.btnCancel.PressedImageTint = System.Drawing.Color.White;
-            this.btnCancel.PressedOutline = System.Drawing.Color.Empty;
-            this.btnCancel.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnCancel.Size = new System.Drawing.Size(70, 35);
-            this.btnCancel.TabIndex = 6;
-            this.btnCancel.TextAutoCenter = true;
-            this.btnCancel.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnDeactivate
-            // 
-            this.btnDeactivate.ButtonText = "Deactivate";
-            this.btnDeactivate.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
-            this.btnDeactivate.CheckedForeColor = System.Drawing.Color.White;
-            this.btnDeactivate.CheckedImageTint = System.Drawing.Color.White;
-            this.btnDeactivate.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnDeactivate.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnDeactivate.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.btnDeactivate.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(150)))), ((int)(((byte)(0)))));
-            this.btnDeactivate.HoverForeColor = System.Drawing.Color.White;
-            this.btnDeactivate.HoverImage = null;
-            this.btnDeactivate.HoverImageTint = System.Drawing.Color.White;
-            this.btnDeactivate.HoverOutline = System.Drawing.Color.Empty;
-            this.btnDeactivate.Image = null;
-            this.btnDeactivate.ImageAutoCenter = true;
-            this.btnDeactivate.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnDeactivate.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnDeactivate.ImageTint = System.Drawing.Color.White;
-            this.btnDeactivate.IsToggleButton = false;
-            this.btnDeactivate.IsToggled = false;
-            this.btnDeactivate.Location = new System.Drawing.Point(175, 673);
-            this.btnDeactivate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnDeactivate.Name = "btnDeactivate";
-            this.btnDeactivate.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(170)))), ((int)(((byte)(0)))));
-            this.btnDeactivate.NormalForeColor = System.Drawing.Color.White;
-            this.btnDeactivate.NormalOutline = System.Drawing.Color.Empty;
-            this.btnDeactivate.OutlineThickness = 2F;
-            this.btnDeactivate.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnDeactivate.PressedForeColor = System.Drawing.Color.White;
-            this.btnDeactivate.PressedImageTint = System.Drawing.Color.White;
-            this.btnDeactivate.PressedOutline = System.Drawing.Color.Empty;
-            this.btnDeactivate.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnDeactivate.Size = new System.Drawing.Size(105, 35);
-            this.btnDeactivate.TabIndex = 6;
-            this.btnDeactivate.TextAutoCenter = true;
-            this.btnDeactivate.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnDeactivate.Click += new System.EventHandler(this.btnDeactivate_Click);
-            // 
-            // btnViewDetails
-            // 
-            this.btnViewDetails.ButtonText = "View";
-            this.btnViewDetails.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(140)))));
-            this.btnViewDetails.CheckedForeColor = System.Drawing.Color.White;
-            this.btnViewDetails.CheckedImageTint = System.Drawing.Color.White;
-            this.btnViewDetails.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnViewDetails.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnViewDetails.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.btnViewDetails.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(110)))), ((int)(((byte)(160)))));
-            this.btnViewDetails.HoverForeColor = System.Drawing.Color.White;
-            this.btnViewDetails.HoverImage = null;
-            this.btnViewDetails.HoverImageTint = System.Drawing.Color.White;
-            this.btnViewDetails.HoverOutline = System.Drawing.Color.Empty;
-            this.btnViewDetails.Image = null;
-            this.btnViewDetails.ImageAutoCenter = true;
-            this.btnViewDetails.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnViewDetails.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnViewDetails.ImageTint = System.Drawing.Color.White;
-            this.btnViewDetails.IsToggleButton = false;
-            this.btnViewDetails.IsToggled = false;
-            this.btnViewDetails.Location = new System.Drawing.Point(95, 673);
-            this.btnViewDetails.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnViewDetails.Name = "btnViewDetails";
-            this.btnViewDetails.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
-            this.btnViewDetails.NormalForeColor = System.Drawing.Color.White;
-            this.btnViewDetails.NormalOutline = System.Drawing.Color.Empty;
-            this.btnViewDetails.OutlineThickness = 2F;
-            this.btnViewDetails.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnViewDetails.PressedForeColor = System.Drawing.Color.White;
-            this.btnViewDetails.PressedImageTint = System.Drawing.Color.White;
-            this.btnViewDetails.PressedOutline = System.Drawing.Color.Empty;
-            this.btnViewDetails.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnViewDetails.Size = new System.Drawing.Size(70, 35);
-            this.btnViewDetails.TabIndex = 6;
-            this.btnViewDetails.TextAutoCenter = true;
-            this.btnViewDetails.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnViewDetails.Click += new System.EventHandler(this.btnViewDetails_Click);
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.ButtonText = "Update";
-            this.btnUpdate.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(160)))), ((int)(((byte)(0)))));
-            this.btnUpdate.CheckedForeColor = System.Drawing.Color.White;
-            this.btnUpdate.CheckedImageTint = System.Drawing.Color.White;
-            this.btnUpdate.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnUpdate.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnUpdate.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.btnUpdate.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
-            this.btnUpdate.HoverForeColor = System.Drawing.Color.White;
-            this.btnUpdate.HoverImage = null;
-            this.btnUpdate.HoverImageTint = System.Drawing.Color.White;
-            this.btnUpdate.HoverOutline = System.Drawing.Color.Empty;
-            this.btnUpdate.Image = null;
-            this.btnUpdate.ImageAutoCenter = true;
-            this.btnUpdate.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnUpdate.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnUpdate.ImageTint = System.Drawing.Color.White;
-            this.btnUpdate.IsToggleButton = false;
-            this.btnUpdate.IsToggled = false;
-            this.btnUpdate.Location = new System.Drawing.Point(25, 673);
-            this.btnUpdate.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            this.btnUpdate.NormalForeColor = System.Drawing.Color.White;
-            this.btnUpdate.NormalOutline = System.Drawing.Color.Empty;
-            this.btnUpdate.OutlineThickness = 2F;
-            this.btnUpdate.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnUpdate.PressedForeColor = System.Drawing.Color.White;
-            this.btnUpdate.PressedImageTint = System.Drawing.Color.White;
-            this.btnUpdate.PressedOutline = System.Drawing.Color.Empty;
-            this.btnUpdate.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnUpdate.Size = new System.Drawing.Size(60, 35);
-            this.btnUpdate.TabIndex = 6;
-            this.btnUpdate.TextAutoCenter = true;
-            this.btnUpdate.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.ButtonText = "Save";
-            this.btnSave.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(105)))));
-            this.btnSave.CheckedForeColor = System.Drawing.Color.White;
-            this.btnSave.CheckedImageTint = System.Drawing.Color.White;
-            this.btnSave.CheckedOutline = System.Drawing.Color.DodgerBlue;
-            this.btnSave.CustomDialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnSave.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.btnSave.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(110)))), ((int)(((byte)(125)))));
-            this.btnSave.HoverForeColor = System.Drawing.Color.White;
-            this.btnSave.HoverImage = null;
-            this.btnSave.HoverImageTint = System.Drawing.Color.White;
-            this.btnSave.HoverOutline = System.Drawing.Color.Empty;
-            this.btnSave.Image = null;
-            this.btnSave.ImageAutoCenter = true;
-            this.btnSave.ImageExpand = new System.Drawing.Point(0, 0);
-            this.btnSave.ImageOffset = new System.Drawing.Point(0, 0);
-            this.btnSave.ImageTint = System.Drawing.Color.White;
-            this.btnSave.IsToggleButton = false;
-            this.btnSave.IsToggled = false;
-            this.btnSave.Location = new System.Drawing.Point(25, 673);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            this.btnSave.NormalForeColor = System.Drawing.Color.White;
-            this.btnSave.NormalOutline = System.Drawing.Color.Empty;
-            this.btnSave.OutlineThickness = 2F;
-            this.btnSave.PressedBackground = System.Drawing.Color.RoyalBlue;
-            this.btnSave.PressedForeColor = System.Drawing.Color.White;
-            this.btnSave.PressedImageTint = System.Drawing.Color.White;
-            this.btnSave.PressedOutline = System.Drawing.Color.Empty;
-            this.btnSave.Rounding = new System.Windows.Forms.Padding(8);
-            this.btnSave.Size = new System.Drawing.Size(0, 0);
-            this.btnSave.TabIndex = 6;
-            this.btnSave.TextAutoCenter = true;
-            this.btnSave.TextOffset = new System.Drawing.Point(0, 0);
-            this.btnSave.Visible = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.sataPanel1.BackColor2 = System.Drawing.Color.White;
+            this.sataPanel1.BorderColor = System.Drawing.Color.Black;
+            borderRadius4.BottomLeft = 10;
+            borderRadius4.BottomRight = 10;
+            borderRadius4.TopLeft = 10;
+            borderRadius4.TopRight = 10;
+            this.sataPanel1.BorderRadius = borderRadius4;
+            this.sataPanel1.BorderThickness = 0;
+            this.sataPanel1.Controls.Add(this.lblFormTitle);
+            this.sataPanel1.Location = new System.Drawing.Point(0, 3);
+            this.sataPanel1.Name = "sataPanel1";
+            this.sataPanel1.Size = new System.Drawing.Size(566, 41);
+            this.sataPanel1.TabIndex = 16;
             // 
             // FrmScholarManagement
             // 
@@ -1295,6 +1743,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picUser)).EndInit();
             this.panelForm.ResumeLayout(false);
             this.panelForm.PerformLayout();
+            this.sataPanel1.ResumeLayout(false);
+            this.sataPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1349,6 +1799,7 @@
         private System.Windows.Forms.Label lblSectionBasic;
         private System.Windows.Forms.Label lblSectionAcademic;
         private System.Windows.Forms.Label lblSectionScholarship;
+        private System.Windows.Forms.Label lblSectionBank;
         private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.TextBox txtLastName;
@@ -1359,12 +1810,32 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtContactNumber;
         private System.Windows.Forms.Label lblContact;
+        private System.Windows.Forms.DateTimePicker dtpDateOfBirth;
+        private System.Windows.Forms.Label lblDOB;
+        private System.Windows.Forms.ComboBox cmbGender;
+        private System.Windows.Forms.Label lblGender;
+        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.Label lblAddress;
+        private System.Windows.Forms.TextBox txtStudentId;
+        private System.Windows.Forms.Label lblStudentId;
         private System.Windows.Forms.ComboBox cmbCourse;
         private System.Windows.Forms.Label lblCourse;
         private System.Windows.Forms.ComboBox cmbYearLevel;
         private System.Windows.Forms.Label lblYearLevel;
         private System.Windows.Forms.ComboBox cmbScholarshipType;
         private System.Windows.Forms.Label lblScholarship;
+        private System.Windows.Forms.TextBox txtStipendAmount;
+        private System.Windows.Forms.Label lblStipendAmount;
+        private System.Windows.Forms.ComboBox cmbStipendFrequency;
+        private System.Windows.Forms.Label lblStipendFrequency;
+        private System.Windows.Forms.ComboBox cmbFundSource;
+        private System.Windows.Forms.Label lblFundSource;
+        private System.Windows.Forms.TextBox txtRenewalConditions;
+        private System.Windows.Forms.Label lblRenewalConditions;
+        private System.Windows.Forms.TextBox txtBankName;
+        private System.Windows.Forms.Label lblBankName;
+        private System.Windows.Forms.TextBox txtBankAccountNumber;
+        private System.Windows.Forms.Label lblBankAccountNumber;
         private System.Windows.Forms.DateTimePicker dtpEnrollmentDate;
         private System.Windows.Forms.Label lblEnrollmentDate;
         private System.Windows.Forms.DateTimePicker dtpExpectedGraduation;
@@ -1378,7 +1849,19 @@
         private FrameworkTest.SATAButton btnSave;
         private FrameworkTest.SATAButton btnUpdate;
         private FrameworkTest.SATAButton btnDeactivate;
-        private FrameworkTest.SATAButton btnViewDetails;
         private FrameworkTest.SATAButton btnCancel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private FrameworkTest.SATAButton sataButton1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private SATAUiFramework.SATAPanel sataPanel1;
     }
 }

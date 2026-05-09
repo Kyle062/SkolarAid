@@ -28,5 +28,10 @@ namespace SkolarAid.form.Scholar
         {
 
         }
+
+        private void panelHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

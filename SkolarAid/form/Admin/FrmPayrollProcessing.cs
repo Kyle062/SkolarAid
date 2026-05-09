@@ -31,10 +31,9 @@ namespace SkolarAid
         private const bool ENABLE_EMAIL_NOTIFICATIONS = true;
         private const bool ENABLE_SMS_NOTIFICATIONS = true;
 
-        // SMS Gateway Configuration (using a free SMS API - for testing only)
-        // In production, replace with a real SMS gateway like Twilio, Semaphore, etc.
+        // SMS Gateway Configuration
         private const string SMS_GATEWAY_URL = "https://api.semaphore.co/api/v4/messages";
-        private const string SMS_API_KEY = "09cabeb4384cf62307f39fd0f6a7efe5"; // Get from https://semaphore.co
+        private const string SMS_API_KEY = "09cabeb4384cf62307f39fd0f6a7efe5";
 
         public FrmPayrollProcessing()
         {
@@ -113,8 +112,13 @@ namespace SkolarAid
                 this.FormBorderStyle = FormBorderStyle.None;
 
                 dtpPaymentPeriod.Value = DateTime.Now;
-                if (cmbPaymentMethod.Items.Count > 0)
-                    cmbPaymentMethod.SelectedIndex = 0;
+
+                // Set payment method items
+                cmbPaymentMethod.Items.Clear();
+                cmbPaymentMethod.Items.Add("Bank Transfer");
+                cmbPaymentMethod.Items.Add("Cheque");
+                cmbPaymentMethod.Items.Add("Cash");
+                cmbPaymentMethod.SelectedIndex = 0;
 
                 WireUpEvents();
                 LoadFilterOptions();
@@ -133,9 +137,9 @@ namespace SkolarAid
         {
             try
             {
+                // Unwire first to prevent duplicates
                 dgvScholars.CellValueChanged -= DgvScholars_CellValueChanged;
                 dgvScholars.CurrentCellDirtyStateChanged -= DgvScholars_CurrentCellDirtyStateChanged;
-                dgvScholars.CellDoubleClick -= dgvScholars_CellDoubleClick;
                 btnSelectAll.Click -= BtnSelectAll_Click;
                 btnClearSelection.Click -= BtnClearSelection_Click;
                 btnProcessPayroll.Click -= BtnProcessPayroll_Click;
@@ -144,9 +148,9 @@ namespace SkolarAid
                 cmbScholarshipType.SelectedIndexChanged -= Filter_Changed;
                 cmbYearLevel.SelectedIndexChanged -= Filter_Changed;
 
+                // Wire events
                 dgvScholars.CellValueChanged += DgvScholars_CellValueChanged;
                 dgvScholars.CurrentCellDirtyStateChanged += DgvScholars_CurrentCellDirtyStateChanged;
-                dgvScholars.CellDoubleClick += dgvScholars_CellDoubleClick;
                 btnSelectAll.Click += BtnSelectAll_Click;
                 btnClearSelection.Click += BtnClearSelection_Click;
                 btnProcessPayroll.Click += BtnProcessPayroll_Click;
@@ -154,6 +158,19 @@ namespace SkolarAid
                 txtSearch.TextChanged += TxtSearch_TextChanged;
                 cmbScholarshipType.SelectedIndexChanged += Filter_Changed;
                 cmbYearLevel.SelectedIndexChanged += Filter_Changed;
+
+                // Make ALL columns read-only except checkbox column
+                // DO NOT set dgvScholars.ReadOnly = true at grid level
+                dgvScholars.ReadOnly = false; // Allow editing at grid level
+                foreach (DataGridViewColumn col in dgvScholars.Columns)
+                {
+                    col.ReadOnly = true; // Make each column read-only
+                }
+                // Then make only the checkbox column editable
+                if (dgvScholars.Columns.Contains("colSelect"))
+                {
+                    dgvScholars.Columns["colSelect"].ReadOnly = false;
+                }
             }
             catch (Exception ex)
             {
@@ -260,6 +277,7 @@ namespace SkolarAid
                             _scholars.Add(scholar);
 
                             int rowIndex = dgvScholars.Rows.Add();
+                            dgvScholars.Rows[rowIndex].Tag = scholar.Id; // Store ID in Tag for lookup
                             dgvScholars.Rows[rowIndex].Cells["colSelect"].Value = false;
                             dgvScholars.Rows[rowIndex].Cells["colScholarNumber"].Value = scholar.ScholarNumber;
                             dgvScholars.Rows[rowIndex].Cells["colName"].Value = scholar.FullName;
@@ -332,240 +350,6 @@ namespace SkolarAid
 
         #endregion
 
-        #region Compliance Management
-
-        private void ManageCompliance(int scholarId)
-        {
-            try
-            {
-                using (MySqlConnection conn = DatabaseHelper.GetConnection())
-                {
-                    conn.Open();
-                    string scholarQuery = "SELECT CONCAT(first_name, ' ', last_name) as name FROM scholars WHERE id = @id";
-                    MySqlCommand scholarCmd = new MySqlCommand(scholarQuery, conn);
-                    scholarCmd.Parameters.AddWithValue("@id", scholarId);
-                    string scholarName = scholarCmd.ExecuteScalar()?.ToString() ?? "Unknown";
-
-                    string query = @"SELECT id, requirement_type, description, due_date, date_submitted, status, remarks 
-                                    FROM compliance_records WHERE scholar_id = @scholarId ORDER BY due_date DESC";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@scholarId", scholarId);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        var records = new List<ComplianceRecordItem>();
-                        while (reader.Read())
-                        {
-                            records.Add(new ComplianceRecordItem
-                            {
-                                Id = Convert.ToInt32(reader["id"]),
-                                RequirementType = reader["requirement_type"]?.ToString(),
-                                Description = reader["description"]?.ToString(),
-                                DueDate = Convert.ToDateTime(reader["due_date"]),
-                                DateSubmitted = reader["date_submitted"] != DBNull.Value ? Convert.ToDateTime(reader["date_submitted"]) : (DateTime?)null,
-                                Status = reader["status"]?.ToString(),
-                                Remarks = reader["remarks"]?.ToString()
-                            });
-                        }
-                        reader.Close();
-
-                        if (records.Count == 0)
-                        {
-                            MessageBox.Show($"No compliance records found for {scholarName}.\n\n" +
-                                "Please add compliance requirements through Scholar Management first.",
-                                "No Records", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
-                        }
-                        ShowComplianceDialog(scholarId, scholarName, records);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error managing compliance: {ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void ShowComplianceDialog(int scholarId, string scholarName, List<ComplianceRecordItem> records)
-        {
-            try
-            {
-                Form complianceForm = new Form
-                {
-                    Text = $"Compliance - {scholarName}",
-                    Size = new Size(800, 550),
-                    StartPosition = FormStartPosition.CenterParent,
-                    FormBorderStyle = FormBorderStyle.FixedDialog,
-                    MaximizeBox = false,
-                    MinimizeBox = false,
-                    BackColor = Color.White
-                };
-
-                Label lblTitle = new Label
-                {
-                    Text = $"📋 Compliance Records for {scholarName}",
-                    Font = new Font("Century Gothic", 14F, FontStyle.Bold),
-                    ForeColor = Color.FromArgb(0, 68, 79),
-                    Location = new Point(20, 15),
-                    Size = new Size(750, 30)
-                };
-                complianceForm.Controls.Add(lblTitle);
-
-                Label lblInstructions = new Label
-                {
-                    Text = "Select a record and click Toggle to change status (Pending ↔ Approved)",
-                    Font = new Font("Century Gothic", 9F, FontStyle.Italic),
-                    ForeColor = Color.FromArgb(120, 120, 120),
-                    Location = new Point(20, 45),
-                    Size = new Size(750, 20)
-                };
-                complianceForm.Controls.Add(lblInstructions);
-
-                DataGridView dgv = new DataGridView
-                {
-                    Location = new Point(20, 75),
-                    Size = new Size(745, 360),
-                    AllowUserToAddRows = false,
-                    AllowUserToDeleteRows = false,
-                    ReadOnly = true,
-                    RowHeadersVisible = false,
-                    BackgroundColor = Color.White,
-                    BorderStyle = BorderStyle.None,
-                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                    SelectionMode = DataGridViewSelectionMode.FullRowSelect,
-                    RowTemplate = { Height = 35 }
-                };
-
-                dgv.Columns.Add("colID", "ID");
-                dgv.Columns.Add("colType", "Requirement");
-                dgv.Columns.Add("colDueDate", "Due Date");
-                dgv.Columns.Add("colSubmitted", "Submitted");
-                dgv.Columns.Add("colStatus", "Status");
-                dgv.Columns["colID"].Visible = false;
-
-                dgv.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
-                {
-                    BackColor = Color.FromArgb(0, 68, 79),
-                    ForeColor = Color.White,
-                    Font = new Font("Century Gothic", 11F, FontStyle.Bold)
-                };
-                dgv.DefaultCellStyle = new DataGridViewCellStyle { Font = new Font("Century Gothic", 11F) };
-
-                foreach (var record in records)
-                {
-                    int rowIndex = dgv.Rows.Add(record.Id, record.RequirementType,
-                        record.DueDate.ToString("MMM dd, yyyy"),
-                        record.DateSubmitted?.ToString("MMM dd, yyyy") ?? "Not submitted",
-                        record.Status);
-
-                    var statusCell = dgv.Rows[rowIndex].Cells["colStatus"];
-                    switch (record.Status)
-                    {
-                        case "Approved": statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69); dgv.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(240, 255, 240); break;
-                        case "Pending": statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0); break;
-                        case "Submitted": statusCell.Style.ForeColor = Color.FromArgb(0, 123, 255); break;
-                        case "Overdue": statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68); dgv.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(255, 240, 240); break;
-                        case "Rejected": statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68); break;
-                    }
-                    statusCell.Style.Font = new Font("Century Gothic", 11F, FontStyle.Bold);
-                }
-                complianceForm.Controls.Add(dgv);
-
-                Button btnToggle = new Button
-                {
-                    Text = "Toggle Status (Complete/Pending)",
-                    Font = new Font("Century Gothic", 11F, FontStyle.Bold),
-                    BackColor = Color.FromArgb(0, 68, 79),
-                    ForeColor = Color.White,
-                    FlatStyle = FlatStyle.Flat,
-                    Location = new Point(20, 450),
-                    Size = new Size(300, 45)
-                };
-                btnToggle.FlatAppearance.BorderSize = 0;
-                btnToggle.Click += (s, ev) =>
-                {
-                    try
-                    {
-                        if (dgv.SelectedRows.Count > 0)
-                        {
-                            int complianceId = Convert.ToInt32(dgv.SelectedRows[0].Cells["colID"].Value);
-                            string currentStatus = dgv.SelectedRows[0].Cells["colStatus"].Value.ToString();
-                            string newStatus = (currentStatus == "Approved" || currentStatus == "Submitted") ? "Pending" : "Approved";
-                            using (MySqlConnection updateConn = DatabaseHelper.GetConnection())
-                            {
-                                updateConn.Open();
-                                MySqlCommand updateCmd = new MySqlCommand(@"UPDATE compliance_records SET status = @status, date_submitted = @dateSubmitted, remarks = @remarks WHERE id = @id", updateConn);
-                                updateCmd.Parameters.AddWithValue("@status", newStatus);
-                                updateCmd.Parameters.AddWithValue("@dateSubmitted", newStatus == "Approved" ? (object)DateTime.Now : DBNull.Value);
-                                updateCmd.Parameters.AddWithValue("@remarks", newStatus == "Approved" ? "Marked as complete via Payroll" : "Marked as pending via Payroll");
-                                updateCmd.Parameters.AddWithValue("@id", complianceId);
-                                updateCmd.ExecuteNonQuery();
-                                MessageBox.Show($"✅ Status updated to '{newStatus}'!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                complianceForm.Close();
-                                LoadScholarsGrid();
-                            }
-                        }
-                        else { MessageBox.Show("Please select a compliance record first.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-                    }
-                    catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                };
-                complianceForm.Controls.Add(btnToggle);
-
-                Button btnMarkAll = new Button
-                {
-                    Text = "Mark All as Complete",
-                    Font = new Font("Century Gothic", 11F),
-                    BackColor = Color.FromArgb(40, 167, 69),
-                    ForeColor = Color.White,
-                    FlatStyle = FlatStyle.Flat,
-                    Location = new Point(335, 450),
-                    Size = new Size(210, 45)
-                };
-                btnMarkAll.FlatAppearance.BorderSize = 0;
-                btnMarkAll.Click += (s, ev) =>
-                {
-                    try
-                    {
-                        if (MessageBox.Show("Mark ALL as Complete?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        {
-                            using (MySqlConnection updateConn = DatabaseHelper.GetConnection())
-                            {
-                                updateConn.Open();
-                                MySqlCommand updateCmd = new MySqlCommand(@"UPDATE compliance_records SET status = 'Approved', date_submitted = NOW(), remarks = 'Bulk approved' WHERE scholar_id = @scholarId AND status IN ('Pending', 'Overdue', 'Submitted')", updateConn);
-                                updateCmd.Parameters.AddWithValue("@scholarId", scholarId);
-                                int affected = updateCmd.ExecuteNonQuery();
-                                MessageBox.Show($"✅ {affected} records marked as Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                complianceForm.Close();
-                                LoadScholarsGrid();
-                            }
-                        }
-                    }
-                    catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                };
-                complianceForm.Controls.Add(btnMarkAll);
-
-                Button btnClose = new Button
-                {
-                    Text = "Close",
-                    Font = new Font("Century Gothic", 11F),
-                    BackColor = Color.FromArgb(180, 180, 180),
-                    ForeColor = Color.White,
-                    FlatStyle = FlatStyle.Flat,
-                    Location = new Point(660, 450),
-                    Size = new Size(105, 45)
-                };
-                btnClose.FlatAppearance.BorderSize = 0;
-                btnClose.Click += (s, ev) => complianceForm.Close();
-                complianceForm.Controls.Add(btnClose);
-
-                complianceForm.ShowDialog();
-            }
-            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-        }
-
-        #endregion
-
         #region Event Handlers
 
         private void DgvScholars_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -576,34 +360,41 @@ namespace SkolarAid
 
         private void DgvScholars_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            try { if (!_isLoading && e.RowIndex >= 0 && e.ColumnIndex == dgvScholars.Columns["colSelect"].Index) UpdateStatistics(); }
-            catch { }
-        }
-
-        private void dgvScholars_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
             try
             {
-                if (e.RowIndex >= 0)
-                {
-                    int scholarId = _scholars[e.RowIndex].Id;
-                    if (MessageBox.Show($"Scholar: {_scholars[e.RowIndex].FullName}\nCompliance: {_scholars[e.RowIndex].ComplianceStatus}\n\nOpen Compliance Manager?",
-                        "Manage Compliance", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        ManageCompliance(scholarId);
-                }
+                if (!_isLoading && e.RowIndex >= 0 && e.ColumnIndex == dgvScholars.Columns["colSelect"].Index)
+                    UpdateStatistics();
             }
-            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch { }
         }
 
         private void BtnSelectAll_Click(object sender, EventArgs e)
         {
-            try { for (int i = 0; i < dgvScholars.Rows.Count; i++) { if (_scholars[i].IsEligible) dgvScholars.Rows[i].Cells["colSelect"].Value = true; } UpdateStatistics(); }
+            try
+            {
+                // Use ID-based lookup instead of index-based
+                for (int i = 0; i < dgvScholars.Rows.Count; i++)
+                {
+                    int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
+                    var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
+                    if (scholar != null && scholar.IsEligible)
+                    {
+                        dgvScholars.Rows[i].Cells["colSelect"].Value = true;
+                    }
+                }
+                UpdateStatistics();
+            }
             catch { }
         }
 
         private void BtnClearSelection_Click(object sender, EventArgs e)
         {
-            try { for (int i = 0; i < dgvScholars.Rows.Count; i++) dgvScholars.Rows[i].Cells["colSelect"].Value = false; UpdateStatistics(); }
+            try
+            {
+                for (int i = 0; i < dgvScholars.Rows.Count; i++)
+                    dgvScholars.Rows[i].Cells["colSelect"].Value = false;
+                UpdateStatistics();
+            }
             catch { }
         }
 
@@ -657,13 +448,25 @@ namespace SkolarAid
             try
             {
                 int eligibleCount = _scholars.Count(s => s.IsEligible);
-                _selectedCount = 0; _totalAmount = 0;
+                _selectedCount = 0;
+                _totalAmount = 0;
+
                 for (int i = 0; i < dgvScholars.Rows.Count; i++)
                 {
                     var cellValue = dgvScholars.Rows[i].Cells["colSelect"].Value;
-                    if (cellValue != null && Convert.ToBoolean(cellValue) && _scholars[i].IsEligible)
-                    { _selectedCount++; _totalAmount += _scholars[i].StipendAmount; }
+                    if (cellValue != null && Convert.ToBoolean(cellValue))
+                    {
+                        // Find scholar by ID stored in the grid row
+                        int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
+                        var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
+                        if (scholar != null && scholar.IsEligible)
+                        {
+                            _selectedCount++;
+                            _totalAmount += scholar.StipendAmount;
+                        }
+                    }
                 }
+
                 lblEligibleCount.Text = eligibleCount.ToString();
                 lblSelectedCount.Text = _selectedCount.ToString();
                 lblSelectedLabel.Text = $"Selected: {_selectedCount}";
@@ -683,8 +486,14 @@ namespace SkolarAid
                 for (int i = 0; i < dgvScholars.Rows.Count; i++)
                 {
                     var cellValue = dgvScholars.Rows[i].Cells["colSelect"].Value;
-                    if (cellValue != null && Convert.ToBoolean(cellValue) && _scholars[i].IsEligible)
-                        selected.Add(_scholars[i]);
+                    if (cellValue != null && Convert.ToBoolean(cellValue))
+                    {
+                        // Find scholar by ID stored in the grid row
+                        int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
+                        var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
+                        if (scholar != null && scholar.IsEligible)
+                            selected.Add(scholar);
+                    }
                 }
             }
             catch { }
@@ -729,7 +538,8 @@ namespace SkolarAid
                                 insertCmd.Parameters.AddWithValue("@amount", scholar.StipendAmount);
                                 insertCmd.Parameters.AddWithValue("@method", method);
                                 insertCmd.Parameters.AddWithValue("@processedBy", processedBy);
-                                insertCmd.Parameters.AddWithValue("@remarks", $"Batch payroll for {period}");
+                                // In ProcessPayroll method, update the insert query remarks:
+                                insertCmd.Parameters.AddWithValue("@remarks", $"Batch payroll for {period} via {method}");
                                 insertCmd.ExecuteNonQuery();
                                 successCount++;
 
@@ -746,22 +556,18 @@ namespace SkolarAid
                             transaction.Commit();
                             ActivityLogger.LogCreate("payments", 0, $"Processed payroll for {successCount} scholars. Period: {period}, Total: ₱{_totalAmount:N2}");
 
-                            // ============================================
                             // SEND EMAIL + SMS TO EACH SCHOLAR
-                            // ============================================
                             foreach (var scholar in scholars)
                             {
                                 string scholarEmail = GetScholarEmailFromDB(scholar.Id);
                                 string scholarPhone = GetScholarPhoneFromDB(scholar.Id);
 
-                                // 1. SEND EMAIL
                                 if (!string.IsNullOrEmpty(scholarEmail))
                                 {
                                     bool emailResult = SendPaymentEmail(scholarEmail, scholar.FullName, period, scholar.StipendAmount, method, scholar.ScholarNumber);
                                     if (emailResult) emailSentCount++; else emailFailedCount++;
                                 }
 
-                                // 2. SEND SMS
                                 if (!string.IsNullOrEmpty(scholarPhone))
                                 {
                                     bool smsResult = SendPaymentSMS(scholarPhone, scholar.FullName, period, scholar.StipendAmount);
@@ -769,7 +575,6 @@ namespace SkolarAid
                                 }
                             }
 
-                            // Success message
                             string resultMsg = $"✅ PAYROLL PROCESSED SUCCESSFULLY!\n\n" +
                                                $"╔══════════════════════════════╗\n" +
                                                $"║      PROCESSING SUMMARY      ║\n" +
@@ -796,9 +601,6 @@ namespace SkolarAid
             finally { this.Cursor = Cursors.Default; }
         }
 
-        // ============================================
-        // DATABASE HELPERS
-        // ============================================
         private string GetScholarEmailFromDB(int scholarId)
         {
             try { using (var conn = DatabaseHelper.GetConnection()) { conn.Open(); var cmd = new MySqlCommand("SELECT email FROM scholars WHERE id = @id", conn); cmd.Parameters.AddWithValue("@id", scholarId); return cmd.ExecuteScalar()?.ToString() ?? ""; } }
@@ -811,128 +613,55 @@ namespace SkolarAid
             catch { return ""; }
         }
 
-        // ============================================
-        // EMAIL NOTIFICATION - FIXED
-        // ============================================
         private bool SendPaymentEmail(string toEmail, string scholarName, string period, decimal amount, string method, string scholarNumber)
         {
             if (!ENABLE_EMAIL_NOTIFICATIONS) return false;
-
             try
             {
-                System.Diagnostics.Debug.WriteLine($"\n========================================");
-                System.Diagnostics.Debug.WriteLine($"📧 SENDING EMAIL:");
-                System.Diagnostics.Debug.WriteLine($"  From: {SENDER_EMAIL}");
-                System.Diagnostics.Debug.WriteLine($"  To: {toEmail}");
-                System.Diagnostics.Debug.WriteLine($"  Scholar: {scholarName}");
-                System.Diagnostics.Debug.WriteLine($"  Period: {period}");
-                System.Diagnostics.Debug.WriteLine($"  Amount: ₱{amount:N2}");
-                System.Diagnostics.Debug.WriteLine($"========================================");
-
                 using (MailMessage mail = new MailMessage())
                 {
                     mail.From = new MailAddress(SENDER_EMAIL, SENDER_NAME);
-
-                    // Send to the scholar
                     mail.To.Add(new MailAddress(toEmail, scholarName));
-
-                    // ALSO SEND A COPY TO YOURSELF so you can verify
                     mail.To.Add(new MailAddress("kylealba79@gmail.com", "Kyle (Test)"));
-
                     mail.Subject = $"ScholarAid - Payment Processed - {period} - {scholarName}";
-
-                    // Plain text email
-                    mail.Body = $"Dear {scholarName},\n\n" +
-                               $"Your stipend has been processed!\n\n" +
-                               $"Scholar Number: {scholarNumber}\n" +
-                               $"Period: {period}\n" +
-                               $"Amount: ₱{amount:N2}\n" +
-                               $"Payment Method: {method}\n" +
-                               $"Expected Release: Within 3-5 business days\n\n" +
-                               $"For questions, contact the Scholarship Office.\n\n" +
-                               $"Best regards,\nScholarAid Team\nLegacy College of Compostela\n\n" +
-                               $"--\nThis is an automated notification.";
-
+                    mail.Body = $"Dear {scholarName},\n\nYour stipend has been processed!\n\nScholar Number: {scholarNumber}\nPeriod: {period}\nAmount: ₱{amount:N2}\nPayment Method: {method}\nExpected Release: Within 3-5 business days\n\nFor questions, contact the Scholarship Office.\n\nBest regards,\nScholarAid Team\nLegacy College of Compostela\n\n--\nThis is an automated notification.";
                     mail.IsBodyHtml = false;
-
                     using (SmtpClient smtp = new SmtpClient(SMTP_HOST, SMTP_PORT))
                     {
                         smtp.EnableSsl = true;
                         smtp.UseDefaultCredentials = false;
                         smtp.Credentials = new NetworkCredential(SENDER_EMAIL, SENDER_PASSWORD);
                         smtp.Timeout = 30000;
-
-                        System.Diagnostics.Debug.WriteLine($"Connecting to SMTP...");
                         smtp.Send(mail);
-                        System.Diagnostics.Debug.WriteLine($"✅ Email sent successfully!");
                     }
                 }
-
                 ActivityLogger.LogCreate("notifications", 0, $"Email sent to {scholarName} ({toEmail}) for {period}");
                 return true;
             }
             catch (SmtpException smtpEx)
             {
-                string errorMsg = $"❌ SMTP Error: {smtpEx.StatusCode} - {smtpEx.Message}";
-                System.Diagnostics.Debug.WriteLine(errorMsg);
-                if (smtpEx.InnerException != null)
-                    System.Diagnostics.Debug.WriteLine($"   Inner: {smtpEx.InnerException.Message}");
-
-                // Show error popup for debugging
-                MessageBox.Show($"EMAIL FAILED:\n\nStatus: {smtpEx.StatusCode}\n{smtpEx.Message}\n\n" +
-                               $"Check: Is App Password correct? Is 2-Step Verification ON?",
-                               "Email Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Diagnostics.Debug.WriteLine($"❌ SMTP Error: {smtpEx.StatusCode} - {smtpEx.Message}");
                 return false;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"❌ General Error: {ex.Message}");
-                if (ex.InnerException != null)
-                    System.Diagnostics.Debug.WriteLine($"   Inner: {ex.InnerException.Message}");
                 return false;
             }
         }
 
-        // ============================================
-        // SMS NOTIFICATION - FIXED (Log + Debug)
-        // ============================================
         private bool SendPaymentSMS(string phoneNumber, string scholarName, string period, decimal amount)
         {
             if (!ENABLE_SMS_NOTIFICATIONS) return false;
-
             try
             {
-                System.Diagnostics.Debug.WriteLine($"\n========================================");
-                System.Diagnostics.Debug.WriteLine($"📱 SENDING SMS:");
-                System.Diagnostics.Debug.WriteLine($"  To: {phoneNumber}");
-                System.Diagnostics.Debug.WriteLine($"  Scholar: {scholarName}");
-                System.Diagnostics.Debug.WriteLine($"  Period: {period}");
-                System.Diagnostics.Debug.WriteLine($"  Amount: ₱{amount:N2}");
-                System.Diagnostics.Debug.WriteLine($"========================================");
-
-                // Clean phone number
                 string cleanPhone = phoneNumber.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("+", "");
                 if (cleanPhone.StartsWith("63")) cleanPhone = "0" + cleanPhone.Substring(2);
-
                 string smsMessage = $"ScholarAid: Hi {scholarName}, your stipend for {period} (P{amount:N0}) has been processed. Release: 3-5 days. -LCC";
-
-                System.Diagnostics.Debug.WriteLine($"📱 Clean phone: {cleanPhone}");
-                System.Diagnostics.Debug.WriteLine($"📱 SMS text: {smsMessage}");
-
-                // Try Email-to-SMS gateway
                 string smsGateway = GetSMSGateway(cleanPhone);
-                System.Diagnostics.Debug.WriteLine($"📱 SMS Gateway: {smsGateway}");
-
                 if (!string.IsNullOrEmpty(smsGateway))
-                {
-                    bool gatewayResult = SendSMSEmailGateway(smsGateway, smsMessage, scholarName);
-                    System.Diagnostics.Debug.WriteLine($"📱 Gateway result: {(gatewayResult ? "Sent" : "Failed")}");
-                }
-
-                // ALWAYS log the SMS to activity log
+                    SendSMSEmailGateway(smsGateway, smsMessage, scholarName);
                 ActivityLogger.LogCreate("notifications", 0, $"SMS to {scholarName} ({cleanPhone}): {smsMessage}");
-                System.Diagnostics.Debug.WriteLine($"📱 SMS logged to activity log");
-
                 return true;
             }
             catch (Exception ex)
@@ -942,63 +671,15 @@ namespace SkolarAid
             }
         }
 
-        /// <summary>
-        /// Formats phone number
-        /// </summary>
-        private string FormatPhoneNumber(string phone)
-        {
-            phone = phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
-            if (phone.StartsWith("09")) return "+63" + phone.Substring(1);
-            if (phone.StartsWith("9")) return "+63" + phone;
-            if (phone.StartsWith("+63")) return phone;
-            return "+63" + phone;
-        }
-
-        /// <summary>
-        /// Gets Email-to-SMS gateway address
-        /// </summary>
         private string GetSMSGateway(string phone)
         {
             phone = phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("+", "");
             if (phone.StartsWith("63")) phone = "0" + phone.Substring(2);
-
-            // Globe/TM
-            if (phone.StartsWith("0915") || phone.StartsWith("0916") || phone.StartsWith("0917") ||
-                phone.StartsWith("0926") || phone.StartsWith("0927") || phone.StartsWith("0935") ||
-                phone.StartsWith("0936") || phone.StartsWith("0937") || phone.StartsWith("0994") ||
-                phone.StartsWith("0995") || phone.StartsWith("0996") || phone.StartsWith("0997") ||
-                phone.StartsWith("0817"))
+            if (phone.StartsWith("0915") || phone.StartsWith("0916") || phone.StartsWith("0917") || phone.StartsWith("0926") || phone.StartsWith("0927") || phone.StartsWith("0935") || phone.StartsWith("0936") || phone.StartsWith("0937") || phone.StartsWith("0994") || phone.StartsWith("0995") || phone.StartsWith("0996") || phone.StartsWith("0997") || phone.StartsWith("0817"))
                 return phone + "@txt.globe.com.ph";
-
-            // Smart/TNT/Sun (includes 0992 prefix)
-            if (phone.StartsWith("0908") || phone.StartsWith("0909") || phone.StartsWith("0910") ||
-                phone.StartsWith("0911") || phone.StartsWith("0912") || phone.StartsWith("0913") ||
-                phone.StartsWith("0914") || phone.StartsWith("0918") || phone.StartsWith("0919") ||
-                phone.StartsWith("0920") || phone.StartsWith("0921") || phone.StartsWith("0922") ||
-                phone.StartsWith("0923") || phone.StartsWith("0925") || phone.StartsWith("0928") ||
-                phone.StartsWith("0929") || phone.StartsWith("0930") || phone.StartsWith("0932") ||
-                phone.StartsWith("0933") || phone.StartsWith("0934") || phone.StartsWith("0938") ||
-                phone.StartsWith("0939") || phone.StartsWith("0940") || phone.StartsWith("0942") ||
-                phone.StartsWith("0943") || phone.StartsWith("0946") || phone.StartsWith("0947") ||
-                phone.StartsWith("0948") || phone.StartsWith("0949") || phone.StartsWith("0950") ||
-                phone.StartsWith("0951") || phone.StartsWith("0970") || phone.StartsWith("0973") ||
-                phone.StartsWith("0974") || phone.StartsWith("0975") || phone.StartsWith("0976") ||
-                phone.StartsWith("0977") || phone.StartsWith("0978") || phone.StartsWith("0979") ||
-                phone.StartsWith("0989") || phone.StartsWith("0992") || phone.StartsWith("0998") ||
-                phone.StartsWith("0999"))
-                return phone + "@text.smart.com.ph";
-
-            // DITO
-            if (phone.StartsWith("0895") || phone.StartsWith("0896") || phone.StartsWith("0897") ||
-                phone.StartsWith("0898") || phone.StartsWith("0991") || phone.StartsWith("0993"))
-                return phone + "@dito.ph";
-
-            return phone + "@text.smart.com.ph"; // Default
+            return phone + "@text.smart.com.ph";
         }
 
-        /// <summary>
-        /// Sends SMS via Email-to-SMS Gateway
-        /// </summary>
         private bool SendSMSEmailGateway(string smsGateway, string message, string scholarName)
         {
             try
@@ -1010,7 +691,6 @@ namespace SkolarAid
                     mail.Subject = "";
                     mail.Body = message;
                     mail.IsBodyHtml = false;
-
                     using (SmtpClient smtp = new SmtpClient(SMTP_HOST, SMTP_PORT))
                     {
                         smtp.EnableSsl = true;
@@ -1020,14 +700,9 @@ namespace SkolarAid
                         smtp.Send(mail);
                     }
                 }
-                System.Diagnostics.Debug.WriteLine($"✅ Email-to-SMS sent to: {smsGateway}");
                 return true;
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"⚠ Email-to-SMS gateway failed: {ex.Message}");
-                return false;
-            }
+            catch { return false; }
         }
 
         #endregion
@@ -1078,7 +753,6 @@ namespace SkolarAid
         #endregion
     }
 
-    // Helper Classes
     public class ScholarPayroll
     {
         public int Id { get; set; }
@@ -1092,16 +766,5 @@ namespace SkolarAid
         public decimal StipendAmount { get; set; }
         public string ComplianceStatus { get; set; }
         public bool IsEligible { get; set; }
-    }
-
-    public class ComplianceRecordItem
-    {
-        public int Id { get; set; }
-        public string RequirementType { get; set; }
-        public string Description { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime? DateSubmitted { get; set; }
-        public string Status { get; set; }
-        public string Remarks { get; set; }
     }
 }
