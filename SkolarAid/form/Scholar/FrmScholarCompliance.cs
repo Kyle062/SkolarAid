@@ -1,10 +1,15 @@
-﻿using SkolarAid.form;
+﻿using MySql.Data.MySqlClient;
+using SkolarAid.Classes;
+using SkolarAid.Data;
+using SkolarAid.form;
+using SkolarAid.form.Scholar;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SkolarAid.form.Scholar;
+
 namespace SkolarAid
 {
     public partial class FrmScholarCompliance : Form
@@ -21,111 +26,217 @@ namespace SkolarAid
             _scholarName = scholarName;
             _scholarNumber = scholarNumber;
 
-            LoadComplianceData();
-        }
+            // Setup form
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
 
-        private void FrmScholarCompliance_Load(object sender, EventArgs e)
-        {
-            lblScholarInfo.Text = $"{_scholarName} | Scholar #: {_scholarNumber}";
-            lblDate.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
+            lblScholarInfo.Text = $"{_scholarName}";
 
             cmbFilterStatus.SelectedIndex = 0;
             cmbFilterType.SelectedIndex = 0;
+
+            // Setup DataGridView styles - NO color change on selection
+            SetupDataGridViewStyles();
+
+            // Wire filter events
+            cmbFilterStatus.SelectedIndexChanged += (s, ev) => UpdateComplianceGrid();
+            cmbFilterType.SelectedIndexChanged += (s, ev) => UpdateComplianceGrid();
+            btnClearFilters.Click += (s, ev) => { cmbFilterStatus.SelectedIndex = 0; cmbFilterType.SelectedIndex = 0; };
+            btnRefresh.Click += (s, ev) => LoadComplianceData();
+            btnUploadDocument.Click += BtnUploadDocument_Click;
+            dgvCompliance.SelectionChanged += dgvCompliance_SelectionChanged;
+
+            // Wire sidebar navigation
+            btnDashboard.Click += (s, ev) => { new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnProfile.Click += (s, ev) => { new FrmScholarProfile(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnPayments.Click += (s, ev) => { new FrmPaymentHistory(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnCompliance.Click += (s, ev) => { };
+            btnNotifications.Click += (s, ev) => { new FrmScholarNotifications(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnLogout.Click += BtnLogout_Click;
+
+            // Setup card icons
+            picTotalRequirements.Image = Properties.Resources.file;
+            picTotalRequirements.SizeMode = PictureBoxSizeMode.Zoom;
+            picCompleted.Image = Properties.Resources.file;
+            picCompleted.SizeMode = PictureBoxSizeMode.Zoom;
+            picPending.Image = Properties.Resources.file;
+            picPending.SizeMode = PictureBoxSizeMode.Zoom;
+            picOverdue.Image = Properties.Resources.file;
+            picOverdue.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // Hide checked_by and remarks labels
+            lblDetailCheckedByLabel.Visible = false;
+            lblDetailCheckedBy.Visible = false;
+            lblDetailRemarksLabel.Visible = false;
+            lblDetailRemarks.Visible = false;
+
+            // Load data
+            LoadComplianceData();
+        }
+
+        /// <summary>
+        /// Setup DataGridView to keep original colors when row is selected
+        /// </summary>
+        /// <summary>
+        /// Setup DataGridView to keep original colors when row is selected
+        /// Header stays dark teal (0, 68, 79)
+        /// </summary>
+        private void SetupDataGridViewStyles()
+        {
+            // Keep header color (0, 68, 79) even when clicked/sorted
+            dgvCompliance.EnableHeadersVisualStyles = false;
+
+            // Force header style
+            dgvCompliance.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 68, 79);
+            dgvCompliance.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvCompliance.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+            dgvCompliance.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 68, 79);
+
+            // Prevent selection from changing row colors
+            dgvCompliance.DefaultCellStyle.SelectionBackColor = Color.White;
+            dgvCompliance.DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+        private void BtnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Logout Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                SessionManager.ClearSession();
+                new Login().Show();
+                this.Close();
+            }
         }
 
         private void LoadComplianceData()
         {
-            // TODO: Load actual data from database
-            // These are placeholder values
-            _complianceItems = new List<ComplianceItem>
+            try
             {
-                new ComplianceItem {
-                    ComplianceID = 1,
-                    RequirementType = "Grades Submission",
-                    Description = "Submit official grades for 1st Semester 2025-2026",
-                    DueDate = new DateTime(2026, 3, 25),
-                    DateSubmitted = null,
-                    Status = "Pending",
-                    Remarks = "Awaiting submission",
-                    CheckedBy = null
-                },
-                new ComplianceItem {
-                    ComplianceID = 2,
-                    RequirementType = "Enrollment Form",
-                    Description = "Submit enrollment form for 2nd Semester 2025-2026",
-                    DueDate = new DateTime(2026, 3, 15),
-                    DateSubmitted = new DateTime(2026, 3, 10),
-                    Status = "Approved",
-                    Remarks = "Form complete and verified",
-                    CheckedBy = "Mrs. Wendy Alcala"
-                },
-                new ComplianceItem {
-                    ComplianceID = 3,
-                    RequirementType = "Good Moral Certificate",
-                    Description = "Submit Good Moral Certificate from previous semester",
-                    DueDate = new DateTime(2026, 4, 10),
-                    DateSubmitted = null,
-                    Status = "Pending",
-                    Remarks = "Must be original copy",
-                    CheckedBy = null
-                },
-                new ComplianceItem {
-                    ComplianceID = 4,
-                    RequirementType = "Parent's Consent",
-                    Description = "Submit signed parent's consent form for scholarship renewal",
-                    DueDate = new DateTime(2026, 2, 28),
-                    DateSubmitted = new DateTime(2026, 2, 20),
-                    Status = "Approved",
-                    Remarks = "Signed by parent/guardian",
-                    CheckedBy = "Mrs. Wendy Alcala"
-                },
-                new ComplianceItem {
-                    ComplianceID = 5,
-                    RequirementType = "Scholarship Contract",
-                    Description = "Sign and submit scholarship contract for renewal",
-                    DueDate = new DateTime(2026, 3, 1),
-                    DateSubmitted = new DateTime(2026, 3, 5),
-                    Status = "Submitted",
-                    Remarks = "Pending verification",
-                    CheckedBy = null
-                },
-                new ComplianceItem {
-                    ComplianceID = 6,
-                    RequirementType = "Community Service Report",
-                    Description = "Submit community service hours report",
-                    DueDate = new DateTime(2026, 5, 15),
-                    DateSubmitted = null,
-                    Status = "Pending",
-                    Remarks = "Minimum 20 hours required",
-                    CheckedBy = null
-                }
-            };
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
 
-            UpdateComplianceGrid();
-            UpdateSummaryCards();
+                    // Auto-update overdue items
+                    string updateOverdue = @"UPDATE compliance_records 
+                                            SET status = 'Overdue' 
+                                            WHERE scholar_id = @scholarId 
+                                            AND status = 'Pending' 
+                                            AND due_date < CURDATE()";
+                    MySqlCommand cmdUpdate = new MySqlCommand(updateOverdue, conn);
+                    cmdUpdate.Parameters.AddWithValue("@scholarId", _scholarId);
+                    cmdUpdate.ExecuteNonQuery();
+
+                    // Auto-set date_submitted = DATE(created_at) for submitted items
+                    string updateDates = @"UPDATE compliance_records 
+                                          SET date_submitted = DATE(created_at) 
+                                          WHERE scholar_id = @scholarId 
+                                          AND status IN ('Submitted', 'Approved') 
+                                          AND date_submitted IS NULL
+                                          AND created_at IS NOT NULL";
+                    MySqlCommand cmdDates = new MySqlCommand(updateDates, conn);
+                    cmdDates.Parameters.AddWithValue("@scholarId", _scholarId);
+                    cmdDates.ExecuteNonQuery();
+
+                    // Load compliance records
+                    string query = @"SELECT cr.id, cr.requirement_type, cr.description, 
+                                    cr.due_date, cr.date_submitted, cr.status, cr.file_path
+                                    FROM compliance_records cr
+                                    WHERE cr.scholar_id = @scholarId
+                                    ORDER BY 
+                                        CASE cr.status 
+                                            WHEN 'Overdue' THEN 0 
+                                            WHEN 'Rejected' THEN 1
+                                            WHEN 'Pending' THEN 2 
+                                            WHEN 'Submitted' THEN 3 
+                                            WHEN 'Approved' THEN 4 
+                                            ELSE 5 
+                                        END, 
+                                        cr.due_date ASC";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@scholarId", _scholarId);
+
+                    _complianceItems = new List<ComplianceItem>();
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            _complianceItems.Add(new ComplianceItem
+                            {
+                                ComplianceID = Convert.ToInt32(reader["id"]),
+                                RequirementType = reader["requirement_type"].ToString(),
+                                Description = reader["description"]?.ToString() ?? "",
+                                DueDate = Convert.ToDateTime(reader["due_date"]),
+                                DateSubmitted = reader["date_submitted"] != DBNull.Value ?
+                                    Convert.ToDateTime(reader["date_submitted"]) : (DateTime?)null,
+                                Status = reader["status"].ToString(),
+                                FilePath = reader["file_path"]?.ToString() ?? ""
+                            });
+                        }
+                    }
+
+                    UpdateFilterTypes();
+                }
+
+                UpdateComplianceGrid();
+                UpdateSummaryCards();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading compliance data: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateFilterTypes()
+        {
+            cmbFilterType.Items.Clear();
+            cmbFilterType.Items.Add("All Types");
+
+            if (_complianceItems != null)
+            {
+                var types = _complianceItems.Select(c => c.RequirementType).Distinct().OrderBy(t => t);
+                foreach (var type in types)
+                {
+                    cmbFilterType.Items.Add(type);
+                }
+            }
+            cmbFilterType.SelectedIndex = 0;
         }
 
         private void UpdateComplianceGrid()
         {
             dgvCompliance.Rows.Clear();
 
+            if (_complianceItems == null || _complianceItems.Count == 0)
+            {
+                lblTotalRecords.Text = "No compliance records found.";
+                return;
+            }
+
             var filteredItems = _complianceItems.AsEnumerable();
 
-            // Apply status filter
             if (cmbFilterStatus.SelectedIndex > 0)
             {
                 string selectedStatus = cmbFilterStatus.SelectedItem.ToString();
                 filteredItems = filteredItems.Where(c => c.Status == selectedStatus);
             }
 
-            // Apply type filter
-            if (cmbFilterType.SelectedIndex > 0)
+            if (cmbFilterType.SelectedIndex > 0 && cmbFilterType.SelectedItem != null)
             {
                 string selectedType = cmbFilterType.SelectedItem.ToString();
                 filteredItems = filteredItems.Where(c => c.RequirementType == selectedType);
             }
 
-            foreach (var item in filteredItems.OrderBy(c => c.DueDate))
+            var recordsList = filteredItems.ToList();
+
+            foreach (var item in recordsList)
             {
                 int rowIndex = dgvCompliance.Rows.Add();
                 DataGridViewRow row = dgvCompliance.Rows[rowIndex];
@@ -133,41 +244,47 @@ namespace SkolarAid
                 row.Cells["colComplianceID"].Value = item.ComplianceID;
                 row.Cells["colRequirementType"].Value = item.RequirementType;
                 row.Cells["colDueDate"].Value = item.DueDate.ToString("MMM dd, yyyy");
-                row.Cells["colDateSubmitted"].Value = item.DateSubmitted?.ToString("MMM dd, yyyy") ?? "-";
+                row.Cells["colDateSubmitted"].Value = item.DateSubmitted?.ToString("MMM dd, yyyy") ?? "Not submitted";
                 row.Cells["colStatus"].Value = item.Status;
 
-                // Set status cell color
+                // Color code status only - selection won't override this
                 var statusCell = row.Cells["colStatus"];
                 switch (item.Status)
                 {
                     case "Approved":
                         statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
-                        statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
-                        break;
-                    case "Pending":
-                        statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0);
-                        statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
                         break;
                     case "Submitted":
                         statusCell.Style.ForeColor = Color.FromArgb(0, 123, 255);
-                        statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
+                        break;
+                    case "Pending":
+                        statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0);
                         break;
                     case "Rejected":
                         statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
-                        statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
                         break;
                     case "Overdue":
                         statusCell.Style.ForeColor = Color.FromArgb(220, 38, 38);
-                        statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
                         break;
                 }
             }
 
-            lblTotalRecords.Text = $"Showing {filteredItems.Count()} of {_complianceItems.Count} records";
+            lblTotalRecords.Text = $"Showing {recordsList.Count} of {_complianceItems.Count} records";
         }
 
         private void UpdateSummaryCards()
         {
+            if (_complianceItems == null || _complianceItems.Count == 0)
+            {
+                lblTotalRequirements.Text = "0";
+                lblCompleted.Text = "0";
+                lblPending.Text = "0";
+                lblOverdue.Text = "0";
+                lblComplianceRate.Text = "0%";
+                progressCompliance.Value = 0;
+                return;
+            }
+
             int totalRequirements = _complianceItems.Count;
             int completed = _complianceItems.Count(c => c.Status == "Approved");
             int pending = _complianceItems.Count(c => c.Status == "Pending");
@@ -183,14 +300,6 @@ namespace SkolarAid
             lblOverdue.Text = overdue.ToString();
             lblComplianceRate.Text = $"{complianceRate}%";
             progressCompliance.Value = (int)complianceRate;
-
-            // Set progress bar color based on rate
-            if (complianceRate >= 80)
-                progressCompliance.ForeColor = Color.FromArgb(40, 167, 69);
-            else if (complianceRate >= 50)
-                progressCompliance.ForeColor = Color.FromArgb(255, 170, 0);
-            else
-                progressCompliance.ForeColor = Color.FromArgb(239, 68, 68);
         }
 
         private void dgvCompliance_SelectionChanged(object sender, EventArgs e)
@@ -198,17 +307,13 @@ namespace SkolarAid
             if (dgvCompliance.SelectedRows.Count > 0)
             {
                 var selectedRow = dgvCompliance.SelectedRows[0];
-                int complianceId = Convert.ToInt32(selectedRow.Cells["colComplianceID"].Value);
-
-                var item = _complianceItems.FirstOrDefault(c => c.ComplianceID == complianceId);
-                if (item != null)
+                if (selectedRow.Cells["colComplianceID"].Value != null)
                 {
-                    ShowComplianceDetails(item);
+                    int complianceId = Convert.ToInt32(selectedRow.Cells["colComplianceID"].Value);
+                    var item = _complianceItems.FirstOrDefault(c => c.ComplianceID == complianceId);
+                    if (item != null)
+                        ShowComplianceDetails(item);
                 }
-            }
-            else
-            {
-                ClearComplianceDetails();
             }
         }
 
@@ -220,20 +325,17 @@ namespace SkolarAid
             lblDetailDueDate.Text = item.DueDate.ToString("MMMM dd, yyyy");
             lblDetailDateSubmitted.Text = item.DateSubmitted?.ToString("MMMM dd, yyyy") ?? "Not yet submitted";
             lblDetailStatus.Text = item.Status;
-            lblDetailRemarks.Text = item.Remarks ?? "-";
-            lblDetailCheckedBy.Text = item.CheckedBy ?? "-";
 
-            // Set status color
             switch (item.Status)
             {
                 case "Approved":
                     lblDetailStatus.ForeColor = Color.FromArgb(40, 167, 69);
                     break;
-                case "Pending":
-                    lblDetailStatus.ForeColor = Color.FromArgb(255, 170, 0);
-                    break;
                 case "Submitted":
                     lblDetailStatus.ForeColor = Color.FromArgb(0, 123, 255);
+                    break;
+                case "Pending":
+                    lblDetailStatus.ForeColor = Color.FromArgb(255, 170, 0);
                     break;
                 case "Rejected":
                     lblDetailStatus.ForeColor = Color.FromArgb(239, 68, 68);
@@ -243,60 +345,46 @@ namespace SkolarAid
                     break;
             }
 
-            // Show upload button for pending items
-            btnUploadDocument.Visible = item.Status == "Pending" || item.Status == "Rejected";
+            btnUploadDocument.Visible = (item.Status == "Pending" || item.Status == "Rejected");
+            btnUploadDocument.Tag = item;
         }
 
-        private void ClearComplianceDetails()
+        private void BtnUploadDocument_Click(object sender, EventArgs e)
         {
-            lblDetailComplianceID.Text = "-";
-            lblDetailRequirementType.Text = "-";
-            lblDetailDescription.Text = "-";
-            lblDetailDueDate.Text = "-";
-            lblDetailDateSubmitted.Text = "-";
-            lblDetailStatus.Text = "-";
-            lblDetailRemarks.Text = "-";
-            lblDetailCheckedBy.Text = "-";
-            btnUploadDocument.Visible = false;
-        }
+            var item = btnUploadDocument.Tag as ComplianceItem;
+            if (item == null) return;
 
-        private void cmbFilterStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateComplianceGrid();
-        }
-
-        private void cmbFilterType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateComplianceGrid();
-        }
-
-        private void btnClearFilters_Click(object sender, EventArgs e)
-        {
-            cmbFilterStatus.SelectedIndex = 0;
-            cmbFilterType.SelectedIndex = 0;
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadComplianceData();
-        }
-
-        private void btnUploadDocument_Click(object sender, EventArgs e)
-        {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Document Files|*.pdf;*.doc;*.docx;*.jpg;*.jpeg;*.png";
-                openFileDialog.Title = "Upload Requirement Document";
+                openFileDialog.Title = $"Upload Document for {item.RequirementType}";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        // TODO: Upload document to server/database
+                        string filePath = openFileDialog.FileName;
+                        string fileName = System.IO.Path.GetFileName(filePath);
+
+                        using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                        {
+                            conn.Open();
+                            string updateQuery = @"UPDATE compliance_records 
+                                                 SET status = 'Submitted', 
+                                                     date_submitted = CURDATE(),
+                                                     file_path = @filePath,
+                                                     updated_at = NOW()
+                                                 WHERE id = @id";
+
+                            MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
+                            cmd.Parameters.AddWithValue("@filePath", fileName);
+                            cmd.Parameters.AddWithValue("@id", item.ComplianceID);
+                            cmd.ExecuteNonQuery();
+                        }
+
                         MessageBox.Show("Document uploaded successfully! Waiting for administrator verification.",
                             "Upload Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Refresh data
                         LoadComplianceData();
                     }
                     catch (Exception ex)
@@ -308,58 +396,9 @@ namespace SkolarAid
             }
         }
 
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            FrmScholarDashboard dashboard = new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber);
-            dashboard.Show();
-            this.Close();
-        }
-
-        private void btnProfile_Click(object sender, EventArgs e)
-        {
-            FrmScholarProfile profile = new FrmScholarProfile(_scholarId, _scholarName, _scholarNumber);
-            profile.Show();
-            this.Close();
-        }
-
-        private void btnPayments_Click(object sender, EventArgs e)
-        {
-            FrmPaymentHistory payments = new FrmPaymentHistory(_scholarId, _scholarName, _scholarNumber);
-            payments.Show();
-            this.Close();
-        }
-
-        private void btnCompliance_Click(object sender, EventArgs e)
-        {
-            // Already on compliance
-        }
-
-        private void btnNotifications_Click(object sender, EventArgs e)
-        {
-            // Navigate to notifications
-            // FrmScholarNotifications notifications = new FrmScholarNotifications(_scholarId, _scholarName, _scholarNumber);
-            // notifications.Show();
-            // this.Close();
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to logout?",
-                "Logout Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                Login login = new Login();
-                login.Show();
-                this.Close();
-            }
-        }
+        private void panelContent_Paint(object sender, PaintEventArgs e) { }
     }
 
-    // Compliance item class (temporary - move to Models folder later)
     public class ComplianceItem
     {
         public int ComplianceID { get; set; }
@@ -368,7 +407,6 @@ namespace SkolarAid
         public DateTime DueDate { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public string Status { get; set; }
-        public string Remarks { get; set; }
-        public string CheckedBy { get; set; }
+        public string FilePath { get; set; }
     }
 }

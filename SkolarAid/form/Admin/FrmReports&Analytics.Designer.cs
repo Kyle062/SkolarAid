@@ -1113,7 +1113,7 @@
             // 
             // pictureBoxPending
             // 
-            this.pictureBoxPending.Image = global::SkolarAid.Properties.Resources.bell__1_;
+            this.pictureBoxPending.Image = global::SkolarAid.Properties.Resources.wall_clock;
             this.pictureBoxPending.Location = new System.Drawing.Point(25, 20);
             this.pictureBoxPending.Name = "pictureBoxPending";
             this.pictureBoxPending.Size = new System.Drawing.Size(50, 50);
@@ -1164,7 +1164,7 @@
             // 
             // pictureBoxDisbursed
             // 
-            this.pictureBoxDisbursed.Image = global::SkolarAid.Properties.Resources.dollar;
+            this.pictureBoxDisbursed.Image = global::SkolarAid.Properties.Resources.wallet__1_;
             this.pictureBoxDisbursed.Location = new System.Drawing.Point(24, 20);
             this.pictureBoxDisbursed.Name = "pictureBoxDisbursed";
             this.pictureBoxDisbursed.Size = new System.Drawing.Size(50, 50);
@@ -1215,7 +1215,7 @@
             // 
             // pictureBoxActive
             // 
-            this.pictureBoxActive.Image = global::SkolarAid.Properties.Resources.user__3_;
+            this.pictureBoxActive.Image = global::SkolarAid.Properties.Resources._checked;
             this.pictureBoxActive.Location = new System.Drawing.Point(30, 19);
             this.pictureBoxActive.Name = "pictureBoxActive";
             this.pictureBoxActive.Size = new System.Drawing.Size(50, 50);
@@ -1266,7 +1266,7 @@
             // 
             // pictureBoxScholars
             // 
-            this.pictureBoxScholars.Image = global::SkolarAid.Properties.Resources.scholar;
+            this.pictureBoxScholars.Image = global::SkolarAid.Properties.Resources.user_groups__1_;
             this.pictureBoxScholars.Location = new System.Drawing.Point(29, 17);
             this.pictureBoxScholars.Name = "pictureBoxScholars";
             this.pictureBoxScholars.Size = new System.Drawing.Size(50, 50);

@@ -426,38 +426,54 @@ namespace SkolarAid
         private void LoadCourseDistributionChart(MySqlConnection conn)
         {
             string query = @"SELECT course, COUNT(*) as scholar_count
-                            FROM scholars 
-                            WHERE status = 'Active' AND course IS NOT NULL
-                            GROUP BY course
-                            ORDER BY scholar_count DESC
-                            LIMIT 10";
+                    FROM scholars 
+                    WHERE status = 'Active' AND course IS NOT NULL
+                    GROUP BY course
+                    ORDER BY scholar_count DESC
+                    LIMIT 10";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
                 chartCourseDist.Series.Clear();
+                chartCourseDist.Legends.Clear();
+                chartCourseDist.Titles.Clear();
+
+                // Create and configure legend
+                Legend legend = new Legend("CourseLegend")
+                {
+                    Docking = Docking.Bottom,           // Position at bottom
+                    Alignment = StringAlignment.Center, // Center the legend items
+                    Font = new Font("Century Gothic", 9F),
+                    BackColor = Color.Transparent,
+                    BorderColor = Color.Transparent,
+                    TableStyle = LegendTableStyle.Wide, // Wide layout (horizontal)
+                    IsTextAutoFit = true,
+                    TextWrapThreshold = 30
+                };
+                chartCourseDist.Legends.Add(legend);
 
                 Series series = new Series("By Course")
                 {
                     ChartType = SeriesChartType.Doughnut,
                     IsValueShownAsLabel = true,
-                    Label = "#VALX\n(#VALY scholars)", // Show name and count
-                    Font = new Font("Century Gothic", 7F, FontStyle.Bold)
+                    Label = "#VALX\n(#VALY scholars)",
+                    Font = new Font("Century Gothic", 8F, FontStyle.Bold)
                 };
                 chartCourseDist.Series.Add(series);
 
                 Color[] colors = {
-                    Color.FromArgb(0, 68, 79),
-                    Color.FromArgb(40, 167, 69),
-                    Color.FromArgb(255, 193, 7),
-                    Color.FromArgb(0, 123, 255),
-                    Color.FromArgb(111, 66, 193),
-                    Color.FromArgb(220, 53, 69),
-                    Color.FromArgb(23, 162, 184),
-                    Color.FromArgb(255, 140, 0),
-                    Color.FromArgb(75, 192, 192),
-                    Color.FromArgb(153, 102, 255)
-                };
+            Color.FromArgb(0, 68, 79),
+            Color.FromArgb(40, 167, 69),
+            Color.FromArgb(255, 193, 7),
+            Color.FromArgb(0, 123, 255),
+            Color.FromArgb(111, 66, 193),
+            Color.FromArgb(220, 53, 69),
+            Color.FromArgb(23, 162, 184),
+            Color.FromArgb(255, 140, 0),
+            Color.FromArgb(75, 192, 192),
+            Color.FromArgb(153, 102, 255)
+        };
                 int colorIndex = 0;
 
                 while (reader.Read())
@@ -474,7 +490,6 @@ namespace SkolarAid
                     }
                 }
 
-                chartCourseDist.Titles.Clear();
                 chartCourseDist.Titles.Add(new Title("Scholars by Course",
                     Docking.Top, new Font("Century Gothic", 10F, FontStyle.Bold), Color.FromArgb(0, 68, 79)));
             }

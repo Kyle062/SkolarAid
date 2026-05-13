@@ -1,4 +1,7 @@
-﻿using SkolarAid.form;
+﻿using MySql.Data.MySqlClient;
+using SkolarAid.Classes;
+using SkolarAid.Data;
+using SkolarAid.form;
 using SkolarAid.form.Scholar;
 using System;
 using System.Drawing;
@@ -11,7 +14,6 @@ namespace SkolarAid
         private int _scholarId;
         private string _scholarName;
         private string _scholarNumber;
-        private bool _isEditMode = false;
 
         public FrmScholarProfile(int scholarId, string scholarName, string scholarNumber)
         {
@@ -20,123 +22,33 @@ namespace SkolarAid
             _scholarName = scholarName;
             _scholarNumber = scholarNumber;
 
-            LoadProfileData();
+            this.Load += FrmScholarProfile_Load;
         }
 
         private void FrmScholarProfile_Load(object sender, EventArgs e)
         {
-            lblScholarInfo.Text = $"{_scholarName} | Scholar #: {_scholarNumber}";
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+
             lblDate.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
-            SetEditMode(false);
+            lblProfileName.Text = _scholarName;
+            lblScholarInfo.Text = _scholarName;
+
+            // Wire sidebar navigation
+            btnDashboard.Click += (s, ev) => { new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnProfile.Click += (s, ev) => { };
+            btnPayments.Click += (s, ev) => { new FrmPaymentHistory(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnCompliance.Click += (s, ev) => { new FrmScholarCompliance(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnNotifications.Click += (s, ev) => { new FrmScholarNotifications(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+
+            // Wire logout buttons
+            btnLogout.Click += BtnLogout_Click;
+            sataButton1.Click += BtnLogout_Click;
+
+            LoadProfileData();
         }
 
-        private void LoadProfileData()
-        {
-            // TODO: Load actual data from database
-            // These are placeholder values
-
-            // Personal Information
-            txtFirstName.Text = "Juan";
-            txtMiddleName.Text = "Santos";
-            txtLastName.Text = "Dela Cruz";
-            txtEmail.Text = "juan.delacruz@student.legacy.edu.ph";
-            txtContactNumber.Text = "0912 345 6789";
-            txtAddress.Text = "123 Main Street, Compostela, Davao de Oro";
-            dtpBirthDate.Value = new DateTime(2002, 5, 15);
-            cmbGender.SelectedIndex = 0; // Male
-            txtGuardianName.Text = "Maria Dela Cruz";
-            txtGuardianContact.Text = "0918 765 4321";
-
-            // Academic Information
-            txtStudentID.Text = "2024-001234";
-            cmbCourse.SelectedIndex = 0; // BS Information Technology
-            cmbYearLevel.SelectedIndex = 1; // 2nd Year
-            txtSection.Text = "IT-2A";
-            txtCurrentGPA.Text = "1.75";
-
-            // Scholarship Information
-            txtScholarNumber.Text = _scholarNumber;
-            cmbScholarshipType.SelectedIndex = 0; // Academic Excellence
-            dtpEnrollmentDate.Value = new DateTime(2024, 8, 1);
-            dtpExpectedGraduation.Value = new DateTime(2028, 6, 30);
-            cmbStatus.SelectedIndex = 0; // Active
-            txtStipendAmount.Text = "₱5,000.00 / Month";
-        }
-
-        private void SetEditMode(bool isEdit)
-        {
-            _isEditMode = isEdit;
-
-            // Toggle read-only state for all input fields
-            txtFirstName.ReadOnly = !isEdit;
-            txtMiddleName.ReadOnly = !isEdit;
-            txtLastName.ReadOnly = !isEdit;
-            txtEmail.ReadOnly = !isEdit;
-            txtContactNumber.ReadOnly = !isEdit;
-            txtAddress.ReadOnly = !isEdit;
-            dtpBirthDate.Enabled = isEdit;
-            cmbGender.Enabled = isEdit;
-            txtGuardianName.ReadOnly = !isEdit;
-            txtGuardianContact.ReadOnly = !isEdit;
-
-            // Academic fields (read-only for scholars)
-            txtStudentID.ReadOnly = true;
-            cmbCourse.Enabled = false;
-            cmbYearLevel.Enabled = false;
-            txtSection.ReadOnly = true;
-            txtCurrentGPA.ReadOnly = true;
-
-            // Scholarship fields (read-only for scholars)
-            txtScholarNumber.ReadOnly = true;
-            cmbScholarshipType.Enabled = false;
-            dtpEnrollmentDate.Enabled = false;
-            dtpExpectedGraduation.Enabled = false;
-            cmbStatus.Enabled = false;
-
-            // Toggle buttons
-            btnEdit.Visible = !isEdit;
-            btnSave.Visible = isEdit;
-            btnCancel.Visible = isEdit;
-            btnChangePassword.Enabled = !isEdit;
-        }
-
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            FrmScholarDashboard dashboard = new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber);
-            dashboard.Show();
-            this.Close();
-        }
-
-        private void btnProfile_Click(object sender, EventArgs e)
-        {
-            // Already on profile
-        }
-
-        private void btnPayments_Click(object sender, EventArgs e)
-        {
-            // Navigate to payment history
-            // FrmPaymentHistory payments = new FrmPaymentHistory(_scholarId);
-            // payments.Show();
-            // this.Hide();
-        }
-
-        private void btnCompliance_Click(object sender, EventArgs e)
-        {
-            // Navigate to compliance
-            // FrmCompliance compliance = new FrmCompliance(_scholarId);
-            // compliance.Show();
-            // this.Hide();
-        }
-
-        private void btnNotifications_Click(object sender, EventArgs e)
-        {
-            // Navigate to notifications
-            // FrmScholarNotifications notifications = new FrmScholarNotifications(_scholarId);
-            // notifications.Show();
-            // this.Hide();
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
                 "Are you sure you want to logout?",
@@ -146,189 +58,165 @@ namespace SkolarAid
 
             if (result == DialogResult.Yes)
             {
-                Login login = new Login();
-                login.Show();
+                SessionManager.ClearSession();
+                new Login().Show();
                 this.Close();
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void LoadProfileData()
         {
-            SetEditMode(true);
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            // TODO: Save changes to database
-            MessageBox.Show("Profile updated successfully!", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            SetEditMode(false);
-            LoadProfileData(); // Refresh data
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            SetEditMode(false);
-            LoadProfileData(); // Revert changes
-        }
-
-        private void btnChangePassword_Click(object sender, EventArgs e)
-        {
-            // Open change password dialog
-            using (var dialog = new FrmChangePassword(_scholarId))
+            try
             {
-                dialog.ShowDialog();
-            }
-        }
-
-        private void btnUploadPhoto_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-                openFileDialog.Title = "Select Profile Photo";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
-                    try
+                    conn.Open();
+
+                    string query = @"SELECT s.*, st.name AS scholarship_type_name, 
+                            st.stipend_amount AS scholarship_stipend_amount,
+                            st.payment_frequency
+                            FROM scholars s
+                            LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
+                            WHERE s.id = @scholarId";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@scholarId", _scholarId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        picProfilePhoto.Image = Image.FromFile(openFileDialog.FileName);
-                        // TODO: Save image to database
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error loading image: {ex.Message}", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (reader.Read())
+                        {
+                            // ===== PERSONAL INFORMATION =====
+                            txtFirstName.Text = reader["first_name"]?.ToString() ?? "";
+                            txtMiddleName.Text = reader["middle_name"]?.ToString() ?? "";
+                            txtLastName.Text = reader["last_name"]?.ToString() ?? "";
+                            txtEmail.Text = reader["email"]?.ToString() ?? "";
+                            txtContactNumber.Text = reader["contact_number"]?.ToString() ?? "";
+                            txtAddress.Text = reader["address"]?.ToString() ?? "";
+
+                            if (reader["date_of_birth"] != DBNull.Value)
+                                dtpBirthDate.Value = Convert.ToDateTime(reader["date_of_birth"]);
+
+                            string gender = reader["gender"]?.ToString() ?? "";
+                            if (gender == "Male") cmbGender.SelectedIndex = 0;
+                            else if (gender == "Female") cmbGender.SelectedIndex = 1;
+                            else if (gender == "Other") cmbGender.SelectedIndex = 2;
+
+                            // Bank Info
+                            txtBankName.Text = reader["bank_name"]?.ToString() ?? "";
+                            txtBankAccountNumber.Text = reader["bank_account_number"]?.ToString() ?? "";
+
+                            // ===== ACADEMIC INFORMATION =====
+                            txtStudentID.Text = reader["student_id"]?.ToString() ?? "";
+                            txtHEI.Text = reader["hei"]?.ToString() ?? "";
+
+                            // Course - FIXED: Add course if not found in ComboBox
+                            string course = reader["course"]?.ToString() ?? "";
+                            if (!string.IsNullOrEmpty(course))
+                            {
+                                int courseIndex = cmbCourse.FindStringExact(course);
+                                if (courseIndex >= 0)
+                                {
+                                    cmbCourse.SelectedIndex = courseIndex;
+                                }
+                                else
+                                {
+                                    // Course not in the list, add it and select it
+                                    cmbCourse.Items.Add(course);
+                                    cmbCourse.SelectedIndex = cmbCourse.Items.Count - 1;
+                                }
+                            }
+
+                            // Year Level - FIXED: Add year level if not found in ComboBox
+                            string yearLevel = reader["year_level"]?.ToString() ?? "";
+                            if (!string.IsNullOrEmpty(yearLevel))
+                            {
+                                int yearIndex = cmbYearLevel.FindStringExact(yearLevel);
+                                if (yearIndex >= 0)
+                                {
+                                    cmbYearLevel.SelectedIndex = yearIndex;
+                                }
+                                else
+                                {
+                                    // Year level not in the list, add it and select it
+                                    cmbYearLevel.Items.Add(yearLevel);
+                                    cmbYearLevel.SelectedIndex = cmbYearLevel.Items.Count - 1;
+                                }
+                            }
+
+                            // ===== SCHOLARSHIP INFORMATION =====
+                            txtScholarNumber.Text = reader["scholar_number"]?.ToString() ?? _scholarNumber;
+
+                            // Scholarship Type - FIXED: Add if not found
+                            string scholarshipTypeName = reader["scholarship_type_name"]?.ToString() ?? "";
+                            txtScholarshipTypeValue.Text = scholarshipTypeName;
+
+                            // Status
+                            string status = reader["status"]?.ToString() ?? "Active";
+                            txtStatusValue.Text = status;
+
+                            if (reader["enrollment_date"] != DBNull.Value)
+                                dtpEnrollmentDate.Value = Convert.ToDateTime(reader["enrollment_date"]);
+
+                            if (reader["expected_graduation"] != DBNull.Value)
+                                dtpExpectedGraduation.Value = Convert.ToDateTime(reader["expected_graduation"]);
+
+                            decimal stipendAmount = reader["scholarship_stipend_amount"] != DBNull.Value ?
+                                Convert.ToDecimal(reader["scholarship_stipend_amount"]) : 0;
+                            string paymentFreq = reader["payment_frequency"]?.ToString() ?? "";
+                            txtStipendAmount.Text = $"₱{stipendAmount:N2} / {paymentFreq}";
+
+                            txtRenewalConditions.Text = reader["renewal_conditions"]?.ToString() ?? "";
+                            txtFundSource.Text = reader["scholarship_fund_source"]?.ToString() ?? "";
+
+                            // ===== PROFILE HEADER STATUS =====
+                            string scholarStatus = reader["status"]?.ToString() ?? "Active";
+                            switch (scholarStatus)
+                            {
+                                case "Active":
+                                    lblProfileStatus.Text = "● Active Scholar";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(40, 167, 69);
+                                    break;
+                                case "Inactive":
+                                    lblProfileStatus.Text = "● Inactive Scholar";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(150, 150, 150);
+                                    break;
+                                case "Graduated":
+                                    lblProfileStatus.Text = "● Graduated";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(0, 123, 255);
+                                    break;
+                                case "Terminated":
+                                    lblProfileStatus.Text = "● Terminated";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(239, 68, 68);
+                                    break;
+                                case "Suspended":
+                                    lblProfileStatus.Text = "● Suspended";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(255, 170, 0);
+                                    break;
+                                case "Probation":
+                                    lblProfileStatus.Text = "● Probation";
+                                    lblProfileStatus.ForeColor = Color.FromArgb(255, 170, 0);
+                                    break;
+                                default:
+                                    lblProfileStatus.Text = $"● {scholarStatus}";
+                                    lblProfileStatus.ForeColor = Color.Gray;
+                                    break;
+                            }
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading profile: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-    }
-}
 
-// Simple change password dialog form
-public partial class FrmChangePassword : Form
-{
-    private int _scholarId;
-
-    public FrmChangePassword(int scholarId)
-    {
-        _scholarId = scholarId;
-        InitializeComponent();
-    }
-
-    private void InitializeComponent()
-    {
-        this.Text = "Change Password";
-        this.Size = new Size(450, 300);
-        this.StartPosition = FormStartPosition.CenterParent;
-        this.FormBorderStyle = FormBorderStyle.FixedDialog;
-        this.MaximizeBox = false;
-        this.MinimizeBox = false;
-        this.BackColor = Color.White;
-
-        Label lblCurrent = new Label()
-        {
-            Text = "Current Password:",
-            Location = new Point(30, 30),
-            Size = new Size(150, 25),
-            Font = new Font("Century Gothic", 11)
-        };
-
-        TextBox txtCurrent = new TextBox()
-        {
-            Location = new Point(30, 60),
-            Size = new Size(370, 30),
-            Font = new Font("Century Gothic", 11),
-            UseSystemPasswordChar = true
-        };
-
-        Label lblNew = new Label()
-        {
-            Text = "New Password:",
-            Location = new Point(30, 100),
-            Size = new Size(150, 25),
-            Font = new Font("Century Gothic", 11)
-        };
-
-        TextBox txtNew = new TextBox()
-        {
-            Location = new Point(30, 130),
-            Size = new Size(370, 30),
-            Font = new Font("Century Gothic", 11),
-            UseSystemPasswordChar = true
-        };
-
-        Label lblConfirm = new Label()
-        {
-            Text = "Confirm New Password:",
-            Location = new Point(30, 170),
-            Size = new Size(200, 25),
-            Font = new Font("Century Gothic", 11)
-        };
-
-        TextBox txtConfirm = new TextBox()
-        {
-            Location = new Point(30, 200),
-            Size = new Size(370, 30),
-            Font = new Font("Century Gothic", 11),
-            UseSystemPasswordChar = true
-        };
-
-        Button btnSave = new Button()
-        {
-            Text = "Save",
-            Location = new Point(220, 250),
-            Size = new Size(85, 35),
-            BackColor = Color.FromArgb(0, 68, 79),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Font = new Font("Century Gothic", 11, FontStyle.Bold)
-        };
-        btnSave.FlatAppearance.BorderSize = 0;
-        btnSave.Click += (s, e) =>
-        {
-            if (string.IsNullOrEmpty(txtCurrent.Text) ||
-                string.IsNullOrEmpty(txtNew.Text) ||
-                string.IsNullOrEmpty(txtConfirm.Text))
-            {
-                MessageBox.Show("Please fill in all fields.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (txtNew.Text != txtConfirm.Text)
-            {
-                MessageBox.Show("New passwords do not match.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // TODO: Verify current password and update in database
-            MessageBox.Show("Password changed successfully!", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
-        };
-
-        Button btnCancel = new Button()
-        {
-            Text = "Cancel",
-            Location = new Point(315, 250),
-            Size = new Size(85, 35),
-            BackColor = Color.FromArgb(180, 180, 180),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Font = new Font("Century Gothic", 11, FontStyle.Bold)
-        };
-        btnCancel.FlatAppearance.BorderSize = 0;
-        btnCancel.Click += (s, e) => this.Close();
-
-        this.Controls.AddRange(new Control[]
-        {
-            lblCurrent, txtCurrent,
-            lblNew, txtNew,
-            lblConfirm, txtConfirm,
-            btnSave, btnCancel
-        });
+        // Designer event handlers
+        private void btnLogout_Click(object sender, EventArgs e) { }
+        private void sataButton1_Click(object sender, EventArgs e) { }
+        private void panelPersonalInfo_Paint(object sender, PaintEventArgs e) { }
+        private void panelContent_Paint(object sender, PaintEventArgs e) { }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using SkolarAid.Classes;
+﻿using SkolarAid.Classes;
 using SkolarAid.Data;
 using System;
 using System.Drawing;
@@ -39,7 +38,7 @@ namespace SkolarAid.form.Admin
 
             // Stats cards - horizontal row below greeting
             int statsY = 185;
-            int statsCardWidth = (screenWidth - 320 - 60) / 4; // 4 cards with gaps
+            int statsCardWidth = (screenWidth - 320 - 60) / 4;
 
             if (panelStats1 != null)
             {
@@ -56,10 +55,10 @@ namespace SkolarAid.form.Admin
                 panelStats4.Size = new Size(statsCardWidth, 130);
             }
 
-            // CHARTS ROW - MADE BIGGER (60% of remaining height)
+            // CHARTS ROW
             int chartsY = 340;
             int availableHeight = screenHeight - chartsY - 30;
-            int chartsHeight = (int)(availableHeight * 0.60); // 60% for charts
+            int chartsHeight = (int)(availableHeight * 0.60);
             int chartPanelWidth = (screenWidth - 320 - 40) / 2;
 
             if (panelChart1 != null)
@@ -86,9 +85,9 @@ namespace SkolarAid.form.Admin
                 }
             }
 
-            // BOTTOM ROW - MADE SMALLER (40% of remaining height)
+            // BOTTOM ROW
             int bottomY = chartsY + chartsHeight + 20;
-            int bottomHeight = (int)(availableHeight * 0.40); // 40% for bottom panels
+            int bottomHeight = (int)(availableHeight * 0.40);
             int bottomPanelWidth = (screenWidth - 320 - 40) / 2;
 
             if (panelRecentActivity != null)
@@ -165,7 +164,7 @@ namespace SkolarAid.form.Admin
             };
             this.panelChart2.Controls.Add(lblChart2Title);
 
-            // ========== PANEL RECENT ACTIVITY (WITH SCROLL) - SMALLER ==========
+            // ========== PANEL RECENT ACTIVITY ==========
             this.panelRecentActivity.Location = new Point(321, 650);
             this.panelRecentActivity.Size = new Size(600, 250);
 
@@ -176,7 +175,7 @@ namespace SkolarAid.form.Admin
             this.panelActivityContainer.BorderStyle = BorderStyle.None;
             this.panelRecentActivity.Controls.Add(this.panelActivityContainer);
 
-            // ========== PANEL UPCOMING PAYMENTS - SMALLER ==========
+            // ========== PANEL UPCOMING PAYMENTS ==========
             this.panelUpcomingPayments.Location = new Point(950, 650);
             this.panelUpcomingPayments.Size = new Size(680, 250);
 
@@ -332,24 +331,33 @@ namespace SkolarAid.form.Admin
                 {
                     conn.Open();
 
-                    // Stats Cards
+                    // ========== STATS CARDS ==========
+
+                    // Total Active Scholars
                     string totalScholarsQuery = "SELECT COUNT(*) FROM scholars WHERE status = 'Active'";
                     MySqlCommand cmdTotal = new MySqlCommand(totalScholarsQuery, conn);
-                    lblTotalScholars.Text = Convert.ToInt32(cmdTotal.ExecuteScalar()).ToString();
+                    int totalScholars = Convert.ToInt32(cmdTotal.ExecuteScalar());
+                    lblTotalScholars.Text = totalScholars.ToString();
 
+                    // Active Scholarships (including all scholarship types)
                     string activeScholarshipsQuery = "SELECT COUNT(*) FROM scholarship_types WHERE is_active = TRUE";
                     MySqlCommand cmdActive = new MySqlCommand(activeScholarshipsQuery, conn);
-                    lblActiveScholarships.Text = Convert.ToInt32(cmdActive.ExecuteScalar()).ToString();
+                    int activeScholarships = Convert.ToInt32(cmdActive.ExecuteScalar());
+                    lblActiveScholarships.Text = activeScholarships.ToString();
 
+                    // Total Disbursed (Released payments only)
                     string totalDisbursedQuery = "SELECT COALESCE(SUM(amount), 0) FROM payments WHERE status = 'Released'";
                     MySqlCommand cmdDisbursed = new MySqlCommand(totalDisbursedQuery, conn);
                     decimal totalDisbursed = Convert.ToDecimal(cmdDisbursed.ExecuteScalar());
                     lblTotalDisbursed.Text = $"₱{totalDisbursed:N0}";
 
+                    // Pending Payments (Pending + Processed)
                     string pendingPaymentsQuery = "SELECT COUNT(*) FROM payments WHERE status IN ('Pending', 'Processed')";
                     MySqlCommand cmdPending = new MySqlCommand(pendingPaymentsQuery, conn);
-                    lblPendingPayments.Text = Convert.ToInt32(cmdPending.ExecuteScalar()).ToString();
+                    int pendingPayments = Convert.ToInt32(cmdPending.ExecuteScalar());
+                    lblPendingPayments.Text = pendingPayments.ToString();
 
+                    // Load charts and grids
                     LoadRecentActivity(conn);
                     LoadUpcomingPaymentsGrid(conn);
                     LoadScholarshipDistributionChart(conn);
@@ -387,7 +395,6 @@ namespace SkolarAid.form.Admin
                     DateTime createdAt = Convert.ToDateTime(reader["created_at"]);
                     string timeAgo = GetRelativeTime(createdAt);
 
-                    // Create a panel for each activity item
                     Panel activityItem = new Panel
                     {
                         Location = new Point(5, yPos),
@@ -396,7 +403,6 @@ namespace SkolarAid.form.Admin
                         Cursor = Cursors.Default
                     };
 
-                    // Activity icon indicator
                     Label lblIcon = new Label
                     {
                         Text = "●",
@@ -408,7 +414,6 @@ namespace SkolarAid.form.Admin
                     };
                     activityItem.Controls.Add(lblIcon);
 
-                    // User name
                     Label lblUser = new Label
                     {
                         Text = userName,
@@ -420,7 +425,6 @@ namespace SkolarAid.form.Admin
                     };
                     activityItem.Controls.Add(lblUser);
 
-                    // Activity details
                     Label lblDetails = new Label
                     {
                         Text = details.Length > 50 ? details.Substring(0, 47) + "..." : details,
@@ -432,7 +436,6 @@ namespace SkolarAid.form.Admin
                     };
                     activityItem.Controls.Add(lblDetails);
 
-                    // Time
                     Label lblTime = new Label
                     {
                         Text = timeAgo,
@@ -466,12 +469,14 @@ namespace SkolarAid.form.Admin
 
         private void LoadUpcomingPaymentsGrid(MySqlConnection conn)
         {
+            // FIXED: Include both pending and processed payments, ordered by computation_date
             string query = @"SELECT CONCAT(s.first_name, ' ', s.last_name) AS scholar_name, 
-                                    p.payment_period, p.amount, p.status, p.release_date
+                                    p.payment_period, p.amount, p.status, 
+                                    COALESCE(p.release_date, p.computation_date) as release_date
                              FROM payments p
                              JOIN scholars s ON p.scholar_id = s.id
                              WHERE p.status IN ('Processed', 'Pending')
-                             ORDER BY p.release_date ASC
+                             ORDER BY p.computation_date ASC
                              LIMIT 10";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -500,22 +505,23 @@ namespace SkolarAid.form.Admin
 
         private void LoadScholarshipDistributionChart(MySqlConnection conn)
         {
-            string query = @"SELECT st.name, COUNT(s.id) as scholar_count
-                            FROM scholarship_types st
-                            LEFT JOIN scholars s ON st.id = s.scholarship_type_id AND s.status = 'Active'
-                            WHERE st.is_active = TRUE
-                            GROUP BY st.id, st.name
-                            HAVING scholar_count >= 0
-                            ORDER BY scholar_count DESC";
+            // FIXED: Get ALL scholarship types (even inactive) and count scholars
+            string query = @"SELECT st.name, 
+                                    COALESCE(COUNT(CASE WHEN s.status = 'Active' THEN s.id END), 0) as scholar_count
+                             FROM scholarship_types st
+                             LEFT JOIN scholars s ON st.id = s.scholarship_type_id
+                             GROUP BY st.id, st.name
+                             ORDER BY scholar_count DESC, st.name ASC";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
+                // Clear existing data
                 chartScholarshipDist.Series.Clear();
                 chartScholarshipDist.Titles.Clear();
 
                 // Title
-                Title chartTitle = new Title("Scholar Count by Scholarship Type",
+                Title chartTitle = new Title("Active Scholars by Scholarship Type",
                     Docking.Top,
                     new Font("Century Gothic", 12F, FontStyle.Bold),
                     Color.FromArgb(0, 68, 79));
@@ -534,13 +540,16 @@ namespace SkolarAid.form.Admin
 
                 // Modern color palette
                 Color[] colors = {
-                    Color.FromArgb(0, 68, 79),       // Dark teal
-                    Color.FromArgb(33, 150, 243),    // Blue
-                    Color.FromArgb(76, 175, 80),     // Green
-                    Color.FromArgb(255, 152, 0),     // Orange
-                    Color.FromArgb(156, 39, 176),    // Purple
-                    Color.FromArgb(233, 30, 99),     // Pink
-                    Color.FromArgb(0, 150, 136)      // Teal
+                    Color.FromArgb(0, 68, 79),
+                    Color.FromArgb(33, 150, 243),
+                    Color.FromArgb(76, 175, 80),
+                    Color.FromArgb(255, 152, 0),
+                    Color.FromArgb(156, 39, 176),
+                    Color.FromArgb(233, 30, 99),
+                    Color.FromArgb(0, 150, 136),
+                    Color.FromArgb(121, 85, 72),
+                    Color.FromArgb(63, 81, 181),
+                    Color.FromArgb(244, 67, 54)
                 };
 
                 int colorIndex = 0;
@@ -551,23 +560,23 @@ namespace SkolarAid.form.Admin
                     string name = reader["name"]?.ToString() ?? "Unknown";
                     int count = Convert.ToInt32(reader["scholar_count"]);
 
-                    if (count > 0 || !hasData) // Include empty types for completeness
+                    // Only show types that have at least 1 scholar
+                    if (count > 0)
                     {
                         int idx = series.Points.AddXY(name, count);
                         series.Points[idx].Color = colors[colorIndex % colors.Length];
                         series.Points[idx].LegendText = $"{name}: {count} scholar{(count != 1 ? "s" : "")}";
-                        series.Points[idx].Label = count > 0 ? $"{count}" : "";
+                        series.Points[idx].Label = $"{count}";
                         series.Points[idx].Font = new Font("Century Gothic", 10F, FontStyle.Bold);
                         colorIndex++;
-                        if (count > 0) hasData = true;
+                        hasData = true;
                     }
                 }
 
-                // If no data, show message
                 if (!hasData)
                 {
                     chartScholarshipDist.Titles.Clear();
-                    chartScholarshipDist.Titles.Add(new Title("No scholar data available",
+                    chartScholarshipDist.Titles.Add(new Title("No active scholars found",
                         Docking.Top,
                         new Font("Century Gothic", 12F, FontStyle.Italic),
                         Color.FromArgb(150, 150, 150)));
@@ -577,23 +586,27 @@ namespace SkolarAid.form.Admin
 
         private void LoadMonthlyDisbursementChart(MySqlConnection conn)
         {
+            // FIXED: Get last 12 months of released payments
             string query = @"SELECT DATE_FORMAT(release_date, '%b %Y') as month_label,
                                     DATE_FORMAT(release_date, '%Y-%m') as month_sort,
                                     SUM(amount) as total_amount,
                                     COUNT(DISTINCT scholar_id) as scholar_count
                              FROM payments 
-                             WHERE status = 'Released' AND release_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
+                             WHERE status = 'Released' 
+                               AND release_date IS NOT NULL
+                               AND release_date >= DATE_SUB(NOW(), INTERVAL 12 MONTH)
                              GROUP BY DATE_FORMAT(release_date, '%b %Y'), DATE_FORMAT(release_date, '%Y-%m')
                              ORDER BY month_sort ASC";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             using (MySqlDataReader reader = cmd.ExecuteReader())
             {
+                // Clear existing data
                 chartMonthlyDisbursement.Series.Clear();
                 chartMonthlyDisbursement.Titles.Clear();
 
                 // Title
-                Title chartTitle = new Title("Monthly Disbursement Summary (Last 12 Months)",
+                Title chartTitle = new Title("Monthly Disbursement (Last 12 Months)",
                     Docking.Top,
                     new Font("Century Gothic", 12F, FontStyle.Bold),
                     Color.FromArgb(0, 68, 79));
@@ -634,8 +647,8 @@ namespace SkolarAid.form.Admin
                     columnSeries.Points.AddXY(month, amount);
                     lineSeries.Points.AddXY(month, amount);
 
-                    // Color the column based on value (higher = darker)
-                    int colorIntensity = Math.Min(200, Math.Max(50, 200 - (int)(amount / 100)));
+                    // Color the column based on position
+                    int colorIntensity = Math.Min(200, Math.Max(50, 200 - (columnSeries.Points.Count * 15)));
                     columnSeries.Points[columnSeries.Points.Count - 1].Color =
                         Color.FromArgb(0, colorIntensity / 2 + 20, colorIntensity);
 
@@ -645,7 +658,7 @@ namespace SkolarAid.form.Admin
                 if (!hasData)
                 {
                     chartMonthlyDisbursement.Titles.Clear();
-                    chartMonthlyDisbursement.Titles.Add(new Title("No disbursement data available",
+                    chartMonthlyDisbursement.Titles.Add(new Title("No disbursement data available for the last 12 months",
                         Docking.Top,
                         new Font("Century Gothic", 12F, FontStyle.Italic),
                         Color.FromArgb(150, 150, 150)));
@@ -702,6 +715,7 @@ namespace SkolarAid.form.Admin
 
         private void sataButton1_Click(object sender, EventArgs e)
         {
+            // Refresh dashboard
             LoadDashboardStats();
             AdjustControlPositions();
         }

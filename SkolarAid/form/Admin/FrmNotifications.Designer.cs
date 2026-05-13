@@ -554,9 +554,9 @@ namespace SkolarAid.form
             this.panelCompose.Controls.Add(this.lblMessage);
             this.panelCompose.Controls.Add(this.btnSendNotification);
             this.panelCompose.Controls.Add(this.btnClearForm);
-            this.panelCompose.Location = new System.Drawing.Point(321, 350);
+            this.panelCompose.Location = new System.Drawing.Point(321, 411);
             this.panelCompose.Name = "panelCompose";
-            this.panelCompose.Size = new System.Drawing.Size(580, 611);
+            this.panelCompose.Size = new System.Drawing.Size(580, 550);
             this.panelCompose.TabIndex = 9;
             // 
             // lblComposeTitle
@@ -637,9 +637,9 @@ namespace SkolarAid.form
             this.chkSendInApp.Font = new System.Drawing.Font("Century Gothic", 10F);
             this.chkSendInApp.Location = new System.Drawing.Point(24, 125);
             this.chkSendInApp.Name = "chkSendInApp";
-            this.chkSendInApp.Size = new System.Drawing.Size(196, 23);
+            this.chkSendInApp.Size = new System.Drawing.Size(121, 23);
             this.chkSendInApp.TabIndex = 4;
-            this.chkSendInApp.Text = "Send In-App Notification";
+            this.chkSendInApp.Text = "Send In email";
             this.chkSendInApp.UseVisualStyleBackColor = true;
             // 
             // txtNotificationTitle
@@ -767,9 +767,9 @@ namespace SkolarAid.form
             this.panelDataGrid.BorderRadius = borderRadius7;
             this.panelDataGrid.BorderThickness = 0;
             this.panelDataGrid.Controls.Add(this.dgvNotifications);
-            this.panelDataGrid.Location = new System.Drawing.Point(916, 350);
+            this.panelDataGrid.Location = new System.Drawing.Point(916, 411);
             this.panelDataGrid.Name = "panelDataGrid";
-            this.panelDataGrid.Size = new System.Drawing.Size(475, 621);
+            this.panelDataGrid.Size = new System.Drawing.Size(475, 560);
             this.panelDataGrid.TabIndex = 10;
             // 
             // dgvNotifications
@@ -822,7 +822,7 @@ namespace SkolarAid.form
             this.dgvNotifications.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvNotifications.RowTemplate.Height = 35;
             this.dgvNotifications.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvNotifications.Size = new System.Drawing.Size(475, 621);
+            this.dgvNotifications.Size = new System.Drawing.Size(475, 560);
             this.dgvNotifications.TabIndex = 0;
             // 
             // colNotificationID
@@ -890,9 +890,9 @@ namespace SkolarAid.form
             this.panelDetailView.Controls.Add(this.txtDetailMessage);
             this.panelDetailView.Controls.Add(this.lblDetailMessage);
             this.panelDetailView.Controls.Add(this.btnResend);
-            this.panelDetailView.Location = new System.Drawing.Point(1398, 350);
+            this.panelDetailView.Location = new System.Drawing.Point(1398, 411);
             this.panelDetailView.Name = "panelDetailView";
-            this.panelDetailView.Size = new System.Drawing.Size(263, 605);
+            this.panelDetailView.Size = new System.Drawing.Size(263, 544);
             this.panelDetailView.TabIndex = 11;
             // 
             // lblDetailTitle
@@ -1039,7 +1039,7 @@ namespace SkolarAid.form
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 80);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(280, 920);
+            this.panelSidebar.Size = new System.Drawing.Size(280, 981);
             this.panelSidebar.TabIndex = 12;
             // 
             // btnReminder
@@ -1295,7 +1295,7 @@ namespace SkolarAid.form
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1700, 80);
+            this.panelHeader.Size = new System.Drawing.Size(1920, 80);
             this.panelHeader.TabIndex = 13;
             this.panelHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.panelHeader_Paint);
             // 
@@ -1342,7 +1342,7 @@ namespace SkolarAid.form
             this.btnLogout.ImageTint = System.Drawing.Color.White;
             this.btnLogout.IsToggleButton = false;
             this.btnLogout.IsToggled = false;
-            this.btnLogout.Location = new System.Drawing.Point(1567, 14);
+            this.btnLogout.Location = new System.Drawing.Point(1777, 23);
             this.btnLogout.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
@@ -1363,7 +1363,7 @@ namespace SkolarAid.form
             // picUser
             // 
             this.picUser.Image = global::SkolarAid.Properties.Resources.user__3_;
-            this.picUser.Location = new System.Drawing.Point(1398, 19);
+            this.picUser.Location = new System.Drawing.Point(1608, 28);
             this.picUser.Name = "picUser";
             this.picUser.Size = new System.Drawing.Size(36, 35);
             this.picUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1375,7 +1375,7 @@ namespace SkolarAid.form
             this.lblRole.AutoSize = true;
             this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
             this.lblRole.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.lblRole.Location = new System.Drawing.Point(1440, 27);
+            this.lblRole.Location = new System.Drawing.Point(1650, 36);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new System.Drawing.Size(111, 19);
             this.lblRole.TabIndex = 4;
@@ -1386,7 +1386,7 @@ namespace SkolarAid.form
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1000);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.panelSidebar);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.panelDetailView);
@@ -1405,6 +1405,7 @@ namespace SkolarAid.form
             this.Name = "FrmNotifications";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Notifications & Reminders - ScholarAid";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmNotifications_Load);
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();

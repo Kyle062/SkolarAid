@@ -518,12 +518,12 @@
             // 
             // dtpPaymentPeriod
             // 
-            this.dtpPaymentPeriod.CustomFormat = "MMMM yyyy";
+            this.dtpPaymentPeriod.CustomFormat = "MMM/dd/yyyy";
             this.dtpPaymentPeriod.Font = new System.Drawing.Font("Century Gothic", 11.25F);
             this.dtpPaymentPeriod.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpPaymentPeriod.Location = new System.Drawing.Point(23, 28);
             this.dtpPaymentPeriod.Name = "dtpPaymentPeriod";
-            this.dtpPaymentPeriod.Size = new System.Drawing.Size(180, 26);
+            this.dtpPaymentPeriod.Size = new System.Drawing.Size(210, 26);
             this.dtpPaymentPeriod.TabIndex = 3;
             // 
             // lblPaymentPeriod
@@ -545,7 +545,7 @@
             "Bank Transfer",
             "Cash",
             "Mobile Wallet"});
-            this.cmbPaymentMethod.Location = new System.Drawing.Point(230, 28);
+            this.cmbPaymentMethod.Location = new System.Drawing.Point(307, 28);
             this.cmbPaymentMethod.Name = "cmbPaymentMethod";
             this.cmbPaymentMethod.Size = new System.Drawing.Size(180, 28);
             this.cmbPaymentMethod.TabIndex = 3;
@@ -554,7 +554,7 @@
             // 
             this.lblPaymentMethod.AutoSize = true;
             this.lblPaymentMethod.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold);
-            this.lblPaymentMethod.Location = new System.Drawing.Point(227, 8);
+            this.lblPaymentMethod.Location = new System.Drawing.Point(304, 8);
             this.lblPaymentMethod.Name = "lblPaymentMethod";
             this.lblPaymentMethod.Size = new System.Drawing.Size(123, 17);
             this.lblPaymentMethod.TabIndex = 2;

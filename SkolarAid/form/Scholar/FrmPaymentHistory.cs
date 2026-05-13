@@ -1,10 +1,15 @@
-﻿using SkolarAid.form;
+﻿using MySql.Data.MySqlClient;
+using SkolarAid.Classes;
+using SkolarAid.Data;
+using SkolarAid.form;
+using SkolarAid.form.Scholar;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SkolarAid.form.Scholar;
+
 namespace SkolarAid
 {
     public partial class FrmPaymentHistory : Form
@@ -21,74 +26,168 @@ namespace SkolarAid
             _scholarName = scholarName;
             _scholarNumber = scholarNumber;
 
-            LoadPaymentHistory();
-        }
+            // Setup form
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
 
-        private void FrmPaymentHistory_Load(object sender, EventArgs e)
-        {
-            lblScholarInfo.Text = $"{_scholarName} | Scholar #: {_scholarNumber}";
-            lblDate.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
+            lblScholarInfo.Text = $"{_scholarName}";
 
             // Set filter dropdowns
             cmbFilterStatus.SelectedIndex = 0;
             cmbFilterPeriod.SelectedIndex = 0;
+
+            // Setup DataGridView styles - keep header color, no selection color change
+            SetupDataGridViewStyles();
+
+            // Wire filter events
+            cmbFilterStatus.SelectedIndexChanged += (s, ev) => UpdatePaymentGrid();
+            cmbFilterPeriod.SelectedIndexChanged += (s, ev) => UpdatePaymentGrid();
+
+            // Wire button events
+            btnClearFilters.Click += (s, ev) => { cmbFilterStatus.SelectedIndex = 0; cmbFilterPeriod.SelectedIndex = 0; };
+            btnRefresh.Click += (s, ev) => LoadPaymentHistory();
+            btnExport.Click += (s, ev) => ExportPayments();
+
+            // Wire sidebar navigation
+            btnDashboard.Click += (s, ev) => { new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnProfile.Click += (s, ev) => { new FrmScholarProfile(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnPayments.Click += (s, ev) => { }; // Already on payment history
+            btnCompliance.Click += (s, ev) => { new FrmScholarCompliance(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+            btnNotifications.Click += (s, ev) => { new FrmScholarNotifications(_scholarId, _scholarName, _scholarNumber).Show(); this.Hide(); };
+
+            // Wire logout
+            btnLogout.Click += BtnLogout_Click;
+
+            // Wire datagrid selection
+            dgvPayments.SelectionChanged += dgvPayments_SelectionChanged;
+
+            // Setup card icons
+            picTotalReceived.Image = Properties.Resources.dollar;
+            picTotalReceived.SizeMode = PictureBoxSizeMode.Zoom;
+            picPendingAmount.Image = Properties.Resources.dollar;
+            picPendingAmount.SizeMode = PictureBoxSizeMode.Zoom;
+            picLastPayment.Image = Properties.Resources.dollar;
+            picLastPayment.SizeMode = PictureBoxSizeMode.Zoom;
+            picTotalPayments.Image = Properties.Resources.dollar;
+            picTotalPayments.SizeMode = PictureBoxSizeMode.Zoom;
+
+            LoadPaymentHistory();
+        }
+
+        /// <summary>
+        /// Setup DataGridView to keep header color (0, 68, 79) and prevent selection color change
+        /// </summary>
+        private void SetupDataGridViewStyles()
+        {
+            // Keep header color (0, 68, 79) even when clicked/sorted
+            dgvPayments.EnableHeadersVisualStyles = false;
+
+            // Force header style
+            dgvPayments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 68, 79);
+            dgvPayments.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvPayments.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+            dgvPayments.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 68, 79);
+
+            // Prevent selection from changing row colors
+            dgvPayments.DefaultCellStyle.SelectionBackColor = Color.White;
+            dgvPayments.DefaultCellStyle.SelectionForeColor = Color.Black;
+        }
+
+        private void BtnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Logout Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                SessionManager.ClearSession();
+                new Login().Show();
+                this.Close();
+            }
         }
 
         private void LoadPaymentHistory()
         {
-            // TODO: Load actual data from database
-            // These are placeholder values
-            _paymentRecords = new List<PaymentRecord>
+            try
             {
-                new PaymentRecord {
-                    PaymentID = 1,
-                    Period = "March 2026",
-                    Amount = 5000.00m,
-                    Status = "Released",
-                    ReleaseDate = new DateTime(2026, 3, 30),
-                    PaymentMethod = "Bank Transfer",
-                    ReferenceNumber = "TRX-2026-03-001",
-                    ProcessedBy = "Mrs. Wendy Alcala"
-                },
-                new PaymentRecord {
-                    PaymentID = 2,
-                    Period = "February 2026",
-                    Amount = 5000.00m,
-                    Status = "Released",
-                    ReleaseDate = new DateTime(2026, 2, 28),
-                    PaymentMethod = "Bank Transfer",
-                    ReferenceNumber = "TRX-2026-02-001",
-                    ProcessedBy = "Mrs. Wendy Alcala"
-                },
-                new PaymentRecord {
-                    PaymentID = 3,
-                    Period = "January 2026",
-                    Amount = 5000.00m,
-                    Status = "Released",
-                    ReleaseDate = new DateTime(2026, 1, 30),
-                    PaymentMethod = "Bank Transfer",
-                    ReferenceNumber = "TRX-2026-01-001",
-                    ProcessedBy = "Mrs. Wendy Alcala"
-                },
-                new PaymentRecord {
-                    PaymentID = 4,
-                    Period = "April 2026",
-                    Amount = 5000.00m,
-                    Status = "Pending",
-                    ReleaseDate = null,
-                    PaymentMethod = "Bank Transfer",
-                    ReferenceNumber = null,
-                    ProcessedBy = null
-                }
-            };
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
 
-            UpdatePaymentGrid();
-            UpdateSummaryCards();
+                    string query = @"SELECT id, payment_period, amount, status, release_date, 
+                                    payment_method, reference_number, processed_by, remarks,
+                                    computation_date, created_at
+                                    FROM payments 
+                                    WHERE scholar_id = @scholarId 
+                                    ORDER BY created_at DESC";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@scholarId", _scholarId);
+
+                    _paymentRecords = new List<PaymentRecord>();
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // Get processor name if available
+                            string processedByName = "System";
+                            if (reader["processed_by"] != DBNull.Value)
+                            {
+                                try
+                                {
+                                    using (MySqlConnection conn2 = DatabaseHelper.GetConnection())
+                                    {
+                                        conn2.Open();
+                                        MySqlCommand cmdUser = new MySqlCommand(
+                                            "SELECT name FROM users WHERE id = @uid", conn2);
+                                        cmdUser.Parameters.AddWithValue("@uid", Convert.ToInt32(reader["processed_by"]));
+                                        object userName = cmdUser.ExecuteScalar();
+                                        if (userName != null) processedByName = userName.ToString();
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            _paymentRecords.Add(new PaymentRecord
+                            {
+                                PaymentID = Convert.ToInt32(reader["id"]),
+                                Period = reader["payment_period"].ToString(),
+                                Amount = Convert.ToDecimal(reader["amount"]),
+                                Status = reader["status"].ToString(),
+                                ReleaseDate = reader["release_date"] != DBNull.Value ?
+                                    Convert.ToDateTime(reader["release_date"]) : (DateTime?)null,
+                                PaymentMethod = reader["payment_method"].ToString(),
+                                ReferenceNumber = reader["reference_number"]?.ToString() ?? "",
+                                ProcessedBy = processedByName,
+                                Remarks = reader["remarks"]?.ToString() ?? ""
+                            });
+                        }
+                    }
+                }
+
+                UpdatePaymentGrid();
+                UpdateSummaryCards();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading payment history: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdatePaymentGrid()
         {
             dgvPayments.Rows.Clear();
+
+            if (_paymentRecords == null || _paymentRecords.Count == 0)
+            {
+                lblTotalRecords.Text = "No payment records found.";
+                return;
+            }
 
             var filteredRecords = _paymentRecords.AsEnumerable();
 
@@ -103,27 +202,22 @@ namespace SkolarAid
             if (cmbFilterPeriod.SelectedIndex > 0)
             {
                 string selectedPeriod = cmbFilterPeriod.SelectedItem.ToString();
+                DateTime filterDate = DateTime.Now;
+
                 if (selectedPeriod == "Last 3 Months")
-                {
-                    var threeMonthsAgo = DateTime.Now.AddMonths(-3);
-                    filteredRecords = filteredRecords.Where(p =>
-                        p.ReleaseDate.HasValue && p.ReleaseDate.Value >= threeMonthsAgo);
-                }
+                    filterDate = DateTime.Now.AddMonths(-3);
                 else if (selectedPeriod == "Last 6 Months")
-                {
-                    var sixMonthsAgo = DateTime.Now.AddMonths(-6);
-                    filteredRecords = filteredRecords.Where(p =>
-                        p.ReleaseDate.HasValue && p.ReleaseDate.Value >= sixMonthsAgo);
-                }
+                    filterDate = DateTime.Now.AddMonths(-6);
                 else if (selectedPeriod == "This Year")
-                {
-                    var startOfYear = new DateTime(DateTime.Now.Year, 1, 1);
-                    filteredRecords = filteredRecords.Where(p =>
-                        p.ReleaseDate.HasValue && p.ReleaseDate.Value >= startOfYear);
-                }
+                    filterDate = new DateTime(DateTime.Now.Year, 1, 1);
+
+                filteredRecords = filteredRecords.Where(p =>
+                    p.ReleaseDate.HasValue && p.ReleaseDate.Value >= filterDate);
             }
 
-            foreach (var payment in filteredRecords.OrderByDescending(p => p.PaymentID))
+            var recordsList = filteredRecords.ToList();
+
+            foreach (var payment in recordsList)
             {
                 int rowIndex = dgvPayments.Rows.Add();
                 DataGridViewRow row = dgvPayments.Rows[rowIndex];
@@ -132,55 +226,62 @@ namespace SkolarAid
                 row.Cells["colPeriod"].Value = payment.Period;
                 row.Cells["colAmount"].Value = $"₱{payment.Amount:N2}";
                 row.Cells["colStatus"].Value = payment.Status;
-                row.Cells["colReleaseDate"].Value = payment.ReleaseDate?.ToString("MMM dd, yyyy") ?? "-";
+                row.Cells["colReleaseDate"].Value = payment.ReleaseDate?.ToString("MMM dd, yyyy") ?? "Pending";
                 row.Cells["colPaymentMethod"].Value = payment.PaymentMethod;
 
-                // Set status cell color
+                // Color code status
                 var statusCell = row.Cells["colStatus"];
                 switch (payment.Status)
                 {
                     case "Released":
                         statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
-                        statusCell.Style.Font = new Font(dgvPayments.Font, FontStyle.Bold);
                         break;
                     case "Pending":
                         statusCell.Style.ForeColor = Color.FromArgb(255, 170, 0);
-                        statusCell.Style.Font = new Font(dgvPayments.Font, FontStyle.Bold);
                         break;
                     case "Processing":
+                    case "Processed":
                         statusCell.Style.ForeColor = Color.FromArgb(0, 123, 255);
-                        statusCell.Style.Font = new Font(dgvPayments.Font, FontStyle.Bold);
                         break;
                     case "Failed":
                         statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
-                        statusCell.Style.Font = new Font(dgvPayments.Font, FontStyle.Bold);
                         break;
                 }
             }
 
-            lblTotalRecords.Text = $"Showing {filteredRecords.Count()} of {_paymentRecords.Count} records";
+            lblTotalRecords.Text = $"Showing {recordsList.Count} of {_paymentRecords.Count} records";
         }
 
         private void UpdateSummaryCards()
         {
+            if (_paymentRecords == null || _paymentRecords.Count == 0)
+            {
+                lblTotalReceived.Text = "₱0.00";
+                lblPendingAmount.Text = "₱0.00";
+                lblLastPayment.Text = "₱0.00";
+                lblLastPaymentDate.Text = "-";
+                lblTotalPayments.Text = "0";
+                return;
+            }
+
             decimal totalReceived = _paymentRecords
                 .Where(p => p.Status == "Released")
                 .Sum(p => p.Amount);
 
             decimal pendingAmount = _paymentRecords
-                .Where(p => p.Status == "Pending" || p.Status == "Processing")
+                .Where(p => p.Status == "Pending" || p.Status == "Processing" || p.Status == "Processed")
                 .Sum(p => p.Amount);
 
             var lastPayment = _paymentRecords
-                .Where(p => p.Status == "Released")
+                .Where(p => p.Status == "Released" && p.ReleaseDate.HasValue)
                 .OrderByDescending(p => p.ReleaseDate)
                 .FirstOrDefault();
 
             int totalPaymentsCount = _paymentRecords.Count(p => p.Status == "Released");
 
-            lblTotalReceived.Text = $"₱{totalReceived:N2}";
-            lblPendingAmount.Text = $"₱{pendingAmount:N2}";
-            lblLastPayment.Text = lastPayment != null ? $"₱{lastPayment.Amount:N2}" : "₱0.00";
+            lblTotalReceived.Text = $"₱{totalReceived:N0}";
+            lblPendingAmount.Text = $"₱{pendingAmount:N0}";
+            lblLastPayment.Text = lastPayment != null ? $"₱{lastPayment.Amount:N0}" : "₱0";
             lblLastPaymentDate.Text = lastPayment?.ReleaseDate?.ToString("MMM dd, yyyy") ?? "-";
             lblTotalPayments.Text = totalPaymentsCount.ToString();
         }
@@ -190,29 +291,25 @@ namespace SkolarAid
             if (dgvPayments.SelectedRows.Count > 0)
             {
                 var selectedRow = dgvPayments.SelectedRows[0];
-                int paymentId = Convert.ToInt32(selectedRow.Cells["colPaymentID"].Value);
-
-                var payment = _paymentRecords.FirstOrDefault(p => p.PaymentID == paymentId);
-                if (payment != null)
+                if (selectedRow.Cells["colPaymentID"].Value != null)
                 {
-                    ShowPaymentDetails(payment);
+                    int paymentId = Convert.ToInt32(selectedRow.Cells["colPaymentID"].Value);
+                    var payment = _paymentRecords.FirstOrDefault(p => p.PaymentID == paymentId);
+                    if (payment != null)
+                        ShowPaymentDetails(payment);
                 }
-            }
-            else
-            {
-                ClearPaymentDetails();
             }
         }
 
         private void ShowPaymentDetails(PaymentRecord payment)
         {
-            lblDetailPaymentID.Text = $"#{payment.PaymentID}";
+            lblDetailPaymentID.Text = $"Payment #{payment.PaymentID}";
             lblDetailPeriod.Text = payment.Period;
             lblDetailAmount.Text = $"₱{payment.Amount:N2}";
             lblDetailStatus.Text = payment.Status;
             lblDetailReleaseDate.Text = payment.ReleaseDate?.ToString("MMMM dd, yyyy") ?? "Pending Release";
             lblDetailPaymentMethod.Text = payment.PaymentMethod;
-            lblDetailReference.Text = payment.ReferenceNumber ?? "-";
+            lblDetailReference.Text = string.IsNullOrEmpty(payment.ReferenceNumber) ? "-" : payment.ReferenceNumber;
             lblDetailProcessedBy.Text = payment.ProcessedBy ?? "-";
 
             // Set status color
@@ -225,10 +322,14 @@ namespace SkolarAid
                     lblDetailStatus.ForeColor = Color.FromArgb(255, 170, 0);
                     break;
                 case "Processing":
+                case "Processed":
                     lblDetailStatus.ForeColor = Color.FromArgb(0, 123, 255);
                     break;
                 case "Failed":
                     lblDetailStatus.ForeColor = Color.FromArgb(239, 68, 68);
+                    break;
+                default:
+                    lblDetailStatus.ForeColor = Color.Black;
                     break;
             }
         }
@@ -245,102 +346,46 @@ namespace SkolarAid
             lblDetailProcessedBy.Text = "-";
         }
 
-        private void cmbFilterStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdatePaymentGrid();
-        }
-
-        private void cmbFilterPeriod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdatePaymentGrid();
-        }
-
-        private void btnClearFilters_Click(object sender, EventArgs e)
-        {
-            cmbFilterStatus.SelectedIndex = 0;
-            cmbFilterPeriod.SelectedIndex = 0;
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadPaymentHistory();
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
+        private void ExportPayments()
         {
             using (SaveFileDialog saveDialog = new SaveFileDialog())
             {
-                saveDialog.Filter = "CSV File|*.csv|PDF File|*.pdf";
+                saveDialog.Filter = "CSV File|*.csv";
                 saveDialog.Title = "Export Payment History";
                 saveDialog.FileName = $"PaymentHistory_{_scholarNumber}_{DateTime.Now:yyyyMMdd}";
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // TODO: Implement export functionality
-                    MessageBox.Show("Payment history exported successfully!", "Export Complete",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    try
+                    {
+                        using (System.IO.StreamWriter sw = new System.IO.StreamWriter(saveDialog.FileName))
+                        {
+                            sw.WriteLine("ID,Period,Amount,Status,Release Date,Payment Method,Reference Number,Processed By");
+
+                            foreach (var payment in _paymentRecords)
+                            {
+                                sw.WriteLine($"{payment.PaymentID},{payment.Period},{payment.Amount:F2},{payment.Status}," +
+                                    $"{payment.ReleaseDate?.ToString("yyyy-MM-dd") ?? ""},{payment.PaymentMethod}," +
+                                    $"{payment.ReferenceNumber},{payment.ProcessedBy}");
+                            }
+                        }
+
+                        MessageBox.Show("Payment history exported successfully!", "Export Complete",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exporting: {ex.Message}", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            FrmScholarDashboard dashboard = new FrmScholarDashboard(_scholarId, _scholarName, _scholarNumber);
-            dashboard.Show();
-            this.Close();
-        }
-
-        private void btnProfile_Click(object sender, EventArgs e)
-        {
-            FrmScholarProfile profile = new FrmScholarProfile(_scholarId, _scholarName, _scholarNumber);
-            profile.Show();
-            this.Close();
-        }
-
-        private void btnPayments_Click(object sender, EventArgs e)
-        {
-            // Already on payment history
-        }
-
-        private void btnCompliance_Click(object sender, EventArgs e)
-        {
-            // Navigate to compliance
-            // FrmScholarCompliance compliance = new FrmScholarCompliance(_scholarId, _scholarName, _scholarNumber);
-            // compliance.Show();
-            // this.Close();
-        }
-
-        private void btnNotifications_Click(object sender, EventArgs e)
-        {
-            // Navigate to notifications
-            // FrmScholarNotifications notifications = new FrmScholarNotifications(_scholarId, _scholarName, _scholarNumber);
-            // notifications.Show();
-            // this.Close();
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show(
-                "Are you sure you want to logout?",
-                "Logout Confirmation",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                Login login = new Login();
-                login.Show();
-                this.Close();
-            }
-        }
-
-        private void panelFilters_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        private void panelFilters_Paint(object sender, PaintEventArgs e) { }
+        private void panelContent_Paint(object sender, PaintEventArgs e) { }
     }
 
-    // Payment record class (temporary - move to Models folder later)
     public class PaymentRecord
     {
         public int PaymentID { get; set; }
@@ -351,5 +396,6 @@ namespace SkolarAid
         public string PaymentMethod { get; set; }
         public string ReferenceNumber { get; set; }
         public string ProcessedBy { get; set; }
+        public string Remarks { get; set; }
     }
 }

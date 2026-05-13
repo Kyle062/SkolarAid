@@ -50,6 +50,9 @@
             this.lblPageTitle = new System.Windows.Forms.Label();
             this.lblScholarInfo = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.sataButton1 = new FrameworkTest.SATAButton();
+            this.lblRole = new System.Windows.Forms.Label();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
             this.panelStats1 = new SATAUiFramework.SATAPanel();
@@ -116,6 +119,7 @@
             this.panelSidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelStats1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTotalStipend)).BeginInit();
             this.panelStats2.SuspendLayout();
@@ -155,7 +159,7 @@
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSidebar.Location = new System.Drawing.Point(0, 0);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(300, 1050);
+            this.panelSidebar.Size = new System.Drawing.Size(300, 1061);
             this.panelSidebar.TabIndex = 0;
             // 
             // btnNotifications
@@ -271,6 +275,7 @@
             this.btnPayments.TabIndex = 2;
             this.btnPayments.TextAutoCenter = true;
             this.btnPayments.TextOffset = new System.Drawing.Point(-10, 0);
+            //this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
             // 
             // btnProfile
             // 
@@ -309,6 +314,7 @@
             this.btnProfile.TabIndex = 1;
             this.btnProfile.TextAutoCenter = true;
             this.btnProfile.TextOffset = new System.Drawing.Point(-20, 0);
+            //this.btnProfile.Click += new System.EventHandler(this.btnProfile_Click);
             // 
             // btnDashboard
             // 
@@ -432,6 +438,9 @@
             // panelContent
             // 
             this.panelContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(244)))), ((int)(((byte)(246)))));
+            this.panelContent.Controls.Add(this.pictureBox1);
+            this.panelContent.Controls.Add(this.sataButton1);
+            this.panelContent.Controls.Add(this.lblRole);
             this.panelContent.Controls.Add(this.lblWelcome);
             this.panelContent.Controls.Add(this.lblDate);
             this.panelContent.Controls.Add(this.panelStats1);
@@ -444,9 +453,68 @@
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContent.Location = new System.Drawing.Point(300, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(1400, 1050);
+            this.panelContent.Size = new System.Drawing.Size(1620, 1061);
             this.panelContent.TabIndex = 2;
             this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SkolarAid.Properties.Resources.user__3_;
+            this.pictureBox1.Location = new System.Drawing.Point(1162, 15);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(60, 49);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 11;
+            this.pictureBox1.TabStop = false;
+            // 
+            // sataButton1
+            // 
+            this.sataButton1.ButtonText = "Logout";
+            this.sataButton1.CheckedBackground = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.sataButton1.CheckedForeColor = System.Drawing.Color.White;
+            this.sataButton1.CheckedImageTint = System.Drawing.Color.White;
+            this.sataButton1.CheckedOutline = System.Drawing.Color.DodgerBlue;
+            this.sataButton1.CustomDialogResult = System.Windows.Forms.DialogResult.None;
+            this.sataButton1.Font = new System.Drawing.Font("Century Gothic", 11F, System.Drawing.FontStyle.Bold);
+            this.sataButton1.HoverBackground = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.sataButton1.HoverForeColor = System.Drawing.Color.White;
+            this.sataButton1.HoverImage = null;
+            this.sataButton1.HoverImageTint = System.Drawing.Color.White;
+            this.sataButton1.HoverOutline = System.Drawing.Color.Empty;
+            this.sataButton1.Image = null;
+            this.sataButton1.ImageAutoCenter = true;
+            this.sataButton1.ImageExpand = new System.Drawing.Point(0, 0);
+            this.sataButton1.ImageOffset = new System.Drawing.Point(0, 0);
+            this.sataButton1.ImageTint = System.Drawing.Color.White;
+            this.sataButton1.IsToggleButton = false;
+            this.sataButton1.IsToggled = false;
+            this.sataButton1.Location = new System.Drawing.Point(1476, 18);
+            this.sataButton1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.sataButton1.Name = "sataButton1";
+            this.sataButton1.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.sataButton1.NormalForeColor = System.Drawing.Color.White;
+            this.sataButton1.NormalOutline = System.Drawing.Color.Empty;
+            this.sataButton1.OutlineThickness = 2F;
+            this.sataButton1.PressedBackground = System.Drawing.Color.RoyalBlue;
+            this.sataButton1.PressedForeColor = System.Drawing.Color.White;
+            this.sataButton1.PressedImageTint = System.Drawing.Color.White;
+            this.sataButton1.PressedOutline = System.Drawing.Color.Empty;
+            this.sataButton1.Rounding = new System.Windows.Forms.Padding(8);
+            this.sataButton1.Size = new System.Drawing.Size(110, 40);
+            this.sataButton1.TabIndex = 5;
+            this.sataButton1.TextAutoCenter = true;
+            this.sataButton1.TextOffset = new System.Drawing.Point(0, 0);
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold);
+            this.lblRole.ForeColor = System.Drawing.Color.Black;
+            this.lblRole.Location = new System.Drawing.Point(1228, 28);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(82, 19);
+            this.lblRole.TabIndex = 6;
+            this.lblRole.Text = "Fullname";
             // 
             // lblWelcome
             // 
@@ -484,7 +552,7 @@
             this.panelStats1.Controls.Add(this.lblTotalStipend);
             this.panelStats1.Controls.Add(this.lblTotalStipendLabel);
             this.panelStats1.Controls.Add(this.picTotalStipend);
-            this.panelStats1.Location = new System.Drawing.Point(40, 110);
+            this.panelStats1.Location = new System.Drawing.Point(55, 99);
             this.panelStats1.Name = "panelStats1";
             this.panelStats1.Size = new System.Drawing.Size(310, 140);
             this.panelStats1.TabIndex = 2;
@@ -535,7 +603,7 @@
             this.panelStats2.Controls.Add(this.lblNextPaymentLabel);
             this.panelStats2.Controls.Add(this.lblNextPaymentDate);
             this.panelStats2.Controls.Add(this.picNextPayment);
-            this.panelStats2.Location = new System.Drawing.Point(370, 110);
+            this.panelStats2.Location = new System.Drawing.Point(445, 99);
             this.panelStats2.Name = "panelStats2";
             this.panelStats2.Size = new System.Drawing.Size(310, 140);
             this.panelStats2.TabIndex = 3;
@@ -596,7 +664,7 @@
             this.panelStats3.Controls.Add(this.lblScholarshipType);
             this.panelStats3.Controls.Add(this.lblScholarshipTypeLabel);
             this.panelStats3.Controls.Add(this.picScholarship);
-            this.panelStats3.Location = new System.Drawing.Point(700, 110);
+            this.panelStats3.Location = new System.Drawing.Point(870, 99);
             this.panelStats3.Name = "panelStats3";
             this.panelStats3.Size = new System.Drawing.Size(310, 140);
             this.panelStats3.TabIndex = 4;
@@ -648,7 +716,7 @@
             this.panelStats4.Controls.Add(this.lblComplianceLabel);
             this.panelStats4.Controls.Add(this.picCompliance);
             this.panelStats4.Controls.Add(this.progressCompliance);
-            this.panelStats4.Location = new System.Drawing.Point(1030, 110);
+            this.panelStats4.Location = new System.Drawing.Point(1256, 99);
             this.panelStats4.Name = "panelStats4";
             this.panelStats4.Size = new System.Drawing.Size(330, 140);
             this.panelStats4.TabIndex = 5;
@@ -709,7 +777,7 @@
             this.panelRecentPayments.Controls.Add(this.dgvRecentPayments);
             this.panelRecentPayments.Location = new System.Drawing.Point(40, 275);
             this.panelRecentPayments.Name = "panelRecentPayments";
-            this.panelRecentPayments.Size = new System.Drawing.Size(640, 330);
+            this.panelRecentPayments.Size = new System.Drawing.Size(790, 330);
             this.panelRecentPayments.TabIndex = 6;
             // 
             // lblRecentPaymentsTitle
@@ -744,7 +812,7 @@
             this.btnViewAllPayments.ImageTint = System.Drawing.Color.White;
             this.btnViewAllPayments.IsToggleButton = false;
             this.btnViewAllPayments.IsToggled = false;
-            this.btnViewAllPayments.Location = new System.Drawing.Point(530, 20);
+            this.btnViewAllPayments.Location = new System.Drawing.Point(670, 20);
             this.btnViewAllPayments.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnViewAllPayments.Name = "btnViewAllPayments";
             this.btnViewAllPayments.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
@@ -800,7 +868,7 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
             this.dgvRecentPayments.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvRecentPayments.RowTemplate.Height = 35;
-            this.dgvRecentPayments.Size = new System.Drawing.Size(640, 270);
+            this.dgvRecentPayments.Size = new System.Drawing.Size(790, 270);
             this.dgvRecentPayments.TabIndex = 2;
             // 
             // colPeriod
@@ -845,7 +913,7 @@
             this.panelCompliance.Controls.Add(this.panelRequirement3);
             this.panelCompliance.Location = new System.Drawing.Point(40, 625);
             this.panelCompliance.Name = "panelCompliance";
-            this.panelCompliance.Size = new System.Drawing.Size(640, 310);
+            this.panelCompliance.Size = new System.Drawing.Size(790, 431);
             this.panelCompliance.TabIndex = 7;
             // 
             // lblComplianceTitle
@@ -880,7 +948,7 @@
             this.btnViewAllCompliance.ImageTint = System.Drawing.Color.White;
             this.btnViewAllCompliance.IsToggleButton = false;
             this.btnViewAllCompliance.IsToggled = false;
-            this.btnViewAllCompliance.Location = new System.Drawing.Point(530, 20);
+            this.btnViewAllCompliance.Location = new System.Drawing.Point(670, 20);
             this.btnViewAllCompliance.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.btnViewAllCompliance.Name = "btnViewAllCompliance";
             this.btnViewAllCompliance.NormalBackground = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
@@ -906,7 +974,7 @@
             this.panelRequirement1.Controls.Add(this.picReq1);
             this.panelRequirement1.Location = new System.Drawing.Point(25, 65);
             this.panelRequirement1.Name = "panelRequirement1";
-            this.panelRequirement1.Size = new System.Drawing.Size(595, 60);
+            this.panelRequirement1.Size = new System.Drawing.Size(749, 60);
             this.panelRequirement1.TabIndex = 2;
             // 
             // lblReq1Status
@@ -961,7 +1029,7 @@
             this.panelRequirement2.Controls.Add(this.picReq2);
             this.panelRequirement2.Location = new System.Drawing.Point(25, 140);
             this.panelRequirement2.Name = "panelRequirement2";
-            this.panelRequirement2.Size = new System.Drawing.Size(595, 60);
+            this.panelRequirement2.Size = new System.Drawing.Size(749, 60);
             this.panelRequirement2.TabIndex = 3;
             // 
             // lblReq2Status
@@ -1016,7 +1084,7 @@
             this.panelRequirement3.Controls.Add(this.picReq3);
             this.panelRequirement3.Location = new System.Drawing.Point(25, 215);
             this.panelRequirement3.Name = "panelRequirement3";
-            this.panelRequirement3.Size = new System.Drawing.Size(595, 60);
+            this.panelRequirement3.Size = new System.Drawing.Size(749, 60);
             this.panelRequirement3.TabIndex = 3;
             // 
             // lblReq3Status
@@ -1077,9 +1145,9 @@
             this.panelNotifications.Controls.Add(this.panelNotification1);
             this.panelNotifications.Controls.Add(this.panelNotification2);
             this.panelNotifications.Controls.Add(this.panelNotification3);
-            this.panelNotifications.Location = new System.Drawing.Point(700, 275);
+            this.panelNotifications.Location = new System.Drawing.Point(870, 275);
             this.panelNotifications.Name = "panelNotifications";
-            this.panelNotifications.Size = new System.Drawing.Size(660, 660);
+            this.panelNotifications.Size = new System.Drawing.Size(724, 781);
             this.panelNotifications.TabIndex = 8;
             // 
             // lblNotificationsTitle
@@ -1260,7 +1328,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1700, 1050);
+            this.ClientSize = new System.Drawing.Size(1920, 1061);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelSidebar);
             this.Font = new System.Drawing.Font("Century Gothic", 8.25F);
@@ -1275,6 +1343,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelContent.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelStats1.ResumeLayout(false);
             this.panelStats1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picTotalStipend)).EndInit();
@@ -1360,7 +1429,6 @@
         // Recent Payments
         private SATAUiFramework.SATAPanel panelRecentPayments;
         private System.Windows.Forms.Label lblRecentPaymentsTitle;
-        private FrameworkTest.SATAButton btnViewAllPayments;
         private System.Windows.Forms.DataGridView dgvRecentPayments;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPeriod;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAmount;
@@ -1370,7 +1438,6 @@
         // Compliance Overview
         private SATAUiFramework.SATAPanel panelCompliance;
         private System.Windows.Forms.Label lblComplianceTitle;
-        private FrameworkTest.SATAButton btnViewAllCompliance;
         private System.Windows.Forms.Panel panelRequirement1;
         private System.Windows.Forms.Label lblReq1Status;
         private System.Windows.Forms.Label lblReq1Due;
@@ -1405,5 +1472,10 @@
         private System.Windows.Forms.Label lblNotif3Message;
         private System.Windows.Forms.Label lblNotif3Title;
         private System.Windows.Forms.PictureBox picNotif3;
+        private FrameworkTest.SATAButton sataButton1;
+        private System.Windows.Forms.Label lblRole;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private FrameworkTest.SATAButton btnViewAllPayments;
+        private FrameworkTest.SATAButton btnViewAllCompliance;
     }
 }

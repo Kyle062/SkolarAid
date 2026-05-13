@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SkolarAid
@@ -34,7 +38,6 @@ namespace SkolarAid
         private ComboBox cmbComplianceScholar;
         private OpenFileDialog complianceOpenFileDialog;
 
-        // File attachment combo boxes
         private ComboBox cmbFilePSA;
         private ComboBox cmbFileCOE;
         private ComboBox cmbFileCOR;
@@ -50,8 +53,6 @@ namespace SkolarAid
         private Dictionary<string, string> _loadedFileNames = new Dictionary<string, string>();
         private bool _filesModified = false;
 
-        // CORRECT MAPPING: DB enum value -> Display name -> Description -> Doc Key
-        // DB enum values: 'PSA Birth Certificate', 'Enrollment Form', 'COR', 'Grades', 'Scholarship Contract'
         private readonly string[] _dbTypes = {
             "PSA Birth Certificate",
             "Enrollment Form",
@@ -78,6 +79,23 @@ namespace SkolarAid
 
         private readonly string[] _docKeys = { "PSA", "COE", "COR", "Grades", "Contract" };
 
+        // ============================================
+        // EMAIL & SMS NOTIFICATION CONFIGURATION
+        // Same credentials as FrmPayrollProcessing
+        // ============================================
+        private const string SMTP_HOST = "smtp.gmail.com";
+        private const int SMTP_PORT = 587;
+        private const string SENDER_EMAIL = "kylealba0624@gmail.com";
+        private const string SENDER_PASSWORD = "yygwothvzhrwvajv";
+        private const string SENDER_NAME = "Legacy College of Compostela - ScholarAid";
+        private const string LOGIN_URL = "http://localhost/ScholarAid/login";
+        private const bool ENABLE_EMAIL_NOTIFICATIONS = true;
+        private const bool ENABLE_SMS_NOTIFICATIONS = true;
+
+        // SMS Gateway Configuration
+        private const string SMS_GATEWAY_URL = "https://api.semaphore.co/api/v4/messages";
+        private const string SMS_API_KEY = "09cabeb4384cf62307f39fd0f6a7efe5";
+
         public FrmScholarManagement()
         {
             InitializeComponent();
@@ -86,6 +104,231 @@ namespace SkolarAid
             this.Load += FrmScholarManagement_Load;
             this.Resize += FrmScholarManagement_Resize;
             sataButton1.Click += sataButton1_Click;
+            btnAddScholar.Click += btnAddScholar_Click;
+        }
+
+        private void btnAddScholar_Click(object sender, EventArgs e)
+        {
+            ShowScholarshipManagementDialog();
+        }
+
+        private string GenerateTemporaryPassword()
+        {
+            const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%&*";
+            StringBuilder sb = new StringBuilder();
+            Random rng = new Random();
+            for (int i = 0; i < 12; i++)
+                sb.Append(chars[rng.Next(chars.Length)]);
+            return sb.ToString();
+        }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(bytes);
+            }
+        }
+
+        private int CreateScholarUserAccount(MySqlConnection conn, MySqlTransaction tr,
+       string studentId, string fullName, string password)
+        {
+            string username = studentId;
+
+            string checkQuery = "SELECT id FROM users WHERE username = @username";
+            using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn, tr))
+            {
+                checkCmd.Parameters.AddWithValue("@username", username);
+                object existingUser = checkCmd.ExecuteScalar();
+                if (existingUser != null)
+                    return Convert.ToInt32(existingUser);
+            }
+
+            string insertQuery = @"INSERT INTO users 
+        (username, password, role, name, account_status, created_at)
+        VALUES (@username, @password, 'SCHOLAR', @name, 'Active', NOW());
+        SELECT LAST_INSERT_ID();";
+
+            using (MySqlCommand cmd = new MySqlCommand(insertQuery, conn, tr))
+            {
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@name", fullName);
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+        private void LinkScholarToUser(MySqlConnection conn, MySqlTransaction tr, int scholarId, int userId)
+        {
+            string updateQuery = "UPDATE scholars SET user_id = @userId WHERE id = @scholarId";
+            using (MySqlCommand cmd = new MySqlCommand(updateQuery, conn, tr))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@scholarId", scholarId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private bool SendWelcomeEmail(string email, string fullName, string scholarNumber, string studentId, string password)
+        {
+            if (!ENABLE_EMAIL_NOTIFICATIONS) return false;
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress(SENDER_EMAIL, SENDER_NAME);
+                    mail.To.Add(new MailAddress(email, fullName));
+                    mail.To.Add(new MailAddress("kylealba79@gmail.com", "Kyle (Test)"));
+                    mail.Subject = $"ScholarAid - Welcome New Scholar - {fullName}";
+                    mail.IsBodyHtml = true;
+
+                    mail.Body = $@"
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ font-family: 'Century Gothic', Arial, sans-serif; background-color: #f4f6f8; margin: 0; padding: 20px; }}
+        .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden; }}
+        .header {{ background: linear-gradient(135deg, #00444F, #006875); padding: 30px; text-align: center; color: white; }}
+        .header h1 {{ margin: 0; font-size: 24px; }}
+        .content {{ padding: 30px; }}
+        .info-box {{ background: #f0f7f8; border-left: 4px solid #00444F; padding: 15px 20px; margin: 20px 0; border-radius: 4px; }}
+        .credentials {{ background: #ffffff; border: 2px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 20px 0; }}
+        .credential-item {{ margin: 10px 0; padding: 8px 0; border-bottom: 1px dashed #e0e0e0; }}
+        .credential-item:last-child {{ border-bottom: none; }}
+        .label {{ font-weight: bold; color: #00444F; display: inline-block; width: 140px; }}
+        .value {{ color: #333; font-family: 'Consolas', monospace; background: #f8f9fa; padding: 4px 12px; border-radius: 4px; }}
+        .footer {{ background: #f8f9fa; padding: 20px; text-align: center; color: #666; font-size: 12px; }}
+        .highlight {{ color: #00444F; font-weight: bold; }}
+        .warning {{ color: #e74c3c; font-weight: bold; }}
+        ul {{ color: #555; line-height: 1.8; padding-left: 20px; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>Welcome to ScholarAid!</h1>
+            <p style='margin:10px 0 0; opacity:0.9;'>Your scholarship journey begins here</p>
+        </div>
+        <div class='content'>
+            <p>Dear <span class='highlight'>{fullName}</span>,</p>
+            <p>Congratulations! Your scholarship application has been approved.</p>
+            <div class='info-box'>
+                <p style='margin:0;'><strong>📋 Your Scholar Number:</strong> <span style='color:#00444F; font-size:16px;'>{scholarNumber}</span></p>
+            </div>
+            <div class='credentials'>
+                <h3 style='color:#00444F; margin-top:0;'>🔐 Your Login Credentials</h3>
+                <div class='credential-item'>
+                    <span class='label'>📧 Username (Student ID):</span>
+                    <span class='value'>{studentId}</span>
+                </div>
+                <div class='credential-item'>
+                    <span class='label'>🔑 Password:</span>
+                    <span class='value'>{password}</span>
+                </div>
+            </div>
+            <p class='warning'>⚠️ Important: Please change your password immediately after your first login.</p>
+            <p>Best regards,<br><strong>ScholarAid Administration</strong><br>Legacy College of Compostela</p>
+        </div>
+        <div class='footer'>
+            <p>This is an automated message from ScholarAid System.</p>
+            <p>© {DateTime.Now.Year} ScholarAid - Legacy College of Compostela. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>";
+
+                    using (SmtpClient smtp = new SmtpClient(SMTP_HOST, SMTP_PORT))
+                    {
+                        smtp.EnableSsl = true;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(SENDER_EMAIL, SENDER_PASSWORD);
+                        smtp.Timeout = 30000;
+                        smtp.Send(mail);
+                    }
+                }
+                ActivityLogger.LogCreate("notifications", 0, $"Welcome email sent to {fullName} ({email})");
+                return true;
+            }
+            catch (SmtpException smtpEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ SMTP Error: {smtpEx.StatusCode} - {smtpEx.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ Error: {ex.Message}");
+                return false;
+            }
+        }
+
+        private string GetSMSGatewayAddress(string phone)
+        {
+            phone = phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("+", "");
+            if (phone.StartsWith("63")) phone = "0" + phone.Substring(2);
+
+            // Globe/TM prefixes
+            if (phone.StartsWith("0915") || phone.StartsWith("0916") || phone.StartsWith("0917") ||
+                phone.StartsWith("0926") || phone.StartsWith("0927") || phone.StartsWith("0935") ||
+                phone.StartsWith("0936") || phone.StartsWith("0937") || phone.StartsWith("0994") ||
+                phone.StartsWith("0995") || phone.StartsWith("0996") || phone.StartsWith("0997") ||
+                phone.StartsWith("0817"))
+                return phone + "@txt.globe.com.ph";
+
+            // Smart/TNT/Sun prefixes - default to Smart
+            return phone + "@text.smart.com.ph";
+        }
+
+        private bool SendSMSEmailGateway(string smsGateway, string message, string scholarName)
+        {
+            try
+            {
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress(SENDER_EMAIL, SENDER_NAME);
+                    mail.To.Add(new MailAddress(smsGateway));
+                    mail.Subject = "";
+                    mail.Body = message;
+                    mail.IsBodyHtml = false;
+                    using (SmtpClient smtp = new SmtpClient(SMTP_HOST, SMTP_PORT))
+                    {
+                        smtp.EnableSsl = true;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(SENDER_EMAIL, SENDER_PASSWORD);
+                        smtp.Timeout = 15000;
+                        smtp.Send(mail);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        private bool SendWelcomeSMS(string contactNumber, string firstName, string studentId, string password)
+        {
+            if (!ENABLE_SMS_NOTIFICATIONS) return false;
+            try
+            {
+                string cleanPhone = contactNumber.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("+", "");
+                if (cleanPhone.StartsWith("63")) cleanPhone = "0" + cleanPhone.Substring(2);
+
+                string smsMessage = $"ScholarAid: Welcome {firstName}! Account created. Login: {studentId} | Password: {password} Pls change after login. -LCC";
+
+                string smsGateway = GetSMSGatewayAddress(cleanPhone);
+                if (!string.IsNullOrEmpty(smsGateway))
+                    SendSMSEmailGateway(smsGateway, smsMessage, firstName);
+
+                ActivityLogger.LogCreate("notifications", 0, $"Welcome SMS queued for {firstName}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SMS error: {ex.Message}");
+                return false;
+            }
         }
 
         private void InitializeFileAttachmentControls()
@@ -124,12 +367,10 @@ namespace SkolarAid
                         txtPath.Text = complianceOpenFileDialog.FileName;
                         string fileName = complianceOpenFileDialog.SafeFileName;
                         long fileSizeKB = new FileInfo(complianceOpenFileDialog.FileName).Length / 1024;
-
                         byte[] fileData = File.ReadAllBytes(complianceOpenFileDialog.FileName);
                         _loadedFileData[docKey] = fileData;
                         _loadedFileNames[docKey] = fileName;
                         _filesModified = true;
-
                         cmb.Items.Clear();
                         cmb.Items.Add("TBA (To be Arranged)");
                         cmb.Items.Add($"✅ {fileName} ({fileSizeKB} KB) - Attached");
@@ -152,12 +393,10 @@ namespace SkolarAid
                         txtPath.Text = complianceOpenFileDialog.FileName;
                         string fileName = complianceOpenFileDialog.SafeFileName;
                         long fileSizeKB = new FileInfo(complianceOpenFileDialog.FileName).Length / 1024;
-
                         byte[] fileData = File.ReadAllBytes(complianceOpenFileDialog.FileName);
                         _loadedFileData[docKey] = fileData;
                         _loadedFileNames[docKey] = fileName;
                         _filesModified = true;
-
                         cmb.Items.Clear();
                         cmb.Items.Add("TBA (To be Arranged)");
                         cmb.Items.Add($"✅ {fileName} ({fileSizeKB} KB) - Attached");
@@ -285,7 +524,7 @@ namespace SkolarAid
             tabScholarList = new TabPage();
             tabScholarList.Text = "Scholar Management";
             tabScholarList.BackColor = Color.FromArgb(243, 244, 246);
-            tabScholarList.AutoScroll = true;
+            tabScholarList.AutoScroll = false;
             panelForm.AutoScroll = true;
             panelForm.HorizontalScroll.Enabled = false;
             tabScholarList.Controls.Add(panelScholarList);
@@ -556,7 +795,28 @@ FROM scholars WHERE status = 'Active' ORDER BY last_name";
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private string GenerateScholarPassword(string firstName, string lastName)
+        {
+            // Get first 3 letters of first name (capitalized)
+            string namePart = (firstName.Length >= 3 ? firstName.Substring(0, 3) : firstName.PadRight(3, 'X'));
 
+            // Get first 3 letters of last name (capitalized)
+            string lastPart = (lastName.Length >= 3 ? lastName.Substring(0, 3) : lastName.PadRight(3, 'X'));
+
+            // Special characters to choose from
+            char[] specialChars = { '@', '#', '$', '&', '*', '!' };
+            Random rng = new Random();
+
+            // Build password: NamePart + SpecialChar + LastPart + SpecialChar (8 chars total)
+            string password = char.ToUpper(namePart[0]) +
+                              namePart.Substring(1).ToLower() +
+                              specialChars[rng.Next(specialChars.Length)] +
+                              char.ToUpper(lastPart[0]) +
+                              lastPart.Substring(1).ToLower() +
+                              specialChars[rng.Next(specialChars.Length)];
+
+            return password;
+        }
         private void CmbComplianceScholar_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbComplianceScholar.SelectedIndex <= 0)
@@ -587,17 +847,13 @@ FROM scholars WHERE status = 'Active' ORDER BY last_name";
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-
-                    // Check if records already exist
                     string checkQuery = "SELECT COUNT(*) FROM compliance_records WHERE scholar_id = @sid";
                     using (MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn))
                     {
                         checkCmd.Parameters.AddWithValue("@sid", scholarId);
                         int count = Convert.ToInt32(checkCmd.ExecuteScalar());
-
                         if (count == 0)
                         {
-                            // Insert exactly 5 records with CORRECT enum values
                             for (int i = 0; i < 5; i++)
                             {
                                 string insQ = @"INSERT INTO compliance_records 
@@ -606,7 +862,7 @@ VALUES (@sid, @type, @desc, @due, 'Pending')";
                                 using (MySqlCommand insCmd = new MySqlCommand(insQ, conn))
                                 {
                                     insCmd.Parameters.AddWithValue("@sid", scholarId);
-                                    insCmd.Parameters.AddWithValue("@type", _dbTypes[i]);  // Uses correct enum value
+                                    insCmd.Parameters.AddWithValue("@type", _dbTypes[i]);
                                     insCmd.Parameters.AddWithValue("@desc", _descriptions[i]);
                                     insCmd.Parameters.AddWithValue("@due", DateTime.Now.AddMonths(1));
                                     insCmd.ExecuteNonQuery();
@@ -629,35 +885,26 @@ VALUES (@sid, @type, @desc, @due, 'Pending')";
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-
                     for (int i = 0; i < 5; i++)
                     {
                         string dbType = _dbTypes[i];
                         string docKey = _docKeys[i];
-
-                        // Find the compliance record for this requirement
                         string findQuery = "SELECT id FROM compliance_records WHERE scholar_id = @sid AND requirement_type = @type LIMIT 1";
                         MySqlCommand findCmd = new MySqlCommand(findQuery, conn);
                         findCmd.Parameters.AddWithValue("@sid", scholarId);
                         findCmd.Parameters.AddWithValue("@type", dbType);
-
                         object result = findCmd.ExecuteScalar();
                         if (result != null)
                         {
                             int complianceId = Convert.ToInt32(result);
-
-                            // Delete old file first (regardless of whether we're adding or removing)
                             string deleteFile = "DELETE FROM file_attachments WHERE compliance_id = @cid";
                             MySqlCommand delCmd = new MySqlCommand(deleteFile, conn);
                             delCmd.Parameters.AddWithValue("@cid", complianceId);
                             delCmd.ExecuteNonQuery();
-
                             if (_loadedFileData.ContainsKey(docKey))
                             {
-                                // Insert new file
                                 byte[] fileData = _loadedFileData[docKey];
                                 string fileName = _loadedFileNames[docKey];
-
                                 string insertFile = @"INSERT INTO file_attachments
 (scholar_id, compliance_id, file_name, original_name, file_type, file_size, file_data, uploaded_by, uploaded_at)
 VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, @uploadedBy, NOW())";
@@ -671,8 +918,6 @@ VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, @uploadedBy, NOW())";
                                 insCmd.Parameters.AddWithValue("@data", fileData);
                                 insCmd.Parameters.AddWithValue("@uploadedBy", SessionManager.CurrentUser?.Id ?? 1);
                                 insCmd.ExecuteNonQuery();
-
-                                // Update compliance status to Submitted
                                 string updateStatus = "UPDATE compliance_records SET date_submitted = CURDATE(), status = 'Submitted', file_path = @fn WHERE id = @cid";
                                 MySqlCommand updCmd = new MySqlCommand(updateStatus, conn);
                                 updCmd.Parameters.AddWithValue("@fn", fileName);
@@ -681,7 +926,6 @@ VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, @uploadedBy, NOW())";
                             }
                             else
                             {
-                                // File was removed - reset status to Pending
                                 string resetStatus = "UPDATE compliance_records SET status = 'Pending', file_path = NULL, date_submitted = NULL WHERE id = @cid";
                                 MySqlCommand rstCmd = new MySqlCommand(resetStatus, conn);
                                 rstCmd.Parameters.AddWithValue("@cid", complianceId);
@@ -689,7 +933,6 @@ VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, @uploadedBy, NOW())";
                             }
                         }
                     }
-
                     _filesModified = false;
                 }
             }
@@ -738,8 +981,6 @@ WHERE s.id = @scholarId";
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-
-                    // Order by the exact enum values
                     string query = @"SELECT cr.id, cr.requirement_type, cr.description, cr.status,
 cr.due_date, cr.date_submitted, cr.remarks,
 (SELECT COUNT(*) FROM file_attachments fa WHERE fa.compliance_id = cr.id) as file_count
@@ -754,7 +995,6 @@ ORDER BY FIELD(cr.requirement_type,
 ), cr.requirement_type";
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@scholarId", scholarId);
-
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         dgvCompliance.Rows.Clear();
@@ -765,10 +1005,8 @@ ORDER BY FIELD(cr.requirement_type,
                             total++;
                             string status = reader["status"].ToString();
                             if (status == "Approved" || status == "Submitted") completed++;
-
                             string dbType = reader["requirement_type"].ToString();
                             string displayName = GetDisplayNameForDbType(dbType);
-
                             int rowIndex = dgvCompliance.Rows.Add();
                             dgvCompliance.Rows[rowIndex].Cells["colReqType"].Value = displayName;
                             dgvCompliance.Rows[rowIndex].Cells["colDescription"].Value = reader["description"]?.ToString() ?? "";
@@ -780,7 +1018,6 @@ ORDER BY FIELD(cr.requirement_type,
                             dgvCompliance.Rows[rowIndex].Cells["colRemarks"].Value = reader["remarks"]?.ToString() ?? "";
                             dgvCompliance.Rows[rowIndex].Cells["colFile"].Value = Convert.ToInt32(reader["file_count"]) > 0 ? "📎 View" : "";
                             dgvCompliance.Rows[rowIndex].Cells["colComplianceID"].Value = reader["id"];
-
                             var statusCell = dgvCompliance.Rows[rowIndex].Cells["colStatus"];
                             switch (status)
                             {
@@ -791,14 +1028,12 @@ ORDER BY FIELD(cr.requirement_type,
                                 case "Rejected": statusCell.Style.ForeColor = Color.FromArgb(220, 50, 50); break;
                             }
                             statusCell.Style.Font = new Font(dgvCompliance.Font, FontStyle.Bold);
-
                             if (Convert.ToInt32(reader["file_count"]) > 0)
                             {
                                 dgvCompliance.Rows[rowIndex].Cells["colFile"].Style.ForeColor = Color.FromArgb(0, 100, 200);
                                 dgvCompliance.Rows[rowIndex].Cells["colFile"].Style.Font = new Font(dgvCompliance.Font, FontStyle.Underline);
                             }
                         }
-
                         if (total > 0)
                         {
                             bool allComplete = completed == 5;
@@ -923,11 +1158,9 @@ WHERE id = @complianceId";
                     cmd.Parameters.AddWithValue("@remarks", remarks);
                     cmd.Parameters.AddWithValue("@complianceId", complianceId);
                     cmd.ExecuteNonQuery();
-
                     ActivityLogger.LogUpdate("compliance_records", complianceId, $"Status updated to {newStatus}");
                     MessageBox.Show("Compliance status updated successfully!", "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     if (cmbComplianceScholar.SelectedIndex > 0)
                     {
                         ComboBoxItem selected = cmbComplianceScholar.SelectedItem as ComboBoxItem;
@@ -969,13 +1202,9 @@ WHERE id = @complianceId";
                     if (selected != null)
                     {
                         UploadFile(selected.Id, complianceId, openFileDialog.FileName);
-
-                        // Also sync to scholar info form combo boxes
                         string displayName = dgvCompliance.SelectedRows[0].Cells["colReqType"].Value.ToString();
                         byte[] fileData = File.ReadAllBytes(openFileDialog.FileName);
                         string fileName = openFileDialog.SafeFileName;
-
-                        // Find which doc key this is
                         for (int i = 0; i < 5; i++)
                         {
                             if (_displayNames[i] == displayName)
@@ -984,14 +1213,11 @@ WHERE id = @complianceId";
                                 _loadedFileData[docKey] = fileData;
                                 _loadedFileNames[docKey] = fileName;
                                 _filesModified = true;
-
-                                // Update the combo box
                                 ComboBox cmb = GetComboBoxForDbType(_dbTypes[i]);
                                 if (cmb != null)
                                 {
                                     long fileSizeKB = fileData.Length / 1024;
                                     if (fileSizeKB == 0) fileSizeKB = 1;
-
                                     cmb.Tag = "updating";
                                     cmb.Items.Clear();
                                     cmb.Items.Add("TBA (To be Arranged)");
@@ -1025,50 +1251,38 @@ WHERE id = @complianceId";
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             int complianceId = Convert.ToInt32(dgvCompliance.SelectedRows[0].Cells["colComplianceID"].Value);
             string displayName = dgvCompliance.SelectedRows[0].Cells["colReqType"].Value.ToString();
             string fileIndicator = dgvCompliance.SelectedRows[0].Cells["colFile"].Value?.ToString() ?? "";
-
             if (string.IsNullOrEmpty(fileIndicator))
             {
                 MessageBox.Show("No file attached to this record.", "Info",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
             DialogResult result = MessageBox.Show(
                 $"Are you sure you want to delete the file for:\n{displayName}?",
                 "Confirm Delete File",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
-
             if (result == DialogResult.Yes)
             {
                 try
                 {
                     ComboBoxItem selected = cmbComplianceScholar.SelectedItem as ComboBoxItem;
                     if (selected == null) return;
-
                     using (MySqlConnection conn = DatabaseHelper.GetConnection())
                     {
                         conn.Open();
-
-                        // Delete the file from database
                         string deleteQuery = "DELETE FROM file_attachments WHERE compliance_id = @complianceId";
                         MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
                         deleteCmd.Parameters.AddWithValue("@complianceId", complianceId);
-                        int deleted = deleteCmd.ExecuteNonQuery();
-
-                        // Update compliance record status back to Pending
+                        deleteCmd.ExecuteNonQuery();
                         string updateQuery = "UPDATE compliance_records SET status = 'Pending', file_path = NULL WHERE id = @complianceId";
                         MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
                         updateCmd.Parameters.AddWithValue("@complianceId", complianceId);
                         updateCmd.ExecuteNonQuery();
-
                         ActivityLogger.LogDelete("file_attachments", complianceId, $"Deleted file for compliance record {complianceId}");
-
-                        // Also clear from loaded data
                         for (int i = 0; i < 5; i++)
                         {
                             if (_displayNames[i] == displayName)
@@ -1077,7 +1291,6 @@ WHERE id = @complianceId";
                                 _loadedFileData.Remove(docKey);
                                 _loadedFileNames.Remove(docKey);
                                 _filesModified = true;
-
                                 ComboBox cmb = GetComboBoxForDbType(_dbTypes[i]);
                                 if (cmb != null)
                                 {
@@ -1093,7 +1306,6 @@ WHERE id = @complianceId";
                                 break;
                             }
                         }
-
                         LoadComplianceRecords(selected.Id);
                     }
                 }
@@ -1120,18 +1332,13 @@ WHERE id = @complianceId";
                 byte[] fileData = File.ReadAllBytes(filePath);
                 string fileType = Path.GetExtension(filePath).ToLower();
                 long fileSize = fileInfo.Length;
-
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
                 {
                     conn.Open();
-
-                    // Delete existing files for this compliance record
                     string deleteQuery = "DELETE FROM file_attachments WHERE compliance_id = @complianceId";
                     MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, conn);
                     deleteCmd.Parameters.AddWithValue("@complianceId", complianceId);
                     deleteCmd.ExecuteNonQuery();
-
-                    // Insert new file
                     string query = @"INSERT INTO file_attachments
 (scholar_id, compliance_id, file_name, original_name, file_type, file_size, file_data, uploaded_by, uploaded_at)
 VALUES (@scholarId, @complianceId, @fileName, @originalName, @fileType, @fileSize, @fileData, @uploadedBy, NOW())";
@@ -1145,14 +1352,11 @@ VALUES (@scholarId, @complianceId, @fileName, @originalName, @fileType, @fileSiz
                     cmd.Parameters.AddWithValue("@fileData", fileData);
                     cmd.Parameters.AddWithValue("@uploadedBy", SessionManager.CurrentUser?.Id ?? 1);
                     cmd.ExecuteNonQuery();
-
-                    // Update compliance record status
                     string updateQuery = "UPDATE compliance_records SET date_submitted = CURDATE(), status = 'Submitted', file_path = @fn WHERE id = @complianceId";
                     MySqlCommand updateCmd = new MySqlCommand(updateQuery, conn);
                     updateCmd.Parameters.AddWithValue("@fn", fileName);
                     updateCmd.Parameters.AddWithValue("@complianceId", complianceId);
                     updateCmd.ExecuteNonQuery();
-
                     ActivityLogger.LogCreate("file_attachments", complianceId, $"File uploaded: {fileName}");
                     MessageBox.Show("File uploaded and saved permanently!", "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1354,7 +1558,6 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
             cmbType.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbType.SelectedIndex = 0;
 
-            // Custom requirement text field (hidden by default)
             Label lblCustomType = new Label();
             lblCustomType.Text = "Specify Requirement Name:";
             lblCustomType.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
@@ -1367,7 +1570,6 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
             txtCustomType.Location = new Point(30, 140);
             txtCustomType.Size = new Size(400, 24);
             txtCustomType.Visible = false;
-            // Set initial text as placeholder-like hint
             txtCustomType.Text = "e.g., 2x2 Picture, Medical Certificate, etc.";
             txtCustomType.ForeColor = Color.Gray;
             txtCustomType.Enter += (s, ev) =>
@@ -1387,7 +1589,6 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
                 }
             };
 
-            // Declare all controls BEFORE the SelectedIndexChanged event
             Label lblDesc = new Label();
             lblDesc.Text = "Description:";
             lblDesc.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
@@ -1441,13 +1642,11 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
             btnAddReq.Rounding = new Padding(8);
             btnAddReq.TextAutoCenter = true;
 
-            // NOW wire up the SelectedIndexChanged event (all controls exist now)
             cmbType.SelectedIndexChanged += (s, ev) =>
             {
                 bool isOthers = cmbType.SelectedItem?.ToString() == "Others";
                 lblCustomType.Visible = isOthers;
                 txtCustomType.Visible = isOthers;
-
                 int offset = isOthers ? 55 : 0;
                 lblDesc.Location = new Point(30, 120 + offset);
                 txtDesc.Location = new Point(30, 145 + offset);
@@ -1459,12 +1658,10 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
 
             btnAddReq.Click += (s, ev) =>
             {
-                // Check if "Others" is selected and the custom text is still the placeholder
                 bool isOtherSelected = cmbType.SelectedItem?.ToString() == "Others";
                 string customText = txtCustomType.Text;
                 if (customText == "e.g., 2x2 Picture, Medical Certificate, etc.")
                     customText = "";
-
                 if (isOtherSelected && string.IsNullOrWhiteSpace(customText))
                 {
                     MessageBox.Show("Please specify the requirement name.", "Warning",
@@ -1472,11 +1669,9 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
                     txtCustomType.Focus();
                     return;
                 }
-
                 string descText = txtDesc.Text;
                 if (descText == "Enter description for this requirement")
                     descText = "";
-
                 if (string.IsNullOrWhiteSpace(descText))
                 {
                     MessageBox.Show("Please enter a description.", "Warning",
@@ -1484,34 +1679,25 @@ VALUES (@senderId, @recipientId, @title, @message, 'Reminder', NOW())";
                     txtDesc.Focus();
                     return;
                 }
-
                 try
                 {
                     using (MySqlConnection conn = DatabaseHelper.GetConnection())
                     {
                         conn.Open();
-
                         string requirementType;
                         if (isOtherSelected)
-                        {
                             requirementType = customText;
-                        }
                         else
-                        {
                             requirementType = cmbType.SelectedItem?.ToString() ?? "";
-                        }
-
                         string query = @"INSERT INTO compliance_records
 (scholar_id, requirement_type, description, due_date, status, created_at)
 VALUES (@scholarId, @type, @desc, @dueDate, 'Pending', NOW())";
-
                         MySqlCommand cmd = new MySqlCommand(query, conn);
                         cmd.Parameters.AddWithValue("@scholarId", selected.Id);
                         cmd.Parameters.AddWithValue("@type", requirementType);
                         cmd.Parameters.AddWithValue("@desc", descText);
                         cmd.Parameters.AddWithValue("@dueDate", dtpDueDate.Value);
                         cmd.ExecuteNonQuery();
-
                         ActivityLogger.LogCreate("compliance_records", selected.Id,
                             $"Added requirement: {requirementType}");
                         MessageBox.Show($"Requirement '{requirementType}' added successfully!", "Success",
@@ -1548,18 +1734,15 @@ VALUES (@scholarId, @type, @desc, @dueDate, 'Pending', NOW())";
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (dgvCompliance.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a compliance record to delete.", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             int complianceId = Convert.ToInt32(dgvCompliance.SelectedRows[0].Cells["colComplianceID"].Value);
             string requirementType = dgvCompliance.SelectedRows[0].Cells["colReqType"].Value.ToString();
             string description = dgvCompliance.SelectedRows[0].Cells["colDescription"].Value?.ToString() ?? "";
-
             DialogResult result = MessageBox.Show(
                 $"Are you sure you want to delete this requirement?\n\n" +
                 $"Requirement: {requirementType}\n" +
@@ -1568,38 +1751,29 @@ VALUES (@scholarId, @type, @desc, @dueDate, 'Pending', NOW())";
                 "Confirm Delete Requirement",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
-
             if (result == DialogResult.Yes)
             {
                 try
                 {
                     ComboBoxItem selected = cmbComplianceScholar.SelectedItem as ComboBoxItem;
                     if (selected == null) return;
-
                     using (MySqlConnection conn = DatabaseHelper.GetConnection())
                     {
                         conn.Open();
-
-                        // Delete associated files first
                         string deleteFiles = "DELETE FROM file_attachments WHERE compliance_id = @complianceId";
                         MySqlCommand delFilesCmd = new MySqlCommand(deleteFiles, conn);
                         delFilesCmd.Parameters.AddWithValue("@complianceId", complianceId);
                         delFilesCmd.ExecuteNonQuery();
-
-                        // Delete the compliance record
                         string deleteRecord = "DELETE FROM compliance_records WHERE id = @complianceId";
                         MySqlCommand delRecordCmd = new MySqlCommand(deleteRecord, conn);
                         delRecordCmd.Parameters.AddWithValue("@complianceId", complianceId);
                         int rowsAffected = delRecordCmd.ExecuteNonQuery();
-
                         if (rowsAffected > 0)
                         {
                             ActivityLogger.LogDelete("compliance_records", complianceId,
                                 $"Deleted requirement: {requirementType} - {description}");
                             MessageBox.Show("Requirement deleted successfully!", "Success",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            // Refresh compliance records
                             LoadComplianceRecords(selected.Id);
                         }
                         else
@@ -1624,7 +1798,7 @@ VALUES (@scholarId, @type, @desc, @dueDate, 'Pending', NOW())";
             Form dlg = new Form
             {
                 Text = "Scholarships Management",
-                Size = new Size(850, 630),
+                Size = new Size(900, 630),
                 StartPosition = FormStartPosition.CenterParent,
                 BackColor = Color.White,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
@@ -2294,7 +2468,6 @@ FROM scholars s LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id 
         {
             try
             {
-                // Reset all combo boxes
                 ComboBox[] allCmbs = { cmbFilePSA, cmbFileCOE, cmbFileCOR, cmbFileGrades, cmbFileContract };
                 foreach (var cmb in allCmbs)
                 {
@@ -2308,7 +2481,6 @@ FROM scholars s LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id 
                     cmb.Tag = null;
                 }
 
-                // Load files from database
                 string query = @"SELECT cr.requirement_type, fa.file_name, fa.file_data
 FROM compliance_records cr
 LEFT JOIN file_attachments fa ON cr.id = fa.compliance_id
@@ -2388,6 +2560,40 @@ ORDER BY fa.uploaded_at DESC";
         private void AddNewScholarWithFiles()
         {
             if (!ValidateForm()) return;
+
+            string firstName = txtFirstName.Text.Trim();
+            string middleName = txtMiddleName.Text.Trim();
+            string lastName = txtLastName.Text.Trim();
+            string suffix = textBox1.Text.Trim();
+
+            // Declare fullName at method level so it's accessible everywhere
+            string fullName;
+            string lastNameForDB;
+
+            if (!string.IsNullOrWhiteSpace(suffix))
+            {
+                fullName = $"{firstName} {middleName} {lastName} {suffix}".Replace("  ", " ").Trim();
+                lastNameForDB = $"{lastName} {suffix}".Trim();
+            }
+            else
+            {
+                fullName = $"{firstName} {middleName} {lastName}".Replace("  ", " ").Trim();
+                lastNameForDB = lastName;
+            }
+
+            string email = txtEmail.Text.Trim();
+            string contactNumber = txtContactNumber.Text.Trim();
+            string studentId = txtStudentId.Text.Trim();
+            string course = cmbCourse.SelectedItem?.ToString() ?? "";
+            string yearLevel = cmbYearLevel.SelectedItem?.ToString() ?? "";
+
+            int scholarshipTypeId = 0;
+            ComboBoxItem selected = cmbScholarshipType.SelectedItem as ComboBoxItem;
+            if (selected != null) scholarshipTypeId = selected.Id;
+
+            decimal stipendAmount = 0;
+            decimal.TryParse(txtStipendAmount.Text, out stipendAmount);
+
             try
             {
                 using (MySqlConnection conn = DatabaseHelper.GetConnection())
@@ -2396,84 +2602,124 @@ ORDER BY fa.uploaded_at DESC";
                     using (MySqlTransaction tr = conn.BeginTransaction())
                     {
                         string year = DateTime.Now.Year.ToString();
-                        int count = Convert.ToInt32(new MySqlCommand("SELECT COUNT(*) FROM scholars WHERE scholar_number LIKE 'SCH-" + year + "-%'", conn, tr).ExecuteScalar()) + 1;
+                        int count = Convert.ToInt32(new MySqlCommand(
+                            "SELECT COUNT(*) FROM scholars WHERE scholar_number LIKE 'SCH-" + year + "-%'", conn, tr).ExecuteScalar()) + 1;
                         string schNum = $"SCH-{year}-{count:D3}";
-                        string studentId = string.IsNullOrWhiteSpace(txtStudentId.Text) ? $"{year}-00{count:D3}" : txtStudentId.Text.Trim();
-                        int scholarshipTypeId = 0;
-                        ComboBoxItem selected = cmbScholarshipType.SelectedItem as ComboBoxItem;
-                        if (selected != null) scholarshipTypeId = selected.Id;
-                        decimal stipendAmount = 0;
-                        decimal.TryParse(txtStipendAmount.Text, out stipendAmount);
 
-                        MySqlCommand insScholar = new MySqlCommand(
-                            "INSERT INTO scholars (scholar_number, student_id, first_name, middle_name, last_name, email, contact_number, date_of_birth, gender, address, course, year_level, scholarship_type_id, stipend_amount, stipend_frequency, scholarship_fund_source, renewal_conditions, bank_name, bank_account_number, enrollment_date, expected_graduation, status, hei, degree_program, program, created_at) " +
-                            "VALUES (@sn, @sid, @fn, @mn, @ln, @em, @cn, @dob, @gen, @addr, @course, @yl, @stid, @sa, @sf, @fs, @rc, @bn, @ban, @ed, @eg, 'Active', 'Legacy College of Compostela', @course, 'Undergraduate', NOW())", conn, tr);
-                        insScholar.Parameters.AddWithValue("@sn", schNum);
-                        insScholar.Parameters.AddWithValue("@sid", studentId);
-                        insScholar.Parameters.AddWithValue("@fn", txtFirstName.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@mn", txtMiddleName.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@ln", txtLastName.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@em", txtEmail.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@cn", txtContactNumber.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@dob", dtpDateOfBirth.Value);
-                        insScholar.Parameters.AddWithValue("@gen", cmbGender.SelectedItem?.ToString() ?? "Male");
-                        insScholar.Parameters.AddWithValue("@addr", txtAddress.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@course", cmbCourse.SelectedItem?.ToString() ?? "");
-                        insScholar.Parameters.AddWithValue("@yl", cmbYearLevel.SelectedItem?.ToString() ?? "");
-                        insScholar.Parameters.AddWithValue("@stid", scholarshipTypeId);
-                        insScholar.Parameters.AddWithValue("@sa", stipendAmount);
-                        insScholar.Parameters.AddWithValue("@sf", cmbStipendFrequency.SelectedItem?.ToString() ?? "Monthly");
-                        insScholar.Parameters.AddWithValue("@fs", cmbFundSource.SelectedItem?.ToString() ?? "");
-                        insScholar.Parameters.AddWithValue("@rc", txtRenewalConditions.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@bn", txtBankName.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@ban", txtBankAccountNumber.Text.Trim());
-                        insScholar.Parameters.AddWithValue("@ed", dtpEnrollmentDate.Value);
-                        insScholar.Parameters.AddWithValue("@eg", dtpExpectedGraduation.Value);
-                        insScholar.ExecuteNonQuery();
+                        if (string.IsNullOrWhiteSpace(studentId))
+                            studentId = $"{year}-{count:D6}";
 
-                        int newScholarId = Convert.ToInt32(new MySqlCommand("SELECT LAST_INSERT_ID()", conn, tr).ExecuteScalar());
+                        string insertScholar = @"INSERT INTO scholars 
+                    (student_id, scholar_number, first_name, middle_name, last_name, email, contact_number, 
+                     date_of_birth, gender, address, program, hei, degree_program, course, year_level, 
+                     scholarship_type_id, stipend_amount, stipend_frequency, scholarship_fund_source, 
+                     renewal_conditions, bank_name, bank_account_number, enrollment_date, expected_graduation, 
+                     status, created_at)
+                    VALUES 
+                    (@studentId, @scholarNumber, @firstName, @middleName, @lastName, @email, @contactNumber,
+                     @dob, @gender, @address, 'Undergraduate', 'Legacy College of Compostela', @course, @course, @yearLevel,
+                     @scholarshipTypeId, @stipendAmount, @stipendFrequency, @fundSource,
+                     @renewalConditions, @bankName, @bankAccountNumber, @enrollmentDate, @expectedGraduation,
+                     'Active', NOW());
+                    SELECT LAST_INSERT_ID();";
 
-                        // Create compliance records with correct enum values
+                        MySqlCommand cmdScholar = new MySqlCommand(insertScholar, conn, tr);
+                        cmdScholar.Parameters.AddWithValue("@studentId", studentId);
+                        cmdScholar.Parameters.AddWithValue("@scholarNumber", schNum);
+                        cmdScholar.Parameters.AddWithValue("@firstName", firstName);
+                        cmdScholar.Parameters.AddWithValue("@middleName", middleName);
+                        cmdScholar.Parameters.AddWithValue("@lastName", lastNameForDB);
+                        cmdScholar.Parameters.AddWithValue("@email", email);
+                        cmdScholar.Parameters.AddWithValue("@contactNumber", contactNumber);
+                        cmdScholar.Parameters.AddWithValue("@dob", dtpDateOfBirth.Value);
+                        cmdScholar.Parameters.AddWithValue("@gender", cmbGender.SelectedItem?.ToString() ?? "Male");
+                        cmdScholar.Parameters.AddWithValue("@address", txtAddress.Text.Trim());
+                        cmdScholar.Parameters.AddWithValue("@course", course);
+                        cmdScholar.Parameters.AddWithValue("@yearLevel", yearLevel);
+                        cmdScholar.Parameters.AddWithValue("@scholarshipTypeId", scholarshipTypeId);
+                        cmdScholar.Parameters.AddWithValue("@stipendAmount", stipendAmount);
+                        cmdScholar.Parameters.AddWithValue("@stipendFrequency", cmbStipendFrequency.SelectedItem?.ToString() ?? "Monthly");
+                        cmdScholar.Parameters.AddWithValue("@fundSource", cmbFundSource.SelectedItem?.ToString() ?? "");
+                        cmdScholar.Parameters.AddWithValue("@renewalConditions", txtRenewalConditions.Text.Trim());
+                        cmdScholar.Parameters.AddWithValue("@bankName", txtBankName.Text.Trim());
+                        cmdScholar.Parameters.AddWithValue("@bankAccountNumber", txtBankAccountNumber.Text.Trim());
+                        cmdScholar.Parameters.AddWithValue("@enrollmentDate", dtpEnrollmentDate.Value);
+                        cmdScholar.Parameters.AddWithValue("@expectedGraduation", dtpExpectedGraduation.Value);
+                        int newScholarId = Convert.ToInt32(cmdScholar.ExecuteScalar());
+
+                        // Create user account and link to scholar
+                        // Generate password from scholar's name
+                        string scholarPassword = GenerateScholarPassword(firstName, lastName);
+
+                        // Create user account and link to scholar
+                        int userId = CreateScholarUserAccount(conn, tr, studentId, fullName, scholarPassword);
+                        LinkScholarToUser(conn, tr, newScholarId, userId);
+
+                        // Create compliance records
                         for (int i = 0; i < 5; i++)
                         {
                             bool isAttached = _loadedFileData.ContainsKey(_docKeys[i]);
                             string status = isAttached ? "Submitted" : "Pending";
 
-                            MySqlCommand insComp = new MySqlCommand(
-                                "INSERT INTO compliance_records (scholar_id, requirement_type, description, due_date, status) VALUES (@sid, @type, @desc, @due, @status); SELECT LAST_INSERT_ID();", conn, tr);
-                            insComp.Parameters.AddWithValue("@sid", newScholarId);
-                            insComp.Parameters.AddWithValue("@type", _dbTypes[i]);  // Uses correct DB enum value!
-                            insComp.Parameters.AddWithValue("@desc", _descriptions[i]);
-                            insComp.Parameters.AddWithValue("@due", DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd"));
-                            insComp.Parameters.AddWithValue("@status", status);
-                            int compId = Convert.ToInt32(insComp.ExecuteScalar());
+                            string insComp = @"INSERT INTO compliance_records 
+                        (scholar_id, requirement_type, description, due_date, status) 
+                        VALUES (@sid, @type, @desc, @due, @status);
+                        SELECT LAST_INSERT_ID();";
+                            MySqlCommand cmdComp = new MySqlCommand(insComp, conn, tr);
+                            cmdComp.Parameters.AddWithValue("@sid", newScholarId);
+                            cmdComp.Parameters.AddWithValue("@type", _dbTypes[i]);
+                            cmdComp.Parameters.AddWithValue("@desc", _descriptions[i]);
+                            cmdComp.Parameters.AddWithValue("@due", DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd"));
+                            cmdComp.Parameters.AddWithValue("@status", status);
+                            int compId = Convert.ToInt32(cmdComp.ExecuteScalar());
 
                             if (isAttached)
                             {
                                 byte[] data = _loadedFileData[_docKeys[i]];
                                 string fileName = _loadedFileNames[_docKeys[i]];
-                                MySqlCommand insFile = new MySqlCommand(
-                                    "INSERT INTO file_attachments (scholar_id, compliance_id, file_name, original_name, file_type, file_size, file_data, uploaded_by) VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, 1)", conn, tr);
-                                insFile.Parameters.AddWithValue("@sid", newScholarId);
-                                insFile.Parameters.AddWithValue("@cid", compId);
-                                insFile.Parameters.AddWithValue("@fn", fileName);
-                                insFile.Parameters.AddWithValue("@on", fileName);
-                                insFile.Parameters.AddWithValue("@ft", Path.GetExtension(fileName).ToLower());
-                                insFile.Parameters.AddWithValue("@sz", data.Length);
-                                insFile.Parameters.AddWithValue("@data", data);
-                                insFile.ExecuteNonQuery();
+                                string insFile = @"INSERT INTO file_attachments 
+                            (scholar_id, compliance_id, file_name, original_name, file_type, file_size, file_data, uploaded_by) 
+                            VALUES (@sid, @cid, @fn, @on, @ft, @sz, @data, 1)";
+                                MySqlCommand cmdFile = new MySqlCommand(insFile, conn, tr);
+                                cmdFile.Parameters.AddWithValue("@sid", newScholarId);
+                                cmdFile.Parameters.AddWithValue("@cid", compId);
+                                cmdFile.Parameters.AddWithValue("@fn", fileName);
+                                cmdFile.Parameters.AddWithValue("@on", fileName);
+                                cmdFile.Parameters.AddWithValue("@ft", Path.GetExtension(fileName).ToLower());
+                                cmdFile.Parameters.AddWithValue("@sz", data.Length);
+                                cmdFile.Parameters.AddWithValue("@data", data);
+                                cmdFile.ExecuteNonQuery();
                             }
                         }
 
                         tr.Commit();
-                        ActivityLogger.LogCreate("scholars", newScholarId, $"Created new scholar: {txtFirstName.Text} {txtLastName.Text}");
-                        MessageBox.Show("Scholar added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ActivityLogger.LogCreate("scholars", newScholarId, $"Created new scholar: {fullName}");
+
+                        // Send notifications
+                        SendWelcomeEmail(email, fullName, schNum, studentId, scholarPassword);
+                        SendWelcomeSMS(contactNumber, firstName, studentId, scholarPassword);
+                        MessageBox.Show(
+    $"✅ Scholar added successfully!\n\n" +
+    $"👤 Name: {fullName}\n" +
+    $"🔢 Scholar Number: {schNum}\n" +
+    $"🆔 Student ID: {studentId}\n" +
+    $"📧 Email: {email}\n\n" +
+    $"📨 Login credentials sent to: {email}\n" +
+    $"📱 SMS notification sent to: {contactNumber}\n\n" +
+    $"ℹ️ Username = Student ID\n" +
+    $"🔑 Password = {scholarPassword}",
+    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         LoadScholarsGrid();
                         ClearForm();
                     }
                 }
             }
-            catch (Exception ex) { MessageBox.Show($"Error saving scholar: {ex.Message}", "Error"); }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving scholar: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
