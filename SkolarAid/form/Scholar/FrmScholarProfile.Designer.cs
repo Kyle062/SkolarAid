@@ -537,9 +537,9 @@
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(85, 30);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(157, 26);
+            this.lblBrand.Size = new System.Drawing.Size(148, 26);
             this.lblBrand.TabIndex = 9;
-            this.lblBrand.Text = "Scholar Portal";
+            this.lblBrand.Text = "Iskolar Portal";
             // 
             // lblDate
             // 

@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SATAUiFramework.BorderRadius borderRadius8 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius9 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius10 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius11 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius12 = new SATAUiFramework.BorderRadius();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            SATAUiFramework.BorderRadius borderRadius13 = new SATAUiFramework.BorderRadius();
-            SATAUiFramework.BorderRadius borderRadius14 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius1 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius2 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius3 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius4 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius5 = new SATAUiFramework.BorderRadius();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            SATAUiFramework.BorderRadius borderRadius6 = new SATAUiFramework.BorderRadius();
+            SATAUiFramework.BorderRadius borderRadius7 = new SATAUiFramework.BorderRadius();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnNotifications = new FrameworkTest.SATAButton();
             this.btnCompliance = new FrameworkTest.SATAButton();
@@ -275,7 +275,6 @@
             this.btnPayments.TabIndex = 2;
             this.btnPayments.TextAutoCenter = true;
             this.btnPayments.TextOffset = new System.Drawing.Point(-10, 0);
-            //this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
             // 
             // btnProfile
             // 
@@ -314,7 +313,6 @@
             this.btnProfile.TabIndex = 1;
             this.btnProfile.TextAutoCenter = true;
             this.btnProfile.TextOffset = new System.Drawing.Point(-20, 0);
-            //this.btnProfile.Click += new System.EventHandler(this.btnProfile_Click);
             // 
             // btnDashboard
             // 
@@ -371,9 +369,10 @@
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(85, 30);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(157, 26);
+            this.lblBrand.Size = new System.Drawing.Size(148, 26);
             this.lblBrand.TabIndex = 9;
-            this.lblBrand.Text = "Scholar Portal";
+            this.lblBrand.Text = "Iskolar Portal";
+            this.lblBrand.Click += new System.EventHandler(this.lblBrand_Click);
             // 
             // btnLogout
             // 
@@ -543,11 +542,11 @@
             this.panelStats1.BackColor = System.Drawing.Color.White;
             this.panelStats1.BackColor2 = System.Drawing.Color.White;
             this.panelStats1.BorderColor = System.Drawing.Color.Black;
-            borderRadius8.BottomLeft = 15;
-            borderRadius8.BottomRight = 15;
-            borderRadius8.TopLeft = 15;
-            borderRadius8.TopRight = 15;
-            this.panelStats1.BorderRadius = borderRadius8;
+            borderRadius1.BottomLeft = 15;
+            borderRadius1.BottomRight = 15;
+            borderRadius1.TopLeft = 15;
+            borderRadius1.TopRight = 15;
+            this.panelStats1.BorderRadius = borderRadius1;
             this.panelStats1.BorderThickness = 0;
             this.panelStats1.Controls.Add(this.lblTotalStipend);
             this.panelStats1.Controls.Add(this.lblTotalStipendLabel);
@@ -593,11 +592,11 @@
             this.panelStats2.BackColor = System.Drawing.Color.White;
             this.panelStats2.BackColor2 = System.Drawing.Color.White;
             this.panelStats2.BorderColor = System.Drawing.Color.Black;
-            borderRadius9.BottomLeft = 15;
-            borderRadius9.BottomRight = 15;
-            borderRadius9.TopLeft = 15;
-            borderRadius9.TopRight = 15;
-            this.panelStats2.BorderRadius = borderRadius9;
+            borderRadius2.BottomLeft = 15;
+            borderRadius2.BottomRight = 15;
+            borderRadius2.TopLeft = 15;
+            borderRadius2.TopRight = 15;
+            this.panelStats2.BorderRadius = borderRadius2;
             this.panelStats2.BorderThickness = 0;
             this.panelStats2.Controls.Add(this.lblNextPayment);
             this.panelStats2.Controls.Add(this.lblNextPaymentLabel);
@@ -655,11 +654,11 @@
             this.panelStats3.BackColor = System.Drawing.Color.White;
             this.panelStats3.BackColor2 = System.Drawing.Color.White;
             this.panelStats3.BorderColor = System.Drawing.Color.Black;
-            borderRadius10.BottomLeft = 15;
-            borderRadius10.BottomRight = 15;
-            borderRadius10.TopLeft = 15;
-            borderRadius10.TopRight = 15;
-            this.panelStats3.BorderRadius = borderRadius10;
+            borderRadius3.BottomLeft = 15;
+            borderRadius3.BottomRight = 15;
+            borderRadius3.TopLeft = 15;
+            borderRadius3.TopRight = 15;
+            this.panelStats3.BorderRadius = borderRadius3;
             this.panelStats3.BorderThickness = 0;
             this.panelStats3.Controls.Add(this.lblScholarshipType);
             this.panelStats3.Controls.Add(this.lblScholarshipTypeLabel);
@@ -706,11 +705,11 @@
             this.panelStats4.BackColor = System.Drawing.Color.White;
             this.panelStats4.BackColor2 = System.Drawing.Color.White;
             this.panelStats4.BorderColor = System.Drawing.Color.Black;
-            borderRadius11.BottomLeft = 15;
-            borderRadius11.BottomRight = 15;
-            borderRadius11.TopLeft = 15;
-            borderRadius11.TopRight = 15;
-            this.panelStats4.BorderRadius = borderRadius11;
+            borderRadius4.BottomLeft = 15;
+            borderRadius4.BottomRight = 15;
+            borderRadius4.TopLeft = 15;
+            borderRadius4.TopRight = 15;
+            this.panelStats4.BorderRadius = borderRadius4;
             this.panelStats4.BorderThickness = 0;
             this.panelStats4.Controls.Add(this.lblComplianceRate);
             this.panelStats4.Controls.Add(this.lblComplianceLabel);
@@ -766,11 +765,11 @@
             this.panelRecentPayments.BackColor = System.Drawing.Color.White;
             this.panelRecentPayments.BackColor2 = System.Drawing.Color.White;
             this.panelRecentPayments.BorderColor = System.Drawing.Color.Black;
-            borderRadius12.BottomLeft = 15;
-            borderRadius12.BottomRight = 15;
-            borderRadius12.TopLeft = 15;
-            borderRadius12.TopRight = 15;
-            this.panelRecentPayments.BorderRadius = borderRadius12;
+            borderRadius5.BottomLeft = 15;
+            borderRadius5.BottomRight = 15;
+            borderRadius5.TopLeft = 15;
+            borderRadius5.TopRight = 15;
+            this.panelRecentPayments.BorderRadius = borderRadius5;
             this.panelRecentPayments.BorderThickness = 0;
             this.panelRecentPayments.Controls.Add(this.lblRecentPaymentsTitle);
             this.panelRecentPayments.Controls.Add(this.btnViewAllPayments);
@@ -837,25 +836,25 @@
             this.dgvRecentPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRecentPayments.BackgroundColor = System.Drawing.Color.White;
             this.dgvRecentPayments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            this.dgvRecentPayments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(68)))), ((int)(((byte)(79)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            this.dgvRecentPayments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvRecentPayments.ColumnHeadersHeight = 40;
             this.dgvRecentPayments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPeriod,
             this.colAmount,
             this.colStatus,
             this.colReleaseDate});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Century Gothic", 8.25F);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecentPayments.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Century Gothic", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecentPayments.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvRecentPayments.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dgvRecentPayments.EnableHeadersVisualStyles = false;
             this.dgvRecentPayments.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
@@ -863,10 +862,10 @@
             this.dgvRecentPayments.Name = "dgvRecentPayments";
             this.dgvRecentPayments.ReadOnly = true;
             this.dgvRecentPayments.RowHeadersVisible = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvRecentPayments.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvRecentPayments.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvRecentPayments.RowTemplate.Height = 35;
             this.dgvRecentPayments.Size = new System.Drawing.Size(790, 270);
             this.dgvRecentPayments.TabIndex = 2;
@@ -900,11 +899,11 @@
             this.panelCompliance.BackColor = System.Drawing.Color.White;
             this.panelCompliance.BackColor2 = System.Drawing.Color.White;
             this.panelCompliance.BorderColor = System.Drawing.Color.Black;
-            borderRadius13.BottomLeft = 15;
-            borderRadius13.BottomRight = 15;
-            borderRadius13.TopLeft = 15;
-            borderRadius13.TopRight = 15;
-            this.panelCompliance.BorderRadius = borderRadius13;
+            borderRadius6.BottomLeft = 15;
+            borderRadius6.BottomRight = 15;
+            borderRadius6.TopLeft = 15;
+            borderRadius6.TopRight = 15;
+            this.panelCompliance.BorderRadius = borderRadius6;
             this.panelCompliance.BorderThickness = 0;
             this.panelCompliance.Controls.Add(this.lblComplianceTitle);
             this.panelCompliance.Controls.Add(this.btnViewAllCompliance);
@@ -1135,11 +1134,11 @@
             this.panelNotifications.BackColor = System.Drawing.Color.White;
             this.panelNotifications.BackColor2 = System.Drawing.Color.White;
             this.panelNotifications.BorderColor = System.Drawing.Color.Black;
-            borderRadius14.BottomLeft = 10;
-            borderRadius14.BottomRight = 10;
-            borderRadius14.TopLeft = 10;
-            borderRadius14.TopRight = 10;
-            this.panelNotifications.BorderRadius = borderRadius14;
+            borderRadius7.BottomLeft = 10;
+            borderRadius7.BottomRight = 10;
+            borderRadius7.TopLeft = 10;
+            borderRadius7.TopRight = 10;
+            this.panelNotifications.BorderRadius = borderRadius7;
             this.panelNotifications.BorderThickness = 0;
             this.panelNotifications.Controls.Add(this.lblNotificationsTitle);
             this.panelNotifications.Controls.Add(this.panelNotification1);

@@ -20,26 +20,108 @@ namespace SkolarAid
         private int _selectedCount = 0;
         private bool _isLoading = false;
 
-       
         // ============================================
         // EMAIL NOTIFICATION CONFIGURATION
         // ============================================
         private const string SMTP_HOST = "smtp.gmail.com";
         private const int SMTP_PORT = 587;
         private const string SENDER_EMAIL = "iskolaraid@gmail.com";
-        private const string SENDER_PASSWORD = "gmvlmnme fgfr mzjy";  // YOUR APP PASSWORD
+        private const string SENDER_PASSWORD = "gmvlmnme fgfr mzjy";
         private const string SENDER_NAME = "Legacy College of Compostela - ScholarAid";
         private const bool ENABLE_EMAIL_NOTIFICATIONS = true;
         private const bool ENABLE_SMS_NOTIFICATIONS = true;
 
         private FrameworkTest.SATAButton btnRelease;
         private FrameworkTest.SATAButton btnInfo;
+        private DataGridView dgvDisbursementHistory; // NEW: Disbursement history grid
+        private Label lblHistoryTitle; // NEW: History section title
 
         public FrmPayrollProcessing()
         {
             InitializeComponent();
+            InitializeDisbursementHistoryGrid(); // NEW: Add history grid
             this.Load += FrmPayrollProcessing_Load_1;
             this.Resize += FrmPayrollProcessing_Resize;
+        }
+
+        /// <summary>
+        /// Creates the disbursement history grid in the summary panel
+        /// </summary>
+        private void InitializeDisbursementHistoryGrid()
+        {
+            // History section title
+            lblHistoryTitle = new Label
+            {
+                Text = "📋 Disbursement History",
+                Font = new Font("Century Gothic", 12F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(0, 68, 79),
+                Location = new Point(20, 200),
+                AutoSize = true
+            };
+            panelSummary.Controls.Add(lblHistoryTitle);
+
+            // Description label
+            Label lblHistoryDesc = new Label
+            {
+                Text = "Already paid for current period:",
+                Font = new Font("Century Gothic", 9F),
+                ForeColor = Color.Gray,
+                Location = new Point(20, 225),
+                AutoSize = true
+            };
+            panelSummary.Controls.Add(lblHistoryDesc);
+
+            // Disbursement history grid
+            dgvDisbursementHistory = new DataGridView
+            {
+                Location = new Point(20, 250),
+                Size = new Size(panelSummary.Width - 40, 200),
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                ReadOnly = true,
+                BackgroundColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                RowHeadersVisible = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                {
+                    BackColor = Color.FromArgb(0, 68, 79),
+                    ForeColor = Color.White,
+                    Font = new Font("Century Gothic", 8F, FontStyle.Bold)
+                },
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Font = new Font("Century Gothic", 8F)
+                },
+                RowTemplate = { Height = 28 }
+            };
+
+            // Add columns
+            dgvDisbursementHistory.Columns.Add("colHistScholar", "Scholar");
+            dgvDisbursementHistory.Columns.Add("colHistPeriod", "Period");
+            dgvDisbursementHistory.Columns.Add("colHistAmount", "Amount");
+            dgvDisbursementHistory.Columns.Add("colHistStatus", "Status");
+            dgvDisbursementHistory.Columns.Add("colHistDate", "Release Date");
+
+            // Column widths
+            dgvDisbursementHistory.Columns["colHistScholar"].FillWeight = 35;
+            dgvDisbursementHistory.Columns["colHistPeriod"].FillWeight = 25;
+            dgvDisbursementHistory.Columns["colHistAmount"].FillWeight = 15;
+            dgvDisbursementHistory.Columns["colHistStatus"].FillWeight = 12;
+            dgvDisbursementHistory.Columns["colHistDate"].FillWeight = 13;
+
+            // Format amount column
+            dgvDisbursementHistory.Columns["colHistAmount"].DefaultCellStyle.Format = "₱#,##0";
+            dgvDisbursementHistory.Columns["colHistAmount"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+            panelSummary.Controls.Add(dgvDisbursementHistory);
+
+            // Adjust Release button position (moved lower to accommodate history grid)
+            if (btnRelease != null)
+            {
+                btnRelease.Location = new Point(20, panelSummary.Height - 70);
+            }
         }
 
         private void FrmPayrollProcessing_Resize(object sender, EventArgs e)
@@ -48,8 +130,6 @@ namespace SkolarAid
             catch (Exception ex) { System.Diagnostics.Debug.WriteLine($"Resize error: {ex.Message}"); }
         }
 
-
-   
         private void AdjustLayoutForFullscreen()
         {
             int screenWidth = this.ClientSize.Width;
@@ -90,7 +170,7 @@ namespace SkolarAid
                 panelBatchControls.Size = new Size(screenWidth - 321, 65);
             }
 
-            int gridWidth = (int)((screenWidth - 321) * 0.78);
+            int gridWidth = (int)((screenWidth - 321) * 0.75);
             int summaryWidth = screenWidth - 321 - gridWidth - 15;
 
             if (panelDataGrid != null)
@@ -105,6 +185,13 @@ namespace SkolarAid
                 panelSummary.Size = new Size(summaryWidth, screenHeight - 420);
             }
 
+            // Adjust history grid size
+            if (dgvDisbursementHistory != null && panelSummary != null)
+            {
+                dgvDisbursementHistory.Size = new Size(panelSummary.Width - 40, panelSummary.Height - 340);
+            }
+
+            // Adjust release button position
             if (btnRelease != null && panelSummary != null)
             {
                 btnRelease.Location = new Point(20, panelSummary.Height - 70);
@@ -126,7 +213,6 @@ namespace SkolarAid
                 cmbPaymentMethod.Items.Add("Cash");
                 cmbPaymentMethod.SelectedIndex = 0;
 
-                // Initialize year level dropdown
                 cmbYearLevel.Items.Clear();
                 cmbYearLevel.Items.Add("All Year Levels");
                 for (int i = 1; i <= 4; i++)
@@ -135,16 +221,125 @@ namespace SkolarAid
 
                 WireUpEvents();
                 AddReleaseButton();
-                AddInfoButton();  // ADD THIS LINE
+                AddInfoButton();
                 LoadFilterOptions();
                 LoadScholarsGrid();
                 LoadStatistics();
+                LoadDisbursementHistory(); // NEW: Load history on startup
                 AdjustLayoutForFullscreen();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading Payroll Processing form: {ex.Message}",
                     "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Loads disbursement history for the current payment period
+        /// Shows which scholars have already been paid to prevent double disbursement
+        /// </summary>
+        private void LoadDisbursementHistory()
+        {
+            try
+            {
+                dgvDisbursementHistory.Rows.Clear();
+                string currentPeriod = dtpPaymentPeriod.Value.ToString("MMMM yyyy");
+
+                using (MySqlConnection conn = DatabaseHelper.GetConnection())
+                {
+                    conn.Open();
+                    string query = @"SELECT 
+                                        CONCAT(s.first_name, ' ', s.last_name) AS scholar_name,
+                                        s.scholar_number,
+                                        p.payment_period,
+                                        p.amount,
+                                        p.status,
+                                        p.release_date,
+                                        p.payment_method,
+                                        p.reference_number
+                                    FROM payments p
+                                    JOIN scholars s ON p.scholar_id = s.id
+                                    WHERE p.payment_period = @period
+                                    ORDER BY p.release_date DESC, p.status ASC";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@period", currentPeriod);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        int releasedCount = 0;
+                        int processedCount = 0;
+                        int pendingCount = 0;
+
+                        while (reader.Read())
+                        {
+                            string scholarName = reader["scholar_name"].ToString();
+                            string period = reader["payment_period"].ToString();
+                            decimal amount = Convert.ToDecimal(reader["amount"]);
+                            string status = reader["status"].ToString();
+                            string releaseDate = reader["release_date"] != DBNull.Value ?
+                                Convert.ToDateTime(reader["release_date"]).ToString("MMM dd, yyyy") : "Pending";
+
+                            int rowIndex = dgvDisbursementHistory.Rows.Add();
+                            dgvDisbursementHistory.Rows[rowIndex].Cells["colHistScholar"].Value = scholarName;
+                            dgvDisbursementHistory.Rows[rowIndex].Cells["colHistPeriod"].Value = period;
+                            dgvDisbursementHistory.Rows[rowIndex].Cells["colHistAmount"].Value = amount;
+                            dgvDisbursementHistory.Rows[rowIndex].Cells["colHistStatus"].Value = status;
+                            dgvDisbursementHistory.Rows[rowIndex].Cells["colHistDate"].Value = releaseDate;
+
+                            // Color code by status
+                            var statusCell = dgvDisbursementHistory.Rows[rowIndex].Cells["colHistStatus"];
+                            switch (status)
+                            {
+                                case "Released":
+                                    statusCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
+                                    statusCell.Style.Font = new Font("Century Gothic", 8F, FontStyle.Bold);
+                                    dgvDisbursementHistory.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(240, 255, 240);
+                                    releasedCount++;
+                                    break;
+                                case "Processed":
+                                    statusCell.Style.ForeColor = Color.FromArgb(255, 193, 7);
+                                    statusCell.Style.Font = new Font("Century Gothic", 8F, FontStyle.Bold);
+                                    dgvDisbursementHistory.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(255, 252, 235);
+                                    processedCount++;
+                                    break;
+                                case "Pending":
+                                    statusCell.Style.ForeColor = Color.FromArgb(108, 117, 125);
+                                    statusCell.Style.Font = new Font("Century Gothic", 8F, FontStyle.Bold);
+                                    pendingCount++;
+                                    break;
+                                case "Failed":
+                                    statusCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
+                                    statusCell.Style.Font = new Font("Century Gothic", 8F, FontStyle.Bold);
+                                    dgvDisbursementHistory.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(255, 240, 240);
+                                    break;
+                            }
+                        }
+
+                        // Update history title with counts
+                        string statusSummary = "";
+                        if (releasedCount > 0) statusSummary += $"✅ {releasedCount} Released";
+                        if (processedCount > 0) statusSummary += (statusSummary.Length > 0 ? " | " : "") + $"🟡 {processedCount} Processed";
+                        if (pendingCount > 0) statusSummary += (statusSummary.Length > 0 ? " | " : "") + $"⏳ {pendingCount} Pending";
+
+                        lblHistoryTitle.Text = statusSummary.Length > 0
+                            ? $"📋 Disbursement History ({statusSummary})"
+                            : "📋 Disbursement History (No payments yet)";
+
+                        // If no records, show a message
+                        if (dgvDisbursementHistory.Rows.Count == 0)
+                        {
+                            dgvDisbursementHistory.Rows.Add("", "No disbursements for this period", "", "", "");
+                            dgvDisbursementHistory.Rows[0].DefaultCellStyle.ForeColor = Color.Gray;
+                            dgvDisbursementHistory.Rows[0].DefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Italic);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading disbursement history: {ex.Message}");
             }
         }
 
@@ -174,7 +369,7 @@ namespace SkolarAid
                 ButtonText = "❓ How It Works",
                 Name = "btnInfo",
                 Font = new Font("Century Gothic", 10F, FontStyle.Regular),
-                NormalBackground = Color.FromArgb(52, 73, 94),  // Dark blue-gray
+                NormalBackground = Color.FromArgb(52, 73, 94),
                 NormalForeColor = Color.White,
                 HoverBackground = Color.FromArgb(44, 62, 80),
                 Rounding = new Padding(6),
@@ -196,7 +391,8 @@ namespace SkolarAid
                 "   ─────────────────────────────────────────────────────────\n" +
                 "   • Choose eligible scholars from the list below\n" +
                 "   • Only scholars with ALL documents APPROVED are eligible\n" +
-                "   • Check the box ☑ next to each scholar's name\n\n" +
+                "   • Check the box ☑ next to each scholar's name\n" +
+                "   • Check Disbursement History to avoid duplicates\n\n" +
                 "🟢 STEP 2: PROCESS PAYROLL\n" +
                 "   ─────────────────────────────────────────────────────────\n" +
                 "   • Click the 'Process Payroll' button\n" +
@@ -215,10 +411,10 @@ namespace SkolarAid
                 "   • Scholar receives email and SMS notification\n" +
                 "   • Funds are sent to the scholar\n\n" +
                 "╔══════════════════════════════════════════════════════════════╗\n" +
-                "║  💡 TIPS:                                                   ║\n" +
-                "║  • Only APPROVED documents = ELIGIBLE                       ║\n" +
-                "║  • Processed ≠ Released (must wait 3 days)                  ║\n" +
-                "║  • Check 'Release Payments' button for due releases        ║\n" +
+                "║  ⚠ IMPORTANT: Check Disbursement History!                  ║\n" +
+                "║  • The right panel shows who has been paid this period     ║\n" +
+                "║  • Scholars already 'Released' will be SKIPPED             ║\n" +
+                "║  • This prevents accidental DOUBLE DISBURSEMENT           ║\n" +
                 "╚══════════════════════════════════════════════════════════════╝";
 
             MessageBox.Show(infoMessage, "Payment Processing Guide",
@@ -238,6 +434,7 @@ namespace SkolarAid
                 txtSearch.TextChanged -= TxtSearch_TextChanged;
                 cmbScholarshipType.SelectedIndexChanged -= Filter_Changed;
                 cmbYearLevel.SelectedIndexChanged -= Filter_Changed;
+                dtpPaymentPeriod.ValueChanged -= DtpPaymentPeriod_ValueChanged; // NEW
 
                 dgvScholars.CellValueChanged += DgvScholars_CellValueChanged;
                 dgvScholars.CurrentCellDirtyStateChanged += DgvScholars_CurrentCellDirtyStateChanged;
@@ -248,6 +445,7 @@ namespace SkolarAid
                 txtSearch.TextChanged += TxtSearch_TextChanged;
                 cmbScholarshipType.SelectedIndexChanged += Filter_Changed;
                 cmbYearLevel.SelectedIndexChanged += Filter_Changed;
+                dtpPaymentPeriod.ValueChanged += DtpPaymentPeriod_ValueChanged; // NEW
 
                 dgvScholars.ReadOnly = false;
                 foreach (DataGridViewColumn col in dgvScholars.Columns)
@@ -264,6 +462,12 @@ namespace SkolarAid
                 MessageBox.Show($"Error wiring events: {ex.Message}", "Event Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // NEW: Reload history when payment period changes
+        private void DtpPaymentPeriod_ValueChanged(object sender, EventArgs e)
+        {
+            LoadDisbursementHistory();
         }
 
         #region Database Loading Methods
@@ -334,7 +538,16 @@ namespace SkolarAid
                                              AND cr.status IN ('Pending', 'Overdue', 'Submitted')) 
                                     THEN 'Incomplete'
                                 ELSE 'Complete'
-                            END AS compliance_status
+                            END AS compliance_status,
+                            CASE 
+                                WHEN EXISTS (
+                                    SELECT 1 FROM payments p 
+                                    WHERE p.scholar_id = s.id 
+                                    AND p.payment_period = @currentPeriod
+                                    AND p.status IN ('Released', 'Processed')
+                                ) THEN 'Already Paid'
+                                ELSE 'Not Paid'
+                            END AS payment_status
                         FROM scholars s
                         LEFT JOIN scholarship_types st ON s.scholarship_type_id = st.id
                         WHERE s.status = 'Active'";
@@ -348,6 +561,7 @@ namespace SkolarAid
                     query += " ORDER BY s.id";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@currentPeriod", dtpPaymentPeriod.Value.ToString("MMMM yyyy"));
                     if (cmbScholarshipType.SelectedItem is ComboItem selectedTypeParam && selectedTypeParam.Id > 0)
                         cmd.Parameters.AddWithValue("@scholarshipTypeId", selectedTypeParam.Id);
                     if (cmbYearLevel.SelectedIndex > 0 && cmbYearLevel.SelectedItem.ToString() != "All Year Levels")
@@ -374,10 +588,12 @@ namespace SkolarAid
                                 ScholarshipType = reader["scholarship_name"]?.ToString() ?? "N/A",
                                 ScholarshipTypeId = reader["scholarship_type_id"] != DBNull.Value ? Convert.ToInt32(reader["scholarship_type_id"]) : 0,
                                 StipendAmount = reader["stipend_amount"] != DBNull.Value ? Convert.ToDecimal(reader["stipend_amount"]) : 0,
-                                ComplianceStatus = reader["compliance_status"].ToString()
+                                ComplianceStatus = reader["compliance_status"].ToString(),
+                                PaymentStatus = reader["payment_status"].ToString()
                             };
 
-                            scholar.IsEligible = (scholar.ComplianceStatus == "Complete") && scholar.StipendAmount > 0;
+                            bool alreadyPaid = scholar.PaymentStatus == "Already Paid";
+                            scholar.IsEligible = (scholar.ComplianceStatus == "Complete") && scholar.StipendAmount > 0 && !alreadyPaid;
                             _scholars.Add(scholar);
 
                             int rowIndex = dgvScholars.Rows.Add();
@@ -390,11 +606,32 @@ namespace SkolarAid
                             dgvScholars.Rows[rowIndex].Cells["colScholarshipType"].Value = scholar.ScholarshipType;
                             dgvScholars.Rows[rowIndex].Cells["colStipendAmount"].Value = $"₱{scholar.StipendAmount:N2}";
                             dgvScholars.Rows[rowIndex].Cells["colComplianceStatus"].Value = scholar.ComplianceStatus;
-                            dgvScholars.Rows[rowIndex].Cells["colEligible"].Value = scholar.IsEligible ? "✓ Eligible" : "✗ Not Eligible";
 
+                            // Show payment status in eligible column
+                            if (alreadyPaid)
+                            {
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Value = "⚠ Already Paid";
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Style.ForeColor = Color.FromArgb(255, 140, 0);
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Style.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+                                dgvScholars.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(255, 248, 240);
+                                dgvScholars.Rows[rowIndex].Cells["colSelect"].ReadOnly = true;
+                            }
+                            else if (scholar.IsEligible)
+                            {
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Value = "✓ Eligible";
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Style.ForeColor = Color.FromArgb(40, 167, 69);
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Style.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
+                            }
+                            else
+                            {
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Value = "✗ Not Eligible";
+                                dgvScholars.Rows[rowIndex].Cells["colEligible"].Style.ForeColor = Color.FromArgb(180, 180, 180);
+                                dgvScholars.Rows[rowIndex].Cells["colSelect"].ReadOnly = true;
+                                dgvScholars.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+                            }
+
+                            // Color compliance status
                             var complianceCell = dgvScholars.Rows[rowIndex].Cells["colComplianceStatus"];
-                            var eligibleCell = dgvScholars.Rows[rowIndex].Cells["colEligible"];
-
                             if (scholar.ComplianceStatus == "Complete")
                             {
                                 complianceCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
@@ -409,18 +646,6 @@ namespace SkolarAid
                             {
                                 complianceCell.Style.ForeColor = Color.FromArgb(239, 68, 68);
                                 complianceCell.Style.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
-                            }
-
-                            if (scholar.IsEligible)
-                            {
-                                eligibleCell.Style.ForeColor = Color.FromArgb(40, 167, 69);
-                                eligibleCell.Style.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
-                            }
-                            else
-                            {
-                                eligibleCell.Style.ForeColor = Color.FromArgb(180, 180, 180);
-                                dgvScholars.Rows[rowIndex].Cells["colSelect"].ReadOnly = true;
-                                dgvScholars.Rows[rowIndex].DefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
                             }
                         }
                     }
@@ -500,7 +725,7 @@ namespace SkolarAid
                 {
                     int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
                     var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
-                    if (scholar != null && scholar.IsEligible)
+                    if (scholar != null && scholar.IsEligible && scholar.PaymentStatus != "Already Paid")
                     {
                         dgvScholars.Rows[i].Cells["colSelect"].Value = true;
                     }
@@ -522,7 +747,7 @@ namespace SkolarAid
         }
 
         private void TxtSearch_TextChanged(object sender, EventArgs e) { try { LoadScholarsGrid(); } catch { } }
-        private void Filter_Changed(object sender, EventArgs e) { try { LoadScholarsGrid(); } catch { } }
+        private void Filter_Changed(object sender, EventArgs e) { try { LoadScholarsGrid(); LoadDisbursementHistory(); } catch { } }
 
         private void BtnPreviewPayroll_Click(object sender, EventArgs e)
         {
@@ -531,7 +756,8 @@ namespace SkolarAid
                 var selectedScholars = GetSelectedScholars();
                 if (selectedScholars.Count == 0)
                 {
-                    MessageBox.Show("⚠ Please select at least one eligible scholar.",
+                    MessageBox.Show("⚠ Please select at least one eligible scholar.\n\n" +
+                                   "Note: Scholars marked '⚠ Already Paid' cannot be selected.",
                         "No Eligible Scholars", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -549,7 +775,7 @@ namespace SkolarAid
 
                 if (existingPayments.Any())
                 {
-                    previewMessage += $"⚠ Already Processed: {existingPayments.Count}\n" +
+                    previewMessage += $"⚠ Already Paid (will be skipped): {existingPayments.Count}\n" +
                                      $"✅ New Scholars: {newScholars.Count}\n\n";
                 }
 
@@ -560,6 +786,8 @@ namespace SkolarAid
                 {
                     previewMessage += $"\n\n⚠ NOTE: {existingPayments.Count} scholar(s) already have payments for this period and will be skipped.";
                 }
+
+                previewMessage += $"\n\n💡 TIP: Check the 'Disbursement History' panel to see who has already been paid.";
 
                 MessageBox.Show(previewMessage, "Payroll Preview",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -578,7 +806,8 @@ namespace SkolarAid
                 var selectedScholars = GetSelectedScholars();
                 if (selectedScholars.Count == 0)
                 {
-                    MessageBox.Show("⚠ Please select at least one eligible scholar.",
+                    MessageBox.Show("⚠ Please select at least one eligible scholar.\n\n" +
+                                   "Note: Scholars marked '⚠ Already Paid' cannot be selected.",
                         "No Eligible Scholars", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -591,9 +820,11 @@ namespace SkolarAid
                 {
                     string existingList = string.Join("\n", existingPayments.Select(s => $"• {s.FullName}"));
                     DialogResult result = MessageBox.Show(
-                        $"⚠ Some scholars already have payments for {period}:\n\n{existingList}\n\n" +
+                        $"⚠ DOUBLE DISBURSEMENT WARNING!\n\n" +
+                        $"These scholars already have payments for {period}:\n\n{existingList}\n\n" +
+                        $"Check the Disbursement History panel for details.\n\n" +
                         $"Do you want to skip them and process only the remaining scholars?",
-                        "Existing Payments Found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        "⚠ Duplicate Payment Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (result == DialogResult.No)
                         return;
@@ -602,7 +833,8 @@ namespace SkolarAid
 
                     if (selectedScholars.Count == 0)
                     {
-                        MessageBox.Show("All selected scholars already have payments for this period.",
+                        MessageBox.Show("All selected scholars already have payments for this period.\n\n" +
+                                       "Check the Disbursement History panel for details.",
                             "No New Payments", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
@@ -662,7 +894,7 @@ namespace SkolarAid
                         "✓ Release date is today or earlier\n\n" +
                         "📌 Note: Newly processed payments have a 3-day waiting period before release.\n" +
                         "📌 Check back after the release date to release payments.\n\n" +
-                        "💡 Tip: You can check payment details in the Payments table.",
+                        "💡 Tip: Check the Disbursement History panel for payment status.",
                         "No Payments Ready", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -818,6 +1050,7 @@ namespace SkolarAid
 
                             LoadScholarsGrid();
                             LoadStatistics();
+                            LoadDisbursementHistory(); // NEW: Refresh history after release
                         }
                         catch (Exception ex)
                         {
@@ -932,7 +1165,7 @@ namespace SkolarAid
                     {
                         int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
                         var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
-                        if (scholar != null && scholar.IsEligible)
+                        if (scholar != null && scholar.IsEligible && scholar.PaymentStatus != "Already Paid")
                         {
                             _selectedCount++;
                             _totalAmount += scholar.StipendAmount;
@@ -963,7 +1196,7 @@ namespace SkolarAid
                     {
                         int scholarId = Convert.ToInt32(dgvScholars.Rows[i].Tag);
                         var scholar = _scholars.FirstOrDefault(s => s.Id == scholarId);
-                        if (scholar != null && scholar.IsEligible)
+                        if (scholar != null && scholar.IsEligible && scholar.PaymentStatus != "Already Paid")
                             selected.Add(scholar);
                     }
                 }
@@ -1087,6 +1320,7 @@ namespace SkolarAid
 
                             LoadScholarsGrid();
                             LoadStatistics();
+                            LoadDisbursementHistory(); // NEW: Refresh history after processing
                         }
                         catch (Exception ex)
                         {
@@ -1133,7 +1367,17 @@ namespace SkolarAid
                     stipendCmd.Parameters.AddWithValue("@sid", scholarId);
                     decimal stipend = stipendCmd.ExecuteScalar() != DBNull.Value ? Convert.ToDecimal(stipendCmd.ExecuteScalar()) : 0;
 
-                    return status == "Complete" && stipend > 0;
+                    // Also check if already paid for current period
+                    string paymentCheck = @"SELECT COUNT(*) FROM payments 
+                                           WHERE scholar_id = @sid 
+                                           AND payment_period = @period 
+                                           AND status IN ('Released', 'Processed')";
+                    MySqlCommand paymentCmd = new MySqlCommand(paymentCheck, conn);
+                    paymentCmd.Parameters.AddWithValue("@sid", scholarId);
+                    paymentCmd.Parameters.AddWithValue("@period", dtpPaymentPeriod.Value.ToString("MMMM yyyy"));
+                    int existingPayments = Convert.ToInt32(paymentCmd.ExecuteScalar());
+
+                    return status == "Complete" && stipend > 0 && existingPayments == 0;
                 }
             }
             catch (Exception ex)
@@ -1317,32 +1561,6 @@ namespace SkolarAid
                 phone.StartsWith("0817") || phone.StartsWith("0905") || phone.StartsWith("0906"))
                 return phone + "@txt.globe.com.ph";
 
-            if (phone.StartsWith("0908") || phone.StartsWith("0909") || phone.StartsWith("0910") ||
-                phone.StartsWith("0911") || phone.StartsWith("0912") || phone.StartsWith("0913") ||
-                phone.StartsWith("0914") || phone.StartsWith("0918") || phone.StartsWith("0919") ||
-                phone.StartsWith("0920") || phone.StartsWith("0921") || phone.StartsWith("0922") ||
-                phone.StartsWith("0923") || phone.StartsWith("0924") || phone.StartsWith("0925") ||
-                phone.StartsWith("0928") || phone.StartsWith("0929") || phone.StartsWith("0930") ||
-                phone.StartsWith("0931") || phone.StartsWith("0932") || phone.StartsWith("0933") ||
-                phone.StartsWith("0934") || phone.StartsWith("0938") || phone.StartsWith("0939") ||
-                phone.StartsWith("0940") || phone.StartsWith("0941") || phone.StartsWith("0942") ||
-                phone.StartsWith("0943") || phone.StartsWith("0944") || phone.StartsWith("0945") ||
-                phone.StartsWith("0946") || phone.StartsWith("0947") || phone.StartsWith("0948") ||
-                phone.StartsWith("0949") || phone.StartsWith("0950") || phone.StartsWith("0951") ||
-                phone.StartsWith("0952") || phone.StartsWith("0953") || phone.StartsWith("0954") ||
-                phone.StartsWith("0955") || phone.StartsWith("0956") || phone.StartsWith("0961") ||
-                phone.StartsWith("0962") || phone.StartsWith("0963") || phone.StartsWith("0964") ||
-                phone.StartsWith("0965") || phone.StartsWith("0966") || phone.StartsWith("0967") ||
-                phone.StartsWith("0968") || phone.StartsWith("0969") || phone.StartsWith("0970") ||
-                phone.StartsWith("0971") || phone.StartsWith("0972") || phone.StartsWith("0973") ||
-                phone.StartsWith("0974") || phone.StartsWith("0975") || phone.StartsWith("0976") ||
-                phone.StartsWith("0977") || phone.StartsWith("0978") || phone.StartsWith("0979") ||
-                phone.StartsWith("0980") || phone.StartsWith("0981") || phone.StartsWith("0982") ||
-                phone.StartsWith("0983") || phone.StartsWith("0984") || phone.StartsWith("0985") ||
-                phone.StartsWith("0986") || phone.StartsWith("0987") || phone.StartsWith("0988") ||
-                phone.StartsWith("0989") || phone.StartsWith("0992") || phone.StartsWith("0993"))
-                return phone + "@txt.smart.com.ph";
-
             return phone + "@txt.smart.com.ph";
         }
 
@@ -1440,6 +1658,7 @@ namespace SkolarAid
         public int ScholarshipTypeId { get; set; }
         public decimal StipendAmount { get; set; }
         public string ComplianceStatus { get; set; }
+        public string PaymentStatus { get; set; } // NEW: "Already Paid" or "Not Paid"
         public bool IsEligible { get; set; }
     }
 

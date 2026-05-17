@@ -425,5 +425,10 @@ namespace SkolarAid.form.Scholar
 
         private void panelContent_Paint(object sender, PaintEventArgs e) { }
         private void panelHeader_Paint(object sender, PaintEventArgs e) { }
+
+        private void lblBrand_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
